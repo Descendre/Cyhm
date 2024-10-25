@@ -27,7 +27,7 @@ if (isProd) {
 	} else {
 		const port = process.argv[2];
 		await mainWindow.loadURL(`http://localhost:${port}`);
-		// mainWindow.webContents.openDevTools()
+		mainWindow.webContents.openDevTools();
 	}
 })();
 

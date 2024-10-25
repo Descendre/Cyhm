@@ -12,6 +12,11 @@
 		"prepare": "husky"
 	},
 	"dependencies": {
+		"@emotion/cache": "^11.13.1",
+		"@emotion/react": "^11.13.3",
+		"@emotion/styled": "^11.13.0",
+		"@mui/material": "^6.1.5",
+		"@mui/material-nextjs": "^6.1.5",
 		"electron-serve": "^1.3.0",
 		"electron-store": "^8.2.0"
 	},
