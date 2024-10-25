@@ -1,4 +1,6 @@
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { Metadata } from 'next';
+import { darkTheme } from '../themes';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -12,7 +14,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="jp">
-			<body>{children}</body>
+			<ThemeProvider theme={darkTheme}>
+				<body>
+					<CssBaseline />
+					{children}
+				</body>
+			</ThemeProvider>
 		</html>
 	);
 }
