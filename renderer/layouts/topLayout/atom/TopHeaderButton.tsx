@@ -2,6 +2,7 @@
 import { IconButton, Tooltip } from '@mui/material';
 import { TopHeaderButtonProps } from '../../../interfaces';
 import { usePalette } from '../../../hooks';
+
 export const TopHeaderButton = ({
 	icon,
 	text,
