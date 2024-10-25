@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+
 const handler = NextAuth({
 	providers: [
 		GoogleProvider({
@@ -14,10 +15,17 @@ const handler = NextAuth({
 	],
 	secret: process.env.NEXTAUTH_SECRET as string,
 	callbacks: {
-		redirect: async ({ url, baseUrl }: { url: string; baseUrl: string }) => {
-			if (url.startsWith('/')) return `${baseUrl}${url}`;
-			return url;
+		async jwt({ token, account, profile }) {
+			if (account) {
+				token.id = account.providerAccountId;
+			}
+			return token;
+		},
+		async session({ session, token, user }: any) {
+			session.id = token.id;
+			return session;
 		},
 	},
 });
+
 export { handler as GET, handler as POST };
