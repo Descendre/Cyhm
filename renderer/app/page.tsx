@@ -8,8 +8,7 @@ export default function Home() {
 			{!session || !session.user ? (
 				<>
 					<p>ログインしていません</p>
-					<button onClick={() => signIn('github')}>GitHubでログイン</button>
-					<button onClick={() => signIn('google')}>Googleでログイン</button>
+					<button onClick={() => signIn()}>ログイン</button>
 				</>
 			) : (
 				<>
