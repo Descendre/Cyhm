@@ -1,0 +1,8 @@
+.husky
+.vscode
+app
+main
+node_modules
+renderer/.next
+renderer/public
+resources

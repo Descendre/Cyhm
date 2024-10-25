@@ -1,0 +1,6 @@
+{
+	"extends": ["next/core-web-vitals", "next/typescript"],
+	"rules": {
+		"@next/next/no-document-import-in-page": "off"
+	}
+}
