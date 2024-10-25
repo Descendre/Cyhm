@@ -5,7 +5,7 @@ export default function Home() {
 	console.log(session);
 	return (
 		<div>
-			{!session || !session.user ? (
+			{/* {!session || !session.user ? (
 				<>
 					<p>ログインしていません</p>
 					<button onClick={() => signIn()}>ログイン</button>
@@ -15,7 +15,7 @@ export default function Home() {
 					<p>こんにちは、{session.user.name}さん</p>
 					<button onClick={() => signOut()}>ログアウト</button>
 				</>
-			)}
+			)} */}
 		</div>
 	);
 }
