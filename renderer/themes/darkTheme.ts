@@ -4,6 +4,12 @@ import { createTheme } from '@mui/material';
 export const darkTheme = createTheme({
 	palette: {
 		mode: 'dark',
+		line: {
+			disabled: '#555555',
+		},
+		background: {
+			default: '#181b1f',
+		},
 	},
 	components: {
 		MuiCssBaseline: {

@@ -15,19 +15,22 @@ if (isProd) {
 	await app.whenReady();
 
 	const mainWindow = createWindow('main', {
-		width: 1000,
+		width: 900,
 		height: 600,
-		minWidth: 600,
-		minHeight: 400,
+		minWidth: 900,
+		minHeight: 600,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 		},
+		autoHideMenuBar: true,
 	});
 
 	if (isProd) {
+		mainWindow.center();
 		await mainWindow.loadURL('app://./home');
 	} else {
 		const port = process.argv[2];
+		mainWindow.center();
 		await mainWindow.loadURL(`http://localhost:${port}`);
 		mainWindow.webContents.openDevTools();
 	}
