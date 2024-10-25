@@ -1,6 +1,7 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { Metadata } from 'next';
 import { darkTheme } from '../themes';
+import { NextAuthProvider } from '../provider';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -16,8 +17,10 @@ export default function RootLayout({
 		<html lang="jp">
 			<ThemeProvider theme={darkTheme}>
 				<body>
-					<CssBaseline />
-					{children}
+					<NextAuthProvider>
+						<CssBaseline />
+						{children}
+					</NextAuthProvider>
 				</body>
 			</ThemeProvider>
 		</html>
