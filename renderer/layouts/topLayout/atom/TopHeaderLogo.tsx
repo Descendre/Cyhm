@@ -1,4 +1,5 @@
 import { Avatar } from '@mui/material';
+
 export const TopHeaderLogo = () => {
 	return (
 		<Avatar

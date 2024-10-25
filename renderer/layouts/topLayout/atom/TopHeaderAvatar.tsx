@@ -1,6 +1,7 @@
 import { ArrowDropDown } from '@mui/icons-material';
 import { Avatar, Chip } from '@mui/material';
 import React from 'react';
+
 export const TopHeaderAvatar = () => {
 	return (
 		<Chip

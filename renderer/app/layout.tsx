@@ -1,8 +1,8 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { Metadata } from 'next';
 import { darkTheme } from '../themes';
-import { NextAuthProvider } from '../provider';
-import { TopLayout } from '../layouts';
+import { ContextProvider, NextAuthProvider } from '../provider';
+import { SwitchingLayoutUi } from '../ui';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -19,10 +19,12 @@ export default function RootLayout({
 			<ThemeProvider theme={darkTheme}>
 				<body>
 					<NextAuthProvider>
-						<TopLayout>
-							<CssBaseline />
-							{children}
-						</TopLayout>
+						<ContextProvider>
+							<SwitchingLayoutUi>
+								<CssBaseline />
+								{children}
+							</SwitchingLayoutUi>
+						</ContextProvider>
 					</NextAuthProvider>
 				</body>
 			</ThemeProvider>
