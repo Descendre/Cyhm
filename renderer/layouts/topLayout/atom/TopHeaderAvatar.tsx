@@ -1,5 +1,6 @@
 import { ArrowDropDown } from '@mui/icons-material';
 import { Avatar, Chip } from '@mui/material';
+import { signOut } from 'next-auth/react';
 import React from 'react';
 
 export const TopHeaderAvatar = () => {
@@ -15,6 +16,7 @@ export const TopHeaderAvatar = () => {
 				marginLeft: '13px',
 				cursor: 'pointer',
 			}}
+			onClick={() => signOut()}
 		/>
 	);
 };
