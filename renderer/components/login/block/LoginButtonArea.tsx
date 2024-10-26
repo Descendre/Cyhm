@@ -17,7 +17,7 @@ export const LoginButtonArea = () => {
 			width="60%"
 			padding="50px 0"
 			borderRadius="10px"
-			bgcolor={palette.area.primary}
+			bgcolor={palette.components.login.buttonArea.bg}
 		>
 			<LoginButton
 				src="/google.svg"

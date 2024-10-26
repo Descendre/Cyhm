@@ -4,8 +4,20 @@ import { createTheme } from '@mui/material';
 export const darkTheme = createTheme({
 	palette: {
 		mode: 'dark',
-		area: {
-			primary: '#30363d',
+		components: {
+			common: {
+				appModal: {
+					bg: '#24292e',
+				},
+			},
+			login: {
+				buttonArea: {
+					bg: '#24292e',
+				},
+				button: {
+					bg: '#080808',
+				},
+			},
 		},
 		line: {
 			disabled: '#555555',
