@@ -16,10 +16,10 @@ export const EditReactFlow = () => {
 		handleGetNodesFromTables()
 	); // useNodesStateを使用
 	const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-	console.log(edges, setEdges);
 
 	useEffect(() => {
 		setNodes(handleGetNodesFromTables());
+		console.log(edges, setEdges);
 	}, [tables]);
 
 	return (
