@@ -16,7 +16,7 @@ export const TopProjectHeaderSearchBar = () => {
 				sx={{
 					width: '75%',
 					borderRadius: '4px',
-					backgroundColor: '#000',
+					backgroundColor: palette.components.top.projectHeader.searchBar.bg,
 					'& .MuiInputBase-root': {
 						'&:hover fieldset': {
 							border: `solid 1px ${palette.text.disabled}`,

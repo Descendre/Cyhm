@@ -7,6 +7,31 @@ export const darkTheme = createTheme({
 		primary: {
 			main: '#747bff',
 		},
+		layout: {
+			editLayout: {
+				header: {
+					bg: '#101014',
+					line: '#26262a',
+					searchBar: {
+						bg: '#161618',
+					},
+					downLoadButton: {
+						bg: '#303040',
+						hoverBg: '#202030',
+					},
+				},
+				leftBar: {
+					bg: '#101014',
+					line: '#26262a',
+				},
+				footer: {
+					toolBar: {
+						bg: '#101014',
+						line: '#363640',
+					},
+				},
+			},
+		},
 		components: {
 			common: {
 				appModal: {
@@ -19,6 +44,13 @@ export const darkTheme = createTheme({
 				},
 				button: {
 					bg: '#080808',
+				},
+			},
+			top: {
+				projectHeader: {
+					searchBar: {
+						bg: '#161618',
+					},
 				},
 			},
 		},

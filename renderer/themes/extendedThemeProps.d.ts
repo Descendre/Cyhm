@@ -2,18 +2,50 @@ import '@mui/material/styles';
 
 declare module '@mui/material/styles' {
 	interface Palette {
+		layout: {
+			editLayout: {
+				header: {
+					bg: string;
+					line: string;
+					searchBar: {
+						bg: string;
+					};
+					downLoadButton: {
+						bg: string;
+						hoverBg: string;
+					};
+				};
+				leftBar: {
+					bg: string;
+					line: string;
+				};
+				footer: {
+					toolBar: {
+						bg: string;
+						line: string;
+					};
+				};
+			};
+		};
 		components: {
 			common: {
 				appModal: {
-					bg: '#24292e';
+					bg: string;
 				};
 			};
 			login: {
 				buttonArea: {
-					bg: '#24292e';
+					bg: string;
 				};
 				button: {
 					bg: string;
+				};
+			};
+			top: {
+				projectHeader: {
+					searchBar: {
+						bg: string;
+					};
 				};
 			};
 		};
@@ -22,6 +54,31 @@ declare module '@mui/material/styles' {
 		};
 	}
 	interface PaletteOptions {
+		layout: {
+			editLayout: {
+				header: {
+					bg: string;
+					line: string;
+					searchBar: {
+						bg: string;
+					};
+					downLoadButton: {
+						bg: string;
+						hoverBg: string;
+					};
+				};
+				leftBar: {
+					bg: string;
+					line: string;
+				};
+				footer: {
+					toolBar: {
+						bg: string;
+						line: string;
+					};
+				};
+			};
+		};
 		components: {
 			common: {
 				appModal: {
@@ -34,6 +91,13 @@ declare module '@mui/material/styles' {
 				};
 				button: {
 					bg: string;
+				};
+			};
+			top: {
+				projectHeader: {
+					searchBar: {
+						bg: string;
+					};
 				};
 			};
 		};

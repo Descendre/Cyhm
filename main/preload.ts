@@ -1,7 +1,8 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 const handler = {
-	send(channel: string, value: unknown) {
+	// send関数の第二引数をデフォルトでnullとする
+	send(channel: string, value: unknown = null) {
 		ipcRenderer.send(channel, value);
 	},
 	on(channel: string, callback: (...args: unknown[]) => void) {
