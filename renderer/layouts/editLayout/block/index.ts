@@ -4,3 +4,6 @@ export * from './EditHeaderRightCommands';
 export * from './EditHeaderAvatars';
 export * from './EditHeaderProjectSettings';
 export * from './EditToolBar';
+export * from './EditLeftBarHeader';
+export * from './EditLeftBarTableHeader';
+export * from './EditLeftBarNewBorn';

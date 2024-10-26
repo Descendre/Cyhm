@@ -8,9 +8,13 @@ export const useRTC = (): UseRTCProps => {
 	if (!context) {
 		throw new Error('Context is not provided');
 	}
-	const { isMic, setIsMic } = context;
+
+	const { isMic, setIsMic, isAudio, setIsAudio } = context;
+
 	return {
 		isMic,
 		setIsMic,
+		isAudio,
+		setIsAudio,
 	};
 };

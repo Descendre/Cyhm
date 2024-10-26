@@ -1,6 +1,11 @@
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { usePalette } from '../../../hooks';
-import { EditFooterMicIcon } from '../atom';
+import {
+	EditFooterAddColumnIcon,
+	EditFooterAddTableIcon,
+	EditFooterAudioIcon,
+	EditFooterMicIcon,
+} from '../atom';
 
 export const EditToolBar = () => {
 	const palette = usePalette();
@@ -10,7 +15,7 @@ export const EditToolBar = () => {
 			display="flex"
 			justifyContent="space-between"
 			alignItems="center"
-			gap="20px"
+			gap="15px"
 			height="40px"
 			maxWidth="80%"
 			padding="0 20px"
@@ -22,6 +27,10 @@ export const EditToolBar = () => {
 			}}
 		>
 			<EditFooterMicIcon />
+			<EditFooterAudioIcon />
+			<Divider orientation="vertical" />
+			<EditFooterAddTableIcon />
+			<EditFooterAddColumnIcon />
 		</Box>
 	);
 };
