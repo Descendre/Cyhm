@@ -4,4 +4,3 @@ export * from './EditHeaderAvatar';
 export * from './EditHeaderDownloadButton';
 export * from './EditHeaderProjectTitle';
 export * from './EditFooterMicIcon';
-export * from './EditFooterPinIcon';

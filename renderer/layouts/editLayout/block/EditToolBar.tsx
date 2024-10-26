@@ -1,9 +1,8 @@
 import { Box } from '@mui/material';
-import { EditToolBarProps } from '../../../interfaces';
 import { usePalette } from '../../../hooks';
-import { EditFooterMicIcon, EditFooterPinIcon } from '../atom';
+import { EditFooterMicIcon } from '../atom';
 
-export const EditToolBar = ({ isHovered }: EditToolBarProps) => {
+export const EditToolBar = () => {
 	const palette = usePalette();
 
 	return (
@@ -12,20 +11,17 @@ export const EditToolBar = ({ isHovered }: EditToolBarProps) => {
 			justifyContent="space-between"
 			alignItems="center"
 			gap="20px"
-			height="50px"
+			height="40px"
 			maxWidth="80%"
 			padding="0 20px"
 			bgcolor={palette.layout.editLayout.footer.toolBar.bg}
 			border={`solid 2px ${palette.layout.editLayout.footer.toolBar.line}`}
 			borderRadius="50px"
 			sx={{
-				opacity: isHovered ? 1 : 0,
-				transform: isHovered ? 'translateY(0)' : 'translateY(20px)',
-				transition: 'opacity 0.3s ease, transform 0.3s ease',
+				pointerEvents: 'auto',
 			}}
 		>
 			<EditFooterMicIcon />
-			<EditFooterPinIcon />
 		</Box>
 	);
 };

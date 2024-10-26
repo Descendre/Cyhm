@@ -1,3 +1,9 @@
+import { EditReactFlow } from '../components';
+
 export const EditContents = () => {
-	return <>edit!!</>;
+	return (
+		<>
+			<EditReactFlow />
+		</>
+	);
 };
