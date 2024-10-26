@@ -7,8 +7,10 @@ import {
 } from '../atom';
 
 export const EditLeftBarTableHeader = ({
+	tableId,
 	bg,
 	text,
+	isExpanded,
 }: EditLeftBarTableHeaderProps) => {
 	return (
 		<Box
@@ -31,7 +33,7 @@ export const EditLeftBarTableHeader = ({
 				{text}
 			</Typography>
 			<Box display="flex" justifyContent="center" alignItems="center" gap="5px">
-				<EditLeftBarTableExpandIcon />
+				<EditLeftBarTableExpandIcon tableId={tableId} isExpanded={isExpanded} />
 				<EditLeftBarTableAddColumnIcon />
 				<EditLeftBarTableMenuIcon />
 			</Box>

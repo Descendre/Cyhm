@@ -44,8 +44,10 @@ export const EditLeftBar = () => {
 					Object.values(tables).map((table: TableProps) => (
 						<EditLeftBarTableHeader
 							key={table.id}
+							tableId={table.id}
 							bg={table.color}
 							text={table.name}
+							isExpanded={table.isExpanded}
 						/>
 					))}
 			</Box>
