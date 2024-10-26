@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { TopHeaderAvatar, TopHeaderButton } from '../atom';
-import { GitHub } from '@mui/icons-material';
+import { GitHub, Help, Settings } from '@mui/icons-material';
 
 export const TopHeaderButtons = () => {
 	return (
@@ -17,13 +17,13 @@ export const TopHeaderButtons = () => {
 				onClick={() => console.log()}
 			/>
 			<TopHeaderButton
-				icon={<GitHub />}
-				text="github"
+				icon={<Help />}
+				text="ヘルプ"
 				onClick={() => console.log()}
 			/>
 			<TopHeaderButton
-				icon={<GitHub />}
-				text="github"
+				icon={<Settings />}
+				text="設定"
 				onClick={() => console.log()}
 			/>
 			<TopHeaderAvatar />
