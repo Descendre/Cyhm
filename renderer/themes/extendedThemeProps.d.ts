@@ -14,9 +14,6 @@ declare module '@mui/material/styles' {
 				leftBar: {
 					bg: string;
 					line: string;
-					tableHeader: {
-						default: string;
-					};
 				};
 				footer: {
 					toolBar: {
@@ -44,6 +41,17 @@ declare module '@mui/material/styles' {
 				projectHeader: {
 					searchBar: {
 						bg: string;
+					};
+				};
+			};
+			edit: {
+				reactFlow: {
+					tableHeader: {
+						default: string;
+					};
+					tableColumn: {
+						odd: string;
+						even: string;
 					};
 				};
 			};
@@ -65,9 +73,6 @@ declare module '@mui/material/styles' {
 				leftBar: {
 					bg: string;
 					line: string;
-					tableHeader: {
-						default: string;
-					};
 				};
 				footer: {
 					toolBar: {
@@ -95,6 +100,17 @@ declare module '@mui/material/styles' {
 				projectHeader: {
 					searchBar: {
 						bg: string;
+					};
+				};
+			};
+			edit: {
+				reactFlow: {
+					tableHeader: {
+						default: string;
+					};
+					tableColumn: {
+						odd: string;
+						even: string;
 					};
 				};
 			};

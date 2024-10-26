@@ -2,11 +2,13 @@
 import { useContext } from 'react';
 import { Context } from '../../provider';
 import {
+	EditReactFlowCustomNodeDataProps,
 	handleAddTableProps,
 	TableProps,
 	UseLayoutProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
+import { Node } from '@xyflow/react';
 
 export const useLayout = (): UseLayoutProps => {
 	const palette = usePalette();
@@ -46,10 +48,10 @@ export const useLayout = (): UseLayoutProps => {
 
 	const handleAddTable = ({ tableName }: handleAddTableProps): void => {
 		const newTable: TableProps = {
-			id: '2',
+			id: Date.now().toString(),
 			name: tableName,
 			columns: [],
-			color: palette.layout.editLayout.leftBar.tableHeader.default,
+			color: palette.components.edit.reactFlow.tableHeader.default,
 			isExpanded: true,
 			position: { x: 200, y: 300 },
 		};
@@ -64,6 +66,22 @@ export const useLayout = (): UseLayoutProps => {
 				[newTable.id]: newTable,
 			};
 		});
+
+		setIsTableAddMode(false);
+	};
+
+	const handleGetNodesFromTables = (): Node[] => {
+		if (!tables) return [];
+
+		return Object.values(tables).map((table) => ({
+			id: table.id,
+			type: 'editRectFlowCustomNode',
+			data: {
+				title: table.name,
+				color: table.color,
+			} as EditReactFlowCustomNodeDataProps,
+			position: table.position,
+		}));
 	};
 
 	return {
@@ -79,5 +97,6 @@ export const useLayout = (): UseLayoutProps => {
 		handleStartProject,
 		handleEndProject,
 		handleAddTable,
+		handleGetNodesFromTables,
 	};
 };

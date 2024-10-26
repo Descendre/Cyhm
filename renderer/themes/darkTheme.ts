@@ -22,9 +22,6 @@ export const darkTheme = createTheme({
 				leftBar: {
 					bg: '#101014',
 					line: '#26262a',
-					tableHeader: {
-						default: '#404050',
-					},
 				},
 				footer: {
 					toolBar: {
@@ -52,6 +49,17 @@ export const darkTheme = createTheme({
 				projectHeader: {
 					searchBar: {
 						bg: '#161618',
+					},
+				},
+			},
+			edit: {
+				reactFlow: {
+					tableHeader: {
+						default: '#404050',
+					},
+					tableColumn: {
+						odd: '#101010',
+						even: '#161616',
 					},
 				},
 			},
