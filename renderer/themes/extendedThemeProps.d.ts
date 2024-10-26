@@ -25,12 +25,12 @@ declare module '@mui/material/styles' {
 		components: {
 			common: {
 				appModal: {
-					bg: '#24292e';
+					bg: string;
 				};
 			};
 			login: {
 				buttonArea: {
-					bg: '#24292e';
+					bg: string;
 				};
 				button: {
 					bg: string;

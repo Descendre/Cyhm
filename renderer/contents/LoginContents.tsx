@@ -1,4 +1,4 @@
-import { LoginButtonArea } from '../components/login/block';
+import { LoginButtonArea } from '../components';
 
 export const LoginContents = () => {
 	return (

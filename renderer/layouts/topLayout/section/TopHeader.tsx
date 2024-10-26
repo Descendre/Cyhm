@@ -8,10 +8,11 @@ export const TopHeader = () => {
 		<Box
 			display="flex"
 			justifyContent="space-between"
-			alignItems="center"
+			alignItems="end"
 			width="100%"
 			height="100px"
 			maxWidth="900px"
+			paddingBottom="15px"
 		>
 			<AppLogo width="auto" height="50px" />
 			<TopHeaderButtons />
