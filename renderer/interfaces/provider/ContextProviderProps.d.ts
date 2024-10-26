@@ -1,6 +1,10 @@
 export interface ContextProviderProps {
 	windowMode: windowModeProps;
 	setWindowMode: React.Dispatch<React.SetStateAction<windowModeProps | null>>;
+	isMic: boolean;
+	setIsMic: React.Dispatch<React.SetStateAction<boolean>>;
+	isPinned: boolean;
+	setIsPinned: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type windowModeProps = 'top' | 'login';
+export type windowModeProps = 'top' | 'edit';
