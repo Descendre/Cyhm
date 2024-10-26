@@ -14,11 +14,17 @@ export interface UseLayoutProps {
 	handleStartProject: () => void;
 	handleEndProject: () => void;
 	handleAddTable: ({ tableName }: handleAddTableProps) => void;
+	handleTableExpansion: ({ tableId }: handleTableExpansionProps) => void;
+	handleAllTableExpansion: (expand: boolean) => void;
 	handleGetNodesFromTables: () => Node[];
 }
 
 export interface handleAddTableProps {
 	tableName: string;
+}
+
+export interface handleTableExpansionProps {
+	tableId: string;
 }
 
 export interface EditReactFlowCustomNodeDataProps {

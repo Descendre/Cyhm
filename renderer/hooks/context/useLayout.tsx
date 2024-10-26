@@ -4,7 +4,9 @@ import { Context } from '../../provider';
 import {
 	EditReactFlowCustomNodeDataProps,
 	handleAddTableProps,
+	handleTableExpansionProps,
 	TableProps,
+	TablesStateProps,
 	UseLayoutProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
@@ -70,6 +72,36 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode(false);
 	};
 
+	const handleTableExpansion = ({
+		tableId,
+	}: handleTableExpansionProps): void => {
+		setTables((prevTables) => {
+			if (!prevTables || !prevTables[tableId]) return prevTables;
+			return {
+				...prevTables,
+				[tableId]: {
+					...prevTables[tableId],
+					isExpanded: !prevTables[tableId].isExpanded,
+				},
+			};
+		});
+	};
+
+	const handleAllTableExpansion = (expand: boolean): void => {
+		setTables((prevTables) => {
+			if (!prevTables) return prevTables;
+			const updatedTables = Object.keys(prevTables).reduce((acc, tableId) => {
+				acc[tableId] = {
+					...prevTables[tableId],
+					isExpanded: expand,
+				};
+				return acc;
+			}, {} as TablesStateProps);
+
+			return updatedTables;
+		});
+	};
+
 	const handleGetNodesFromTables = (): Node[] => {
 		if (!tables) return [];
 
@@ -97,6 +129,8 @@ export const useLayout = (): UseLayoutProps => {
 		handleStartProject,
 		handleEndProject,
 		handleAddTable,
+		handleTableExpansion,
+		handleAllTableExpansion,
 		handleGetNodesFromTables,
 	};
 };
