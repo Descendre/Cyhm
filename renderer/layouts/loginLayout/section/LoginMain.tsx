@@ -9,7 +9,6 @@ export const LoginMain = ({ children }: LoginMainProps) => {
 			justifyContent="center"
 			alignItems="center"
 			width="100%"
-			height="calc(100% - 100px)"
 		>
 			{children}
 		</Box>
