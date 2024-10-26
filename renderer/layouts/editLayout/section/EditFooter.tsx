@@ -1,12 +1,7 @@
 import { Box } from '@mui/material';
 import { EditToolBar } from '../block';
-import { useState } from 'react';
-import { useLayout } from '../../../hooks';
 
 export const EditFooter = () => {
-	const { isPinned } = useLayout();
-	const [isHovered, setIsHovered] = useState<boolean>(false);
-
 	return (
 		<Box
 			position="fixed"
@@ -15,12 +10,13 @@ export const EditFooter = () => {
 			justifyContent="center"
 			alignItems="start"
 			width="calc(100% - 300px)"
-			height="100px"
+			height="70px"
 			paddingTop="20px"
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
+			sx={{
+				pointerEvents: 'none',
+			}}
 		>
-			<EditToolBar isHovered={isHovered || isPinned} />
+			<EditToolBar />
 		</Box>
 	);
 };

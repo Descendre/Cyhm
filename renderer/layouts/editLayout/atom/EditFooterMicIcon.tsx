@@ -9,6 +9,7 @@ export const EditFooterMicIcon = () => {
 			{isMic ? (
 				<Mic
 					titleAccess="マイクをオフ"
+					fontSize="small"
 					sx={{
 						cursor: 'pointer',
 					}}
@@ -17,6 +18,7 @@ export const EditFooterMicIcon = () => {
 			) : (
 				<MicOff
 					titleAccess="マイクをオン"
+					fontSize="small"
 					color="error"
 					sx={{
 						cursor: 'pointer',

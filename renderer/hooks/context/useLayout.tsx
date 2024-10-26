@@ -9,7 +9,7 @@ export const useLayout = (): UseLayoutProps => {
 		throw new Error('Context is not provided');
 	}
 
-	const { windowMode, setWindowMode, isPinned, setIsPinned } = context;
+	const { windowMode, setWindowMode } = context;
 
 	const handleStartProject = (): void => {
 		if (typeof window !== 'undefined' && window.ipc) {
@@ -32,8 +32,6 @@ export const useLayout = (): UseLayoutProps => {
 	return {
 		windowMode,
 		setWindowMode,
-		isPinned,
-		setIsPinned,
 
 		handleStartProject,
 		handleEndProject,
