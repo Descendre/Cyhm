@@ -7,14 +7,12 @@ import { useLayout } from '../../../hooks';
 export const EditLeftBarNewBornInput = ({
 	mode,
 }: EditLeftBarNewBornInputProps) => {
-	const { setIsTableAddMode, handleAddTable, tables } = useLayout();
-	console.log(tables);
+	const { setIsTableAddMode, handleAddTable } = useLayout();
 	const placeholder = mode === 'table' ? 'テーブル名を入力' : 'カラム名を入力';
 	const focusRef = useRef<HTMLInputElement | null>(null);
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && focusRef.current) {
-			console.log('Enterが押されました');
 			handleAddTable({ tableName: focusRef.current.value });
 		}
 	};
@@ -57,6 +55,9 @@ export const EditLeftBarNewBornInput = ({
 						<Add
 							color="primary"
 							fontSize="small"
+							onMouseDown={() =>
+								handleAddTable({ tableName: focusRef.current.value })
+							}
 							sx={{
 								cursor: 'pointer',
 							}}

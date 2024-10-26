@@ -1,3 +1,4 @@
+import { Node } from '@xyflow/react';
 import { windowModeProps } from '../provider';
 
 export interface UseLayoutProps {
@@ -13,8 +14,15 @@ export interface UseLayoutProps {
 	handleStartProject: () => void;
 	handleEndProject: () => void;
 	handleAddTable: ({ tableName }: handleAddTableProps) => void;
+	handleGetNodesFromTables: () => Node[];
 }
 
 export interface handleAddTableProps {
 	tableName: string;
+}
+
+export interface EditReactFlowCustomNodeDataProps {
+	title: string;
+	color: string;
+	[key: string]: unknown;
 }
