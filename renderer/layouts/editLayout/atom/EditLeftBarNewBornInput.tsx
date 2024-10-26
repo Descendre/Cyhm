@@ -11,8 +11,21 @@ export const EditLeftBarNewBornInput = ({
 	const placeholder = mode === 'table' ? 'テーブル名を入力' : 'カラム名を入力';
 	const focusRef = useRef<HTMLInputElement | null>(null);
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter' && focusRef.current) {
+	const handleKeyDown = (
+		event: React.KeyboardEvent<HTMLInputElement>
+	): void => {
+		if (
+			event.key === 'Enter' &&
+			focusRef.current &&
+			focusRef.current.value.length > 0
+		) {
+			handleAddTable({ tableName: focusRef.current.value });
+		}
+	};
+
+	const handleMouseDown = (event: React.MouseEvent): void => {
+		event.preventDefault();
+		if (focusRef.current && focusRef.current.value.length > 0) {
 			handleAddTable({ tableName: focusRef.current.value });
 		}
 	};
@@ -55,9 +68,7 @@ export const EditLeftBarNewBornInput = ({
 						<Add
 							color="primary"
 							fontSize="small"
-							onMouseDown={() =>
-								handleAddTable({ tableName: focusRef.current.value })
-							}
+							onMouseDown={handleMouseDown}
 							sx={{
 								cursor: 'pointer',
 							}}
