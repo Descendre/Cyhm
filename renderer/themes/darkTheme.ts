@@ -4,15 +4,18 @@ import { createTheme } from '@mui/material';
 export const darkTheme = createTheme({
 	palette: {
 		mode: 'dark',
+		primary: {
+			main: '#747bff',
+		},
 		components: {
 			common: {
 				appModal: {
-					bg: '#24292e',
+					bg: '#202127',
 				},
 			},
 			login: {
 				buttonArea: {
-					bg: '#24292e',
+					bg: '#202127',
 				},
 				button: {
 					bg: '#080808',
@@ -23,18 +26,18 @@ export const darkTheme = createTheme({
 			disabled: '#555555',
 		},
 		background: {
-			default: '#181b1f',
+			default: '#1b1b1f',
 		},
 	},
 	components: {
 		MuiCssBaseline: {
 			styleOverrides: `
             ::-webkit-scrollbar{
-                width: 10px;
+                width: 5px;
 				max-width: 2vw;
             },
             ::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.2);
 				border-radius: 5px;
             },
             ::-webkit-scrollbar-track {

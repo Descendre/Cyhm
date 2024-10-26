@@ -17,10 +17,10 @@ export const LoginButton = ({ src, text, onClick }: LoginButtonProps) => {
 				color: palette.text.secondary,
 				backgroundColor: palette.components.login.button.bg,
 				'&:hover': {
-					color: palette.text.primary,
+					color: palette.primary.main,
 				},
 				'&:hover .action-icon': {
-					color: palette.text.primary,
+					color: palette.primary.main,
 				},
 			}}
 			onClick={() => onClick()}

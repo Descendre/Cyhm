@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useLayout } from '../hooks';
-import { LoginContents } from '../contents';
+import { LoginContents, TopContents } from '../contents';
 
 export const SwitchingContentsUi = () => {
 	const { windowMode } = useLayout();
@@ -11,7 +11,7 @@ export const SwitchingContentsUi = () => {
 			{!session || !session.user ? (
 				<LoginContents />
 			) : windowMode === 'top' ? (
-				<></>
+				<TopContents />
 			) : (
 				<></>
 			)}

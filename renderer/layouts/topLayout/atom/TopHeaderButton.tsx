@@ -9,15 +9,21 @@ export const TopHeaderButton = ({
 	onClick,
 }: TopHeaderButtonProps) => {
 	const palette = usePalette();
+
 	return (
 		<Tooltip title={text} placement="bottom">
 			<span>
 				<IconButton
+					size="small"
 					onClick={onClick}
 					disableTouchRipple
 					sx={{
 						borderRadius: '10px',
 						border: `solid 1px ${palette.line.disabled}`,
+						'&:hover': {
+							border: `solid 1px ${palette.primary.main}`,
+							backgroundColor: 'transparent',
+						},
 					}}
 				>
 					{icon}
