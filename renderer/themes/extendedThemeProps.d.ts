@@ -10,14 +10,13 @@ declare module '@mui/material/styles' {
 					searchBar: {
 						bg: string;
 					};
-					downLoadButton: {
-						bg: string;
-						hoverBg: string;
-					};
 				};
 				leftBar: {
 					bg: string;
 					line: string;
+					tableHeader: {
+						default: string;
+					};
 				};
 				footer: {
 					toolBar: {
@@ -62,14 +61,13 @@ declare module '@mui/material/styles' {
 					searchBar: {
 						bg: string;
 					};
-					downLoadButton: {
-						bg: string;
-						hoverBg: string;
-					};
 				};
 				leftBar: {
 					bg: string;
 					line: string;
+					tableHeader: {
+						default: string;
+					};
 				};
 				footer: {
 					toolBar: {

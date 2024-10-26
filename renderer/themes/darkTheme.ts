@@ -7,6 +7,9 @@ export const darkTheme = createTheme({
 		primary: {
 			main: '#747bff',
 		},
+		secondary: {
+			main: '#303040',
+		},
 		layout: {
 			editLayout: {
 				header: {
@@ -15,14 +18,13 @@ export const darkTheme = createTheme({
 					searchBar: {
 						bg: '#161618',
 					},
-					downLoadButton: {
-						bg: '#303040',
-						hoverBg: '#202030',
-					},
 				},
 				leftBar: {
 					bg: '#101014',
 					line: '#26262a',
+					tableHeader: {
+						default: '#404050',
+					},
 				},
 				footer: {
 					toolBar: {
