@@ -1,3 +1,3 @@
-export interface EditLeftBarNewBornProps {
-	mode: 'table' | 'column';
-}
+import { ColumnModeProps, TableModeProps } from '../atom';
+
+export type EditLeftBarNewBornProps = TableModeProps | ColumnModeProps;

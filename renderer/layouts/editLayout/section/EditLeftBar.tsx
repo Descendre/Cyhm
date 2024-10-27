@@ -3,7 +3,7 @@ import { useLayout, usePalette } from '../../../hooks';
 import {
 	EditLeftBarHeader,
 	EditLeftBarNewBorn,
-	EditLeftBarTableHeader,
+	EditLeftBarTableArea,
 } from '../block';
 import { TableProps } from '../../../interfaces';
 
@@ -42,13 +42,7 @@ export const EditLeftBar = () => {
 				{isTableAddMode && <EditLeftBarNewBorn mode="table" />}
 				{tables &&
 					Object.values(tables).map((table: TableProps) => (
-						<EditLeftBarTableHeader
-							key={table.id}
-							tableId={table.id}
-							bg={table.color}
-							text={table.name}
-							isExpanded={table.isExpanded}
-						/>
+						<EditLeftBarTableArea key={table.id} {...table} />
 					))}
 			</Box>
 		</Box>

@@ -6,7 +6,7 @@ export interface ColumnProps {
 	name: string;
 	type: ColumnTypeProps;
 	constraints: ColumnConstraintProps[];
-	defaultValue?: string;
+	defaultValue: string | null;
 }
 
-export type ColumnsStateProps = { [key: string]: ColumnProps } | null;
+export type ColumnsStateProps = { [key: string]: ColumnProps[] } | null;
