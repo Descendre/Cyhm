@@ -20,4 +20,6 @@ export interface ContextProviderProps {
 	setColumns: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
 	isTableAddMode: boolean;
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
+	addColumnIndex: string | null;
+	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
 }

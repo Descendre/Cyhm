@@ -3,8 +3,9 @@ import { usePalette } from '../../../hooks';
 import { EditLeftBarNewBornInput } from '../atom';
 import { EditLeftBarNewBornProps } from '../../../interfaces';
 
-export const EditLeftBarNewBorn = ({ mode }: EditLeftBarNewBornProps) => {
+export const EditLeftBarNewBorn = (props: EditLeftBarNewBornProps) => {
 	const palette = usePalette();
+
 	return (
 		<Box
 			display="flex"
@@ -15,7 +16,13 @@ export const EditLeftBarNewBorn = ({ mode }: EditLeftBarNewBornProps) => {
 			padding="0 5px"
 			border={`solid 1px ${palette.primary.main}`}
 		>
-			<EditLeftBarNewBornInput mode={mode} />
+			{props.mode === 'table' ? (
+				<EditLeftBarNewBornInput mode={props.mode} />
+			) : props.mode === 'column' ? (
+				<EditLeftBarNewBornInput mode={props.mode} tableId={props.tableId} />
+			) : (
+				<></>
+			)}
 			<Box
 				display="flex"
 				justifyContent="center"

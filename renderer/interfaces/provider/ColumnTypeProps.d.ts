@@ -5,4 +5,5 @@ export type ColumnTypeProps =
 	| 'DATE'
 	| 'TEXT'
 	| 'FLOAT'
-	| 'DOUBLE';
+	| 'DOUBLE'
+	| undefined;

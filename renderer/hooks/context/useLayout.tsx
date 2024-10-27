@@ -2,7 +2,9 @@
 import { useContext } from 'react';
 import { Context } from '../../provider';
 import {
+	ColumnProps,
 	EditReactFlowCustomNodeDataProps,
+	handleAddColumnProps,
 	handleAddTableProps,
 	handleTableExpansionProps,
 	TableProps,
@@ -28,6 +30,8 @@ export const useLayout = (): UseLayoutProps => {
 		setColumns,
 		isTableAddMode,
 		setIsTableAddMode,
+		addColumnIndex,
+		setAddColumnIndex,
 	} = context;
 
 	const handleStartProject = (): void => {
@@ -102,6 +106,35 @@ export const useLayout = (): UseLayoutProps => {
 		});
 	};
 
+	const handleAddColumn = ({
+		tableId,
+		columnName,
+	}: handleAddColumnProps): void => {
+		setColumns((prevColumns) => {
+			const newColumn: ColumnProps = {
+				id: 'fixed-id',
+				name: columnName,
+				type: undefined,
+				constraints: [],
+				defaultValue: null,
+			};
+
+			if (!prevColumns || !prevColumns[tableId]) {
+				return {
+					...prevColumns,
+					[tableId]: [newColumn],
+				};
+			}
+
+			return {
+				...prevColumns,
+				[tableId]: [...prevColumns[tableId], newColumn],
+			};
+		});
+
+		setAddColumnIndex(null);
+	};
+
 	const handleGetNodesFromTables = (): Node[] => {
 		if (!tables) return [];
 
@@ -125,12 +158,15 @@ export const useLayout = (): UseLayoutProps => {
 		setColumns,
 		isTableAddMode,
 		setIsTableAddMode,
+		addColumnIndex,
+		setAddColumnIndex,
 
 		handleStartProject,
 		handleEndProject,
 		handleAddTable,
 		handleTableExpansion,
 		handleAllTableExpansion,
+		handleAddColumn,
 		handleGetNodesFromTables,
 	};
 };

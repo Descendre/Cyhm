@@ -19,6 +19,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [tables, setTables] = useState<TablesStateProps>(null);
 	const [columns, setColumns] = useState<ColumnsStateProps>(null);
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
+	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
 
 	const contextValue = {
 		windowMode,
@@ -37,6 +38,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setColumns,
 		isTableAddMode,
 		setIsTableAddMode,
+		addColumnIndex,
+		setAddColumnIndex,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

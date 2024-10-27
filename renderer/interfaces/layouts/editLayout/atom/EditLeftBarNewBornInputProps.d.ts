@@ -1,3 +1,4 @@
-export interface EditLeftBarNewBornInputProps {
-	mode: 'table' | 'column';
-}
+import { ColumnModeProps } from './ColumnModeProps';
+import { TableModeProps } from './TableModeProps';
+
+export type EditLeftBarNewBornInputProps = TableModeProps | ColumnModeProps;
