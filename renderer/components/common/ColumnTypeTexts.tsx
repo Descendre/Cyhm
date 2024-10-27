@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import { usePalette } from '../../../hooks';
 import {
 	BarChart,
 	CalendarToday,
@@ -10,9 +9,10 @@ import {
 	StackedBarChart,
 	TextFields,
 } from '@mui/icons-material';
-import { ColumnTypeTextsProps } from '../../../interfaces';
+import { usePalette } from '../../hooks';
+import { ColumnTypeTextsProps } from '../../interfaces';
 
-export const EditLeftBarTypeTexts = ({ type }: ColumnTypeTextsProps) => {
+export const ColumnTypeTexts = ({ type }: ColumnTypeTextsProps) => {
 	const palette = usePalette();
 
 	return (
@@ -23,6 +23,7 @@ export const EditLeftBarTypeTexts = ({ type }: ColumnTypeTextsProps) => {
 					justifyContent="center"
 					alignItems="center"
 					gap="2px"
+					height="100%"
 					variant="body2"
 					fontSize="0.6rem"
 					color={palette.components.edit.reactFlow.column.color.int}

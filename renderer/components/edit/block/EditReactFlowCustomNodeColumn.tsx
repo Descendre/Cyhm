@@ -1,7 +1,7 @@
 'use client';
 import { Box, Typography } from '@mui/material';
 import { EditReactFlowCustomNodeColumnProps } from '../../../interfaces';
-import { EditLeftBarTypeTexts } from '../../../layouts/editLayout/atom';
+import { ColumnTypeTexts } from '../../common';
 
 export const EditReactFlowCustomNodeColumn = ({
 	color,
@@ -27,7 +27,7 @@ export const EditReactFlowCustomNodeColumn = ({
 			>
 				{name}
 			</Typography>
-			<EditLeftBarTypeTexts type={type} />
+			<ColumnTypeTexts type={type} />
 		</Box>
 	);
 };
