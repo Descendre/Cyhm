@@ -12,7 +12,13 @@ import { useEffect } from 'react';
 import { EditReactFlowCustomNodeDataProps } from '../../../interfaces';
 
 export const EditReactFlow = () => {
-	const { handleGetNodesFromTables, handleTableSelect, tables } = useLayout();
+	const {
+		handleGetNodesFromTables,
+		EditReactFlowAreaRef,
+		handleTableSelect,
+		handleTableSelectCancel,
+		tables,
+	} = useLayout();
 	const [nodes, setNodes, onNodesChange] = useNodesState(
 		handleGetNodesFromTables()
 	); // useNodesStateを使用
@@ -25,6 +31,7 @@ export const EditReactFlow = () => {
 
 	return (
 		<ReactFlow
+			ref={EditReactFlowAreaRef}
 			colorMode="dark"
 			nodes={nodes} // 状態からノードを取得
 			onNodesChange={onNodesChange} // ノードの変更を処理
@@ -33,7 +40,7 @@ export const EditReactFlow = () => {
 				event: React.MouseEvent,
 				node: Node<EditReactFlowCustomNodeDataProps>
 			) => handleTableSelect(node.data.tableData.id)}
-			// nodes={handleGetNodesFromTables()}
+			onPaneClick={() => handleTableSelectCancel()}
 			nodeTypes={{ editRectFlowCustomNode: EditReactFlowCustomNode }}
 			fitView
 			style={{

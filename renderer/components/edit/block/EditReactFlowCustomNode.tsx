@@ -1,3 +1,4 @@
+'use client';
 import { Box } from '@mui/material';
 import { EditReactFlowCustomNodeHeader } from '../atom';
 import {
@@ -18,12 +19,12 @@ export const EditReactFlowCustomNode = ({
 
 	return (
 		<Box
+			position="relative"
 			display="flex"
 			justifyContent="center"
 			alignItems="center"
 			flexDirection="column"
 			width="300px"
-			border={isTableSelected ? `solid 2px ${palette.primary.main}` : 'none'}
 			borderRadius="10px"
 			overflow="hidden"
 		>
@@ -41,6 +42,20 @@ export const EditReactFlowCustomNode = ({
 						type={column.type}
 					/>
 				))}
+
+			<Box
+				position="absolute"
+				display={isTableSelected ? 'block' : 'none'}
+				top={0}
+				left={0}
+				width="100%"
+				height="100%"
+				border={`solid 2px ${palette.primary.main}`}
+				borderRadius="10px"
+				sx={{
+					pointerEvents: 'none',
+				}}
+			/>
 		</Box>
 	);
 };

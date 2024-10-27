@@ -3,10 +3,35 @@ import { useSession } from 'next-auth/react';
 import { useLayout } from '../hooks';
 import { SwitchingLayoutUiProps } from '../interfaces';
 import { EditLayout, LoginLayout, TopLayout } from '../layouts';
+import { useEffect } from 'react';
 
 export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
-	const { windowMode } = useLayout();
+	const {
+		EditLeftBarTableAreaRef,
+		EditReactFlowAreaRef,
+		windowMode,
+		handleTableSelectCancel,
+	} = useLayout();
 	const { data: session } = useSession();
+
+	useEffect(() => {
+		const handleDisplayClick = (event: MouseEvent) => {
+			if (EditLeftBarTableAreaRef.current && EditReactFlowAreaRef.current) {
+				const isClickOutsideReactFlow = !EditReactFlowAreaRef.current.contains(
+					event.target as Node
+				);
+				const isClickOutsideLeftBarTableArea =
+					!EditLeftBarTableAreaRef.current.contains(event.target as Node);
+				if (isClickOutsideReactFlow && isClickOutsideLeftBarTableArea) {
+					handleTableSelectCancel();
+				}
+			}
+		};
+		document.addEventListener('click', handleDisplayClick);
+		return () => {
+			document.removeEventListener('click', handleDisplayClick);
+		};
+	}, []);
 
 	return (
 		<>

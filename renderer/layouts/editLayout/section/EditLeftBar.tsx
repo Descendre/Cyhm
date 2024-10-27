@@ -9,7 +9,7 @@ import { TableProps } from '../../../interfaces';
 
 export const EditLeftBar = () => {
 	const palette = usePalette();
-	const { isTableAddMode, tables } = useLayout();
+	const { isTableAddMode, tables, EditLeftBarTableAreaRef } = useLayout();
 
 	return (
 		<Box
@@ -40,6 +40,7 @@ export const EditLeftBar = () => {
 				}}
 			>
 				<Box
+					ref={EditLeftBarTableAreaRef}
 					display="flex"
 					justifyContent="start"
 					alignItems="center"

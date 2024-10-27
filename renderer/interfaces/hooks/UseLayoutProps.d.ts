@@ -7,6 +7,9 @@ import {
 } from '../provider';
 
 export interface UseLayoutProps {
+	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
+	EditReactFlowAreaRef: React.RefObject<HTMLDivElement | null>;
+
 	windowMode: windowModeProps;
 	setWindowMode: React.Dispatch<React.SetStateAction<windowModeProps | null>>;
 	tables: TablesStateProps;
