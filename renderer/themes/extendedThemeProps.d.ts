@@ -14,6 +14,20 @@ declare module '@mui/material/styles' {
 				leftBar: {
 					bg: string;
 					line: string;
+					column: {
+						bg: string;
+						line: string;
+						color: {
+							int: string;
+							varchar: string;
+							boolean: string;
+							date: string;
+							text: string;
+							float: string;
+							double: string;
+							undefined: string;
+						};
+					};
 				};
 				footer: {
 					toolBar: {
@@ -73,6 +87,20 @@ declare module '@mui/material/styles' {
 				leftBar: {
 					bg: string;
 					line: string;
+					column: {
+						bg: string;
+						line: string;
+						color: {
+							int: string;
+							varchar: string;
+							boolean: string;
+							date: string;
+							text: string;
+							float: string;
+							double: string;
+							undefined: string;
+						};
+					};
 				};
 				footer: {
 					toolBar: {

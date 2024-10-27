@@ -8,3 +8,4 @@ export * from './EditLeftBarHeader';
 export * from './EditLeftBarTableHeader';
 export * from './EditLeftBarNewBorn';
 export * from './EditLeftBarTableArea';
+export * from './EditLeftBarColumnArea';
