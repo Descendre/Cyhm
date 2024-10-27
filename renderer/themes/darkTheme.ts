@@ -1,5 +1,15 @@
 'use client';
 import { createTheme } from '@mui/material';
+import {
+	blue,
+	grey,
+	lightBlue,
+	lime,
+	pink,
+	purple,
+	red,
+	teal,
+} from '@mui/material/colors';
 
 export const darkTheme = createTheme({
 	palette: {
@@ -22,6 +32,20 @@ export const darkTheme = createTheme({
 				leftBar: {
 					bg: '#101014',
 					line: '#26262a',
+					column: {
+						bg: '#0a0a0a',
+						line: '#161616',
+						color: {
+							int: blue[700],
+							varchar: red[700],
+							boolean: purple[700],
+							date: lightBlue[700],
+							text: lime[700],
+							float: teal[700],
+							double: pink[700],
+							undefined: grey[700],
+						},
+					},
 				},
 				footer: {
 					toolBar: {

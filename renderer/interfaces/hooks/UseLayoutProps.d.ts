@@ -1,5 +1,9 @@
 import { Node } from '@xyflow/react';
-import { windowModeProps } from '../provider';
+import {
+	ColumnsStateProps,
+	TablesStateProps,
+	windowModeProps,
+} from '../provider';
 
 export interface UseLayoutProps {
 	windowMode: windowModeProps;
