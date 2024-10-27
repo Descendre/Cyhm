@@ -39,11 +39,19 @@ export const EditLeftBar = () => {
 					},
 				}}
 			>
-				{isTableAddMode && <EditLeftBarNewBorn mode="table" />}
-				{tables &&
-					Object.values(tables).map((table: TableProps) => (
-						<EditLeftBarTableArea key={table.id} {...table} />
-					))}
+				<Box
+					display="flex"
+					justifyContent="start"
+					alignItems="center"
+					flexDirection="column"
+					width="100%"
+				>
+					{isTableAddMode && <EditLeftBarNewBorn mode="table" />}
+					{tables &&
+						Object.values(tables).map((table: TableProps) => (
+							<EditLeftBarTableArea key={table.id} table={table} />
+						))}
+				</Box>
 			</Box>
 		</Box>
 	);

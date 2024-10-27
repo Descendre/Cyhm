@@ -22,9 +22,14 @@ export interface UseLayoutProps {
 	handleEndProject: () => void;
 	handleAddTable: ({ tableName }: handleAddTableProps) => void;
 	handleTableExpansion: ({ tableId }: handleTableExpansionProps) => void;
+	handleOpenTableExpansion: ({
+		tableId,
+	}: handleOpenTableExpansionProps) => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleAddColumn: ({ tableId, columnName }: handleAddColumnProps) => void;
 	handleGetNodesFromTables: () => Node[];
+	handleTableSelect: (tableId: string) => void;
+	handleTableSelectCancel: () => void;
 }
 
 export interface handleAddTableProps {
@@ -32,6 +37,10 @@ export interface handleAddTableProps {
 }
 
 export interface handleTableExpansionProps {
+	tableId: string;
+}
+
+export interface handleOpenTableExpansionProps {
 	tableId: string;
 }
 

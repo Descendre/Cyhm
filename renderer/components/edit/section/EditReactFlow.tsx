@@ -1,5 +1,5 @@
 'use client';
-import { ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
+import { Node, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import {
 	EditReactFlowBackground,
@@ -9,9 +9,10 @@ import {
 import { EditReactFlowCustomNode } from '../block/EditReactFlowCustomNode';
 import { useLayout } from '../../../hooks';
 import { useEffect } from 'react';
+import { EditReactFlowCustomNodeDataProps } from '../../../interfaces';
 
 export const EditReactFlow = () => {
-	const { handleGetNodesFromTables, tables } = useLayout();
+	const { handleGetNodesFromTables, handleTableSelect, tables } = useLayout();
 	const [nodes, setNodes, onNodesChange] = useNodesState(
 		handleGetNodesFromTables()
 	); // useNodesStateを使用
@@ -28,6 +29,10 @@ export const EditReactFlow = () => {
 			nodes={nodes} // 状態からノードを取得
 			onNodesChange={onNodesChange} // ノードの変更を処理
 			onEdgesChange={onEdgesChange} // エッジの変更を処理（必要に応じて）
+			onNodeClick={(
+				event: React.MouseEvent,
+				node: Node<EditReactFlowCustomNodeDataProps>
+			) => handleTableSelect(node.data.tableData.id)}
 			// nodes={handleGetNodesFromTables()}
 			nodeTypes={{ editRectFlowCustomNode: EditReactFlowCustomNode }}
 			fitView
