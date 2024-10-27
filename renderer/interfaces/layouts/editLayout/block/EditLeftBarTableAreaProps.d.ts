@@ -1,5 +1,5 @@
 import { TableProps } from '../../../provider';
 
-export interface EditLeftBarTableHeaderProps {
+export interface EditLeftBarTableAreaProps {
 	table: TableProps;
 }

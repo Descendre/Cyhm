@@ -7,10 +7,7 @@ import {
 } from '../atom';
 
 export const EditLeftBarTableHeader = ({
-	tableId,
-	bg,
-	text,
-	isExpanded,
+	table,
 }: EditLeftBarTableHeaderProps) => {
 	return (
 		<Box
@@ -20,7 +17,10 @@ export const EditLeftBarTableHeader = ({
 			width="100%"
 			height="25px"
 			padding="0 5px"
-			bgcolor={bg}
+			bgcolor={table.color}
+			sx={{
+				userSelect: 'none',
+			}}
 		>
 			<Typography
 				variant="body2"
@@ -30,11 +30,14 @@ export const EditLeftBarTableHeader = ({
 					flexGrow: 1,
 				}}
 			>
-				{text}
+				{table.name}
 			</Typography>
 			<Box display="flex" justifyContent="center" alignItems="center" gap="5px">
-				<EditLeftBarTableExpandIcon tableId={tableId} isExpanded={isExpanded} />
-				<EditLeftBarTableAddColumnIcon tableId={tableId} />
+				<EditLeftBarTableExpandIcon
+					tableId={table.id}
+					isExpanded={table.isExpanded}
+				/>
+				<EditLeftBarTableAddColumnIcon tableId={table?.id} />
 				<EditLeftBarTableMenuIcon />
 			</Box>
 		</Box>

@@ -14,7 +14,7 @@ export const EditLeftBarNewBorn = (props: EditLeftBarNewBornProps) => {
 			width="100%"
 			height="25px"
 			padding="0 5px"
-			border={`solid 1px ${palette.primary.main}`}
+			border={props.mode === 'table' && `solid 1px ${palette.primary.main}`}
 		>
 			{props.mode === 'table' ? (
 				<EditLeftBarNewBornInput mode={props.mode} />

@@ -1,22 +1,22 @@
 import { Box } from '@mui/material';
 import { EditLeftBarTableHeader } from './EditLeftBarTableHeader';
-import { useLayout } from '../../../hooks';
+import { useLayout, usePalette } from '../../../hooks';
 import { EditLeftBarNewBorn } from './EditLeftBarNewBorn';
-import { TableProps } from '../../../interfaces';
 import { EditLeftBarColumnArea } from './EditLeftBarColumnArea';
+import { EditLeftBarTableAreaProps } from '../../../interfaces';
 
-export const EditLeftBarTableArea = (table: TableProps) => {
-	const { tables, columns, addColumnIndex } = useLayout();
+export const EditLeftBarTableArea = ({ table }: EditLeftBarTableAreaProps) => {
+	const palette = usePalette();
+	const { tables, columns, addColumnIndex, handleTableSelect } = useLayout();
+	const isTableSelected: boolean = tables[table.id]?.isSelected;
 
 	return (
-		<Box width="100%">
-			<EditLeftBarTableHeader
-				key={table.id}
-				tableId={table.id}
-				bg={table.color}
-				text={table.name}
-				isExpanded={table.isExpanded}
-			/>
+		<Box
+			position="relative"
+			width="100%"
+			onClick={() => handleTableSelect(table.id)}
+		>
+			<EditLeftBarTableHeader key={table.id} table={table} />
 			{addColumnIndex === table.id && (
 				<EditLeftBarNewBorn mode="column" tableId={table.id} />
 			)}
@@ -25,6 +25,19 @@ export const EditLeftBarTableArea = (table: TableProps) => {
 				columns[table.id]?.map((column) => (
 					<EditLeftBarColumnArea key={column.id} {...column} />
 				))}
+
+			<Box
+				position="absolute"
+				display={isTableSelected ? 'block' : 'none'}
+				top={0}
+				left={0}
+				width="100%"
+				height="100%"
+				border={`solid 2px ${palette.primary.main}`}
+				sx={{
+					pointerEvents: 'none',
+				}}
+			/>
 		</Box>
 	);
 };

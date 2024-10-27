@@ -13,7 +13,8 @@ export const EditReactFlowCustomNode = ({
 	const { tableData }: EditReactFlowCustomNodeDataProps = data;
 	const { name, color, id } = tableData;
 	const palette = usePalette();
-	const { columns } = useLayout();
+	const { tables, columns } = useLayout();
+	const isTableSelected: boolean = tables[id].isSelected;
 
 	return (
 		<Box
@@ -22,6 +23,7 @@ export const EditReactFlowCustomNode = ({
 			alignItems="center"
 			flexDirection="column"
 			width="300px"
+			border={isTableSelected ? `solid 2px ${palette.primary.main}` : 'none'}
 			borderRadius="10px"
 			overflow="hidden"
 		>

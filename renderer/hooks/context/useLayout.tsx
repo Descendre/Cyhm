@@ -6,6 +6,7 @@ import {
 	EditReactFlowCustomNodeDataProps,
 	handleAddColumnProps,
 	handleAddTableProps,
+	handleOpenTableExpansionProps,
 	handleTableExpansionProps,
 	TableProps,
 	TablesStateProps,
@@ -59,6 +60,7 @@ export const useLayout = (): UseLayoutProps => {
 			columns: [],
 			color: palette.components.edit.reactFlow.tableHeader.default,
 			isExpanded: true,
+			isSelected: false,
 			position: { x: 200, y: 300 },
 		};
 
@@ -86,6 +88,21 @@ export const useLayout = (): UseLayoutProps => {
 				[tableId]: {
 					...prevTables[tableId],
 					isExpanded: !prevTables[tableId].isExpanded,
+				},
+			};
+		});
+	};
+
+	const handleOpenTableExpansion = ({
+		tableId,
+	}: handleOpenTableExpansionProps): void => {
+		setTables((prevTables) => {
+			if (!prevTables || !prevTables[tableId]) return prevTables;
+			return {
+				...prevTables,
+				[tableId]: {
+					...prevTables[tableId],
+					isExpanded: true,
 				},
 			};
 		});
@@ -140,6 +157,7 @@ export const useLayout = (): UseLayoutProps => {
 		});
 
 		setAddColumnIndex(null);
+		handleOpenTableExpansion({ tableId: tableId });
 	};
 
 	const handleGetNodesFromTables = (): Node[] => {
@@ -153,6 +171,28 @@ export const useLayout = (): UseLayoutProps => {
 			} as EditReactFlowCustomNodeDataProps,
 			position: table.position,
 		}));
+	};
+
+	const handleTableSelect = (tableId: string): void => {
+		setTables((prevTables) => {
+			if (!prevTables) return null;
+			const updatedTables = { ...prevTables };
+			Object.keys(updatedTables).forEach((id) => {
+				updatedTables[id].isSelected = updatedTables[id].id === tableId;
+			});
+			return updatedTables;
+		});
+	};
+
+	const handleTableSelectCancel = (): void => {
+		setTables((prevTables) => {
+			if (!prevTables) return null;
+			const updatedTables = { ...prevTables };
+			Object.keys(updatedTables).forEach((id) => {
+				updatedTables[id].isSelected = false;
+			});
+			return updatedTables;
+		});
 	};
 
 	return {
@@ -171,8 +211,11 @@ export const useLayout = (): UseLayoutProps => {
 		handleEndProject,
 		handleAddTable,
 		handleTableExpansion,
+		handleOpenTableExpansion,
 		handleAllTableExpansion,
 		handleAddColumn,
 		handleGetNodesFromTables,
+		handleTableSelect,
+		handleTableSelectCancel,
 	};
 };

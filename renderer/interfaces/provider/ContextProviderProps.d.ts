@@ -1,4 +1,3 @@
-import { Edge, Node } from '@xyflow/react';
 import { windowModeProps } from './windowModeProps';
 import { TablesStateProps } from './TableProps';
 import { ColumnsStateProps } from './ColumnProps';
@@ -10,10 +9,6 @@ export interface ContextProviderProps {
 	setIsMic: React.Dispatch<React.SetStateAction<boolean>>;
 	isAudio: boolean;
 	setIsAudio: React.Dispatch<React.SetStateAction<boolean>>;
-	nodes: Node[] | null;
-	setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
-	edges: Edge[] | null;
-	setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
 	tables: TablesStateProps;
 	setTables: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columns: ColumnsStateProps;
