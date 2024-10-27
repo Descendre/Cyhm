@@ -1,7 +1,7 @@
 export type ColumnConstraintProps =
 	| 'PRIMARY_KEY'
-	| 'UNIQUE'
 	| 'NOT_NULL'
+	| 'UNIQUE'
 	| 'FOREIGN_KEY'
 	| CheckConstraintProps
 	| DefaultConstraintProps;
@@ -13,5 +13,5 @@ interface DefaultConstraintProps {
 
 interface CheckConstraintProps {
 	type: 'CHECK';
-	condition: string;
+	value: string;
 }

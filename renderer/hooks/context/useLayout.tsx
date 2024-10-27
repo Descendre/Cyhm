@@ -115,7 +115,14 @@ export const useLayout = (): UseLayoutProps => {
 				id: Date.now().toString(),
 				name: columnName,
 				type: undefined,
-				constraints: [],
+				constraints: [
+					'PRIMARY_KEY',
+					'NOT_NULL',
+					'UNIQUE',
+					'FOREIGN_KEY',
+					{ type: 'CHECK', value: 'aaaaa' },
+					{ type: 'DEFAULT', value: 'aaa' },
+				],
 				defaultValue: null,
 			};
 

@@ -2,6 +2,7 @@
 import { createTheme } from '@mui/material';
 import {
 	blue,
+	deepPurple,
 	grey,
 	lightBlue,
 	lime,
@@ -9,6 +10,7 @@ import {
 	purple,
 	red,
 	teal,
+	yellow,
 } from '@mui/material/colors';
 
 export const darkTheme = createTheme({
@@ -35,16 +37,13 @@ export const darkTheme = createTheme({
 					column: {
 						bg: '#0a0a0a',
 						line: '#161616',
-						color: {
-							int: blue[700],
-							varchar: red[700],
-							boolean: purple[700],
-							date: lightBlue[700],
-							text: lime[700],
-							float: teal[700],
-							double: pink[700],
-							undefined: grey[700],
-						},
+					},
+					constraint: {
+						primaryKey: yellow[700],
+						notNull: red[500],
+						unique: lightBlue[500],
+						foreignKey: teal[500],
+						check: deepPurple[400],
 					},
 				},
 				footer: {
@@ -84,6 +83,18 @@ export const darkTheme = createTheme({
 					tableColumn: {
 						odd: '#101010',
 						even: '#161616',
+					},
+					column: {
+						color: {
+							int: blue[700],
+							varchar: red[700],
+							boolean: purple[700],
+							date: lightBlue[700],
+							text: lime[700],
+							float: teal[700],
+							double: pink[700],
+							undefined: grey[700],
+						},
 					},
 				},
 			},

@@ -1,7 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { usePalette } from '../../../hooks';
 import { ColumnProps } from '../../../interfaces';
-import { EditLeftBarTypeTexts } from '../atom';
+import { EditLefBarConstraintsArea } from './EditLefBarConstraintsArea';
+import { ColumnTypeTexts } from '../../../components';
 
 export const EditLeftBarColumnArea = (props: ColumnProps) => {
 	const palette = usePalette();
@@ -20,7 +21,12 @@ export const EditLeftBarColumnArea = (props: ColumnProps) => {
 				width="100%"
 				height="25px"
 			>
-				<Typography variant="body2" fontSize="0.75rem" color="text.disabled">
+				<Typography
+					variant="body2"
+					fontSize="0.75rem"
+					color="text.secondary"
+					noWrap
+				>
 					{props.name}
 				</Typography>
 			</Box>
@@ -31,7 +37,8 @@ export const EditLeftBarColumnArea = (props: ColumnProps) => {
 				width="100%"
 				height="25px"
 			>
-				<EditLeftBarTypeTexts type={props.type} />
+				<EditLefBarConstraintsArea {...props} />
+				<ColumnTypeTexts type={props.type} />
 			</Box>
 		</Box>
 	);

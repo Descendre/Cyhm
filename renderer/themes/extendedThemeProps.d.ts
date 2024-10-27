@@ -17,16 +17,13 @@ declare module '@mui/material/styles' {
 					column: {
 						bg: string;
 						line: string;
-						color: {
-							int: string;
-							varchar: string;
-							boolean: string;
-							date: string;
-							text: string;
-							float: string;
-							double: string;
-							undefined: string;
-						};
+					};
+					constraint: {
+						primaryKey: string;
+						notNull: string;
+						unique: string;
+						foreignKey: string;
+						check: string;
 					};
 				};
 				footer: {
@@ -66,6 +63,18 @@ declare module '@mui/material/styles' {
 					tableColumn: {
 						odd: string;
 						even: string;
+					};
+					column: {
+						color: {
+							int: string;
+							varchar: string;
+							boolean: string;
+							date: string;
+							text: string;
+							float: string;
+							double: string;
+							undefined: string;
+						};
 					};
 				};
 			};
@@ -90,16 +99,13 @@ declare module '@mui/material/styles' {
 					column: {
 						bg: string;
 						line: string;
-						color: {
-							int: string;
-							varchar: string;
-							boolean: string;
-							date: string;
-							text: string;
-							float: string;
-							double: string;
-							undefined: string;
-						};
+					};
+					constraint: {
+						primaryKey: string;
+						notNull: string;
+						unique: string;
+						foreignKey: string;
+						check: string;
 					};
 				};
 				footer: {
@@ -139,6 +145,18 @@ declare module '@mui/material/styles' {
 					tableColumn: {
 						odd: string;
 						even: string;
+					};
+					column: {
+						color: {
+							int: string;
+							varchar: string;
+							boolean: string;
+							date: string;
+							text: string;
+							float: string;
+							double: string;
+							undefined: string;
+						};
 					};
 				};
 			};
