@@ -1,6 +1,7 @@
 import { Node } from '@xyflow/react';
 import {
 	ColumnsStateProps,
+	TableProps,
 	TablesStateProps,
 	windowModeProps,
 } from '../provider';
@@ -40,7 +41,6 @@ export interface handleAddColumnProps {
 }
 
 export interface EditReactFlowCustomNodeDataProps {
-	title: string;
-	color: string;
+	tableData: TableProps;
 	[key: string]: unknown;
 }

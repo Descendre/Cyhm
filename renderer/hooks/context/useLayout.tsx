@@ -112,7 +112,7 @@ export const useLayout = (): UseLayoutProps => {
 	}: handleAddColumnProps): void => {
 		setColumns((prevColumns) => {
 			const newColumn: ColumnProps = {
-				id: 'fixed-id',
+				id: Date.now().toString(),
 				name: columnName,
 				type: undefined,
 				constraints: [],
@@ -142,8 +142,7 @@ export const useLayout = (): UseLayoutProps => {
 			id: table.id,
 			type: 'editRectFlowCustomNode',
 			data: {
-				title: table.name,
-				color: table.color,
+				tableData: table,
 			} as EditReactFlowCustomNodeDataProps,
 			position: table.position,
 		}));
