@@ -1,18 +1,19 @@
 import { Box } from '@mui/material';
-import { Handle, Position } from '@xyflow/react';
 import { EditReactFlowCustomNodeHeader } from '../atom';
 import {
 	EditReactFlowCustomNodeDataProps,
 	EditReactFlowCustomNodeProps,
 } from '../../../interfaces';
 import { EditReactFlowCustomNodeColumn } from './EditReactFlowCustomNodeColumn';
-import { usePalette } from '../../../hooks';
+import { useLayout, usePalette } from '../../../hooks';
 
 export const EditReactFlowCustomNode = ({
 	data,
 }: EditReactFlowCustomNodeProps) => {
-	const { title, color }: EditReactFlowCustomNodeDataProps = data;
+	const { tableData }: EditReactFlowCustomNodeDataProps = data;
+	const { name, color, id } = tableData;
 	const palette = usePalette();
+	const { columns } = useLayout();
 
 	return (
 		<Box
@@ -24,21 +25,20 @@ export const EditReactFlowCustomNode = ({
 			borderRadius="10px"
 			overflow="hidden"
 		>
-			<EditReactFlowCustomNodeHeader title={title} color={color} />
-			<EditReactFlowCustomNodeColumn
-				color={palette.components.edit.reactFlow.tableColumn.odd}
-			/>
-			<EditReactFlowCustomNodeColumn
-				color={palette.components.edit.reactFlow.tableColumn.even}
-			/>
-			<EditReactFlowCustomNodeColumn
-				color={palette.components.edit.reactFlow.tableColumn.odd}
-			/>
-			<EditReactFlowCustomNodeColumn
-				color={palette.components.edit.reactFlow.tableColumn.even}
-			/>
-			<Handle type="source" position={Position.Right} />
-			<Handle type="target" position={Position.Left} />
+			<EditReactFlowCustomNodeHeader title={name} color={color} />
+			{columns &&
+				columns[id]?.map((column, index) => (
+					<EditReactFlowCustomNodeColumn
+						key={column.id}
+						color={
+							index % 2 == 0
+								? palette.components.edit.reactFlow.tableColumn.odd
+								: palette.components.edit.reactFlow.tableColumn.even
+						}
+						name={column.name}
+						type={column.type}
+					/>
+				))}
 		</Box>
 	);
 };
