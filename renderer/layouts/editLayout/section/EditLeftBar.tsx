@@ -9,11 +9,12 @@ import { TableProps } from '../../../interfaces';
 
 export const EditLeftBar = () => {
 	const palette = usePalette();
-	const { isTableAddMode, tables, EditLeftBarTableAreaRef } = useLayout();
+	const { isTableAddMode, tables, EditLeftBarTableAreaRef, isEditLeftBar } =
+		useLayout();
 
 	return (
 		<Box
-			display="flex"
+			display={isEditLeftBar ? 'flex' : 'none'}
 			justifyContent="start"
 			alignItems="center"
 			flexDirection="column"

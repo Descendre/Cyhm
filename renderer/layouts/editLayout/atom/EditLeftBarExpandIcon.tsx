@@ -12,6 +12,7 @@ export const EditLeftBarTableExpandIcon = () => {
 			onClick={() => handleAllTableExpansion(true)}
 			sx={{
 				color: palette.text.disabled,
+				cursor: 'pointer',
 			}}
 		/>
 	);

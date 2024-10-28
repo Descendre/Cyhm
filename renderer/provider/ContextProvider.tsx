@@ -20,6 +20,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [columns, setColumns] = useState<ColumnsStateProps>(null);
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
+	const [isEditLeftBar, setIsEditLeftBar] = useState<boolean>(true);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -39,6 +40,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
+		isEditLeftBar,
+		setIsEditLeftBar,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

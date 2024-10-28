@@ -5,6 +5,7 @@ export interface TableProps {
 	color: string;
 	isExpanded: boolean;
 	isSelected: boolean;
+	isEditing: boolean;
 	position: {
 		x: number;
 		y: number;

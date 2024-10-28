@@ -26,6 +26,10 @@ declare module '@mui/material/styles' {
 						check: string;
 					};
 				};
+				rightPopper: {
+					bg: string;
+					line: string;
+				};
 				footer: {
 					toolBar: {
 						bg: string;
@@ -76,6 +80,11 @@ declare module '@mui/material/styles' {
 							undefined: string;
 						};
 					};
+					commands: {
+						iconButton: {
+							bg: string;
+						};
+					};
 				};
 			};
 		};
@@ -107,6 +116,10 @@ declare module '@mui/material/styles' {
 						foreignKey: string;
 						check: string;
 					};
+				};
+				rightPopper: {
+					bg: string;
+					line: string;
 				};
 				footer: {
 					toolBar: {
@@ -156,6 +169,11 @@ declare module '@mui/material/styles' {
 							float: string;
 							double: string;
 							undefined: string;
+						};
+					};
+					commands: {
+						iconButton: {
+							bg: string;
 						};
 					};
 				};

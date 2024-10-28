@@ -4,6 +4,7 @@ import { useLayout, usePalette } from '../../../hooks';
 export const EditLeftBarAddTableIcon = () => {
 	const palette = usePalette();
 	const { setIsTableAddMode } = useLayout();
+
 	return (
 		<Add
 			fontSize="small"
@@ -11,6 +12,7 @@ export const EditLeftBarAddTableIcon = () => {
 			onClick={() => setIsTableAddMode(true)}
 			sx={{
 				color: palette.text.disabled,
+				cursor: 'pointer',
 			}}
 		/>
 	);
