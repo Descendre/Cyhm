@@ -9,6 +9,7 @@ import {
 export interface UseLayoutProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
 	EditReactFlowAreaRef: React.RefObject<HTMLDivElement | null>;
+	EditFooterAddColumnIconRef: React.RefObject<HTMLDivElement | null>;
 
 	windowMode: windowModeProps;
 	setWindowMode: React.Dispatch<React.SetStateAction<windowModeProps | null>>;

@@ -13,6 +13,7 @@ export const Context = createContext<ContextProviderProps | null>(null);
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const EditLeftBarTableAreaRef = useRef<HTMLDivElement | null>(null);
 	const EditReactFlowAreaRef = useRef<HTMLDivElement | null>(null);
+	const EditFooterAddColumnIconRef = useRef<HTMLDivElement | null>(null);
 
 	const [windowMode, setWindowMode] = useState<windowModeProps>('top');
 	const [isMic, setIsMic] = useState<boolean>(false);
@@ -27,6 +28,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const contextValue = {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
+		EditFooterAddColumnIconRef,
 
 		windowMode,
 		setWindowMode,

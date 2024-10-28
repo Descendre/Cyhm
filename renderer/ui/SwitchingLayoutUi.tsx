@@ -9,6 +9,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 	const {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
+		EditFooterAddColumnIconRef,
 		windowMode,
 		setSelectedTable,
 	} = useLayout();
@@ -16,13 +17,23 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 
 	useEffect(() => {
 		const handleDisplayClick = (event: MouseEvent) => {
-			if (EditLeftBarTableAreaRef.current && EditReactFlowAreaRef.current) {
+			if (
+				EditLeftBarTableAreaRef.current &&
+				EditReactFlowAreaRef.current &&
+				EditFooterAddColumnIconRef.current
+			) {
 				const isClickOutsideReactFlow = !EditReactFlowAreaRef.current.contains(
 					event.target as Node
 				);
 				const isClickOutsideLeftBarTableArea =
 					!EditLeftBarTableAreaRef.current.contains(event.target as Node);
-				if (isClickOutsideReactFlow && isClickOutsideLeftBarTableArea) {
+				const isClickOutsideEditFooterAddColumnIcon =
+					!EditFooterAddColumnIconRef.current.contains(event.target as Node);
+				if (
+					isClickOutsideReactFlow &&
+					isClickOutsideLeftBarTableArea &&
+					isClickOutsideEditFooterAddColumnIcon
+				) {
 					setSelectedTable(null);
 				}
 			}
@@ -31,7 +42,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 		return () => {
 			document.removeEventListener('click', handleDisplayClick);
 		};
-	}, []);
+	}, []); // eslint-disable-line
 
 	return (
 		<>

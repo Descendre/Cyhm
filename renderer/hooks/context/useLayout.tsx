@@ -25,6 +25,7 @@ export const useLayout = (): UseLayoutProps => {
 	const {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
+		EditFooterAddColumnIconRef,
 
 		windowMode,
 		setWindowMode,
@@ -197,6 +198,7 @@ export const useLayout = (): UseLayoutProps => {
 	return {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
+		EditFooterAddColumnIconRef,
 
 		windowMode,
 		setWindowMode,
