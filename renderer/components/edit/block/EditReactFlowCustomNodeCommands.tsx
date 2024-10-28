@@ -1,6 +1,9 @@
 import { Box } from '@mui/material';
 import { EditReactFlowCustomNodeCommandsProps } from '../../../interfaces';
-import { EditReactFlowCommandsEditIcon } from '../atom';
+import {
+	EditReactFlowCommandsAddColumnIcon,
+	EditReactFlowCommandsEditIcon,
+} from '../atom';
 
 export const EditReactFlowCustomNodeCommands = ({
 	table,
@@ -25,6 +28,7 @@ export const EditReactFlowCustomNodeCommands = ({
 				transform: 'translateY(100%)',
 			}}
 		>
+			<EditReactFlowCommandsAddColumnIcon table={table} />
 			<EditReactFlowCommandsEditIcon table={table} />
 		</Box>
 	);
