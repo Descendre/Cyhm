@@ -17,15 +17,16 @@ const handler = NextAuth({
 	callbacks: {
 		async jwt({ token, account, profile }) {
 			if (account) {
+				token.provider = account.provider;
 				token.id = account.providerAccountId;
 			}
 			return token;
 		},
 		async session({ session, token, user }: any) {
+			session.provider = token.provider;
 			session.id = token.id;
 			return session;
 		},
 	},
 });
-
 export { handler as GET, handler as POST };
