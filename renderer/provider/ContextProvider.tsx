@@ -3,6 +3,7 @@ import { ReactNode, createContext, useRef, useState } from 'react';
 import {
 	ColumnsStateProps,
 	ContextProviderProps,
+	TableProps,
 	TablesStateProps,
 	windowModeProps,
 } from '../interfaces';
@@ -20,6 +21,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [columns, setColumns] = useState<ColumnsStateProps>(null);
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
+	const [selectedTable, setSelectedTable] = useState<TableProps | null>(null);
 	const [isEditLeftBar, setIsEditLeftBar] = useState<boolean>(true);
 
 	const contextValue = {
@@ -40,6 +42,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
+		selectedTable,
+		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
 	};

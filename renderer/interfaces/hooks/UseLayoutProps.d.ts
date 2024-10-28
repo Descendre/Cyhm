@@ -20,6 +20,8 @@ export interface UseLayoutProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
+	selectedTable: TableProps | null;
+	setSelectedTable: React.Dispatch<React.SetStateAction<TableProps | null>>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -33,8 +35,6 @@ export interface UseLayoutProps {
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleAddColumn: ({ tableId, columnName }: handleAddColumnProps) => void;
 	handleGetNodesFromTables: () => Node[];
-	handleTableSelect: (tableId: string) => void;
-	handleTableSelectCancel: () => void;
 	handleTableEditMode: (tablId: string) => void;
 }
 
