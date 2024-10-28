@@ -36,6 +36,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
+		isEditLeftBar,
+		setIsEditLeftBar,
 	} = context;
 
 	const handleStartProject = (): void => {
@@ -64,6 +66,7 @@ export const useLayout = (): UseLayoutProps => {
 			color: palette.components.edit.reactFlow.tableHeader.default,
 			isExpanded: true,
 			isSelected: false,
+			isEditing: false,
 			position: { x: 200, y: 300 },
 		};
 
@@ -198,6 +201,20 @@ export const useLayout = (): UseLayoutProps => {
 		});
 	};
 
+	const handleTableEditMode = (tableId: string): void => {
+		setTables((prevTables) => {
+			if (!prevTables) return null;
+			const updatedTables = { ...prevTables };
+			if (updatedTables[tableId]) {
+				updatedTables[tableId] = {
+					...updatedTables[tableId],
+					isEditing: !updatedTables[tableId].isEditing,
+				};
+			}
+			return updatedTables;
+		});
+	};
+
 	return {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
@@ -212,6 +229,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
+		isEditLeftBar,
+		setIsEditLeftBar,
 
 		handleStartProject,
 		handleEndProject,
@@ -223,5 +242,6 @@ export const useLayout = (): UseLayoutProps => {
 		handleGetNodesFromTables,
 		handleTableSelect,
 		handleTableSelectCancel,
+		handleTableEditMode,
 	};
 };

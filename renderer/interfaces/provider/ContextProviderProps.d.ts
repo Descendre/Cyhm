@@ -21,4 +21,6 @@ export interface ContextProviderProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
+	isEditLeftBar: boolean;
+	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 }

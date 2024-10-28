@@ -46,6 +46,10 @@ export const darkTheme = createTheme({
 						check: deepPurple[400],
 					},
 				},
+				rightPopper: {
+					bg: '#101014',
+					line: '#26262a',
+				},
 				footer: {
 					toolBar: {
 						bg: '#101014',
@@ -94,6 +98,11 @@ export const darkTheme = createTheme({
 							float: teal[700],
 							double: pink[700],
 							undefined: grey[700],
+						},
+					},
+					commands: {
+						iconButton: {
+							bg: '#000000',
 						},
 					},
 				},

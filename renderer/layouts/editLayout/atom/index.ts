@@ -11,6 +11,7 @@ export * from './EditHeaderDownloadButton';
 export * from './EditFooterAddTableIcon';
 export * from './EditFooterAddColumnIcon';
 export * from './EditLeftBarTableExpandIcon';
-export * from './EditLeftBarTableMenuIcon';
 export * from './EditLeftBarTableAddColumnIcon';
 export * from './EditLeftBarNewBornInput';
+export * from './EditLeftBarToggleIcon';
+export * from './EditLeftBarToggleEditIcon';

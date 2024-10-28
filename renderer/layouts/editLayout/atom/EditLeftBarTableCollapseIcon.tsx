@@ -12,6 +12,7 @@ export const EditLeftBarTableCollapseIcon = () => {
 			onClick={() => handleAllTableExpansion(false)}
 			sx={{
 				color: palette.text.disabled,
+				cursor: 'pointer',
 			}}
 		/>
 	);

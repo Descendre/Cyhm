@@ -3,7 +3,7 @@ import { EditLeftBarTableHeaderProps } from '../../../interfaces';
 import {
 	EditLeftBarTableAddColumnIcon,
 	EditLeftBarTableExpandIcon,
-	EditLeftBarTableMenuIcon,
+	EditLeftBarToggleEditIcon,
 } from '../atom';
 
 export const EditLeftBarTableHeader = ({
@@ -22,14 +22,7 @@ export const EditLeftBarTableHeader = ({
 				userSelect: 'none',
 			}}
 		>
-			<Typography
-				variant="body2"
-				fontSize="0.75rem"
-				noWrap
-				sx={{
-					flexGrow: 1,
-				}}
-			>
+			<Typography variant="body2" fontSize="0.75rem" noWrap flexGrow={1}>
 				{table.name}
 			</Typography>
 			<Box display="flex" justifyContent="center" alignItems="center" gap="5px">
@@ -38,7 +31,7 @@ export const EditLeftBarTableHeader = ({
 					isExpanded={table.isExpanded}
 				/>
 				<EditLeftBarTableAddColumnIcon tableId={table?.id} />
-				<EditLeftBarTableMenuIcon />
+				<EditLeftBarToggleEditIcon table={table} />
 			</Box>
 		</Box>
 	);
