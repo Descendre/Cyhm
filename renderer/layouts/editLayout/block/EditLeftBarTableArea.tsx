@@ -7,14 +7,15 @@ import { EditLeftBarTableAreaProps } from '../../../interfaces';
 
 export const EditLeftBarTableArea = ({ table }: EditLeftBarTableAreaProps) => {
 	const palette = usePalette();
-	const { tables, columns, addColumnIndex, handleTableSelect } = useLayout();
-	const isTableSelected: boolean = tables[table.id]?.isSelected;
+	const { tables, columns, addColumnIndex, selectedTable, setSelectedTable } =
+		useLayout();
+	const isTableSelected: boolean = table === selectedTable;
 
 	return (
 		<Box
 			position="relative"
 			width="100%"
-			onClick={() => handleTableSelect(table.id)}
+			onClick={() => setSelectedTable(table)}
 		>
 			<EditLeftBarTableHeader key={table.id} table={table} />
 			{addColumnIndex === table.id && (

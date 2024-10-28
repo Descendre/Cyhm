@@ -15,8 +15,7 @@ export const EditReactFlow = () => {
 	const {
 		handleGetNodesFromTables,
 		EditReactFlowAreaRef,
-		handleTableSelect,
-		handleTableSelectCancel,
+		setSelectedTable,
 		tables,
 	} = useLayout();
 	const [nodes, setNodes, onNodesChange] = useNodesState(
@@ -39,8 +38,8 @@ export const EditReactFlow = () => {
 			onNodeClick={(
 				event: React.MouseEvent,
 				node: Node<EditReactFlowCustomNodeDataProps>
-			) => handleTableSelect(node.data.tableData.id)}
-			onPaneClick={() => handleTableSelectCancel()}
+			) => setSelectedTable(node.data.tableData)}
+			onPaneClick={() => setSelectedTable(null)}
 			nodeTypes={{ editRectFlowCustomNode: EditReactFlowCustomNode }}
 			fitView
 			style={{

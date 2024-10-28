@@ -10,7 +10,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
 		windowMode,
-		handleTableSelectCancel,
+		setSelectedTable,
 	} = useLayout();
 	const { data: session } = useSession();
 
@@ -23,7 +23,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 				const isClickOutsideLeftBarTableArea =
 					!EditLeftBarTableAreaRef.current.contains(event.target as Node);
 				if (isClickOutsideReactFlow && isClickOutsideLeftBarTableArea) {
-					handleTableSelectCancel();
+					setSelectedTable(null);
 				}
 			}
 		};

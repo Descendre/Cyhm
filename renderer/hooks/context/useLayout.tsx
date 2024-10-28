@@ -36,6 +36,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
+		selectedTable,
+		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
 	} = context;
@@ -65,7 +67,6 @@ export const useLayout = (): UseLayoutProps => {
 			columns: [],
 			color: palette.components.edit.reactFlow.tableHeader.default,
 			isExpanded: true,
-			isSelected: false,
 			isEditing: false,
 			position: { x: 200, y: 300 },
 		};
@@ -179,28 +180,6 @@ export const useLayout = (): UseLayoutProps => {
 		}));
 	};
 
-	const handleTableSelect = (tableId: string): void => {
-		setTables((prevTables) => {
-			if (!prevTables) return null;
-			const updatedTables = { ...prevTables };
-			Object.keys(updatedTables).forEach((id) => {
-				updatedTables[id].isSelected = updatedTables[id].id === tableId;
-			});
-			return updatedTables;
-		});
-	};
-
-	const handleTableSelectCancel = (): void => {
-		setTables((prevTables) => {
-			if (!prevTables) return null;
-			const updatedTables = { ...prevTables };
-			Object.keys(updatedTables).forEach((id) => {
-				updatedTables[id].isSelected = false;
-			});
-			return updatedTables;
-		});
-	};
-
 	const handleTableEditMode = (tableId: string): void => {
 		setTables((prevTables) => {
 			if (!prevTables) return null;
@@ -229,6 +208,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
+		selectedTable,
+		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
 
@@ -240,8 +221,6 @@ export const useLayout = (): UseLayoutProps => {
 		handleAllTableExpansion,
 		handleAddColumn,
 		handleGetNodesFromTables,
-		handleTableSelect,
-		handleTableSelectCancel,
 		handleTableEditMode,
 	};
 };
