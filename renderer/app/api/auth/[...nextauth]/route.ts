@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import { prisma } from '../../../../libs';
+import { Provider } from '@prisma/client';
 
 const handler = NextAuth({
 	providers: [
@@ -19,6 +21,31 @@ const handler = NextAuth({
 			if (account) {
 				token.provider = account.provider;
 				token.id = account.providerAccountId;
+
+				const userId = account.providerAccountId;
+				const providerName = account.provider as Provider;
+				const userName = profile?.name as string;
+				const userEmail = profile?.email as string;
+				const userImage = profile?.image as string;
+
+				await prisma.user.upsert({
+					where: {
+						id: userId,
+					},
+					update: {
+						provider: providerName,
+						name: userName,
+						email: userEmail,
+						image: userImage,
+					},
+					create: {
+						id: userId,
+						provider: providerName,
+						name: userName,
+						email: userEmail,
+						image: userImage,
+					},
+				});
 			}
 			return token;
 		},
