@@ -1,10 +1,11 @@
-// "use client"
 import { AddCircleOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { useLayout } from '../../../hooks';
+import { useProject } from '../../../hooks';
+import { useSession } from 'next-auth/react';
 
 export const TopProjectHeaderNewButton = () => {
-	const { handleStartProject } = useLayout();
+	const { data: session } = useSession();
+	const { handleCreateProject } = useProject();
 
 	return (
 		<Button
@@ -16,7 +17,7 @@ export const TopProjectHeaderNewButton = () => {
 			sx={{
 				fontSize: '0.8rem',
 			}}
-			onClick={() => handleStartProject()}
+			onClick={() => handleCreateProject({ userId: session?.user.id })}
 		>
 			プロジェクトを追加
 		</Button>

@@ -26,7 +26,6 @@ export interface UseLayoutProps {
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 
-	handleStartProject: () => void;
 	handleEndProject: () => void;
 	handleAddTable: ({ tableName }: handleAddTableProps) => void;
 	handleTableExpansion: ({ tableId }: handleTableExpansionProps) => void;

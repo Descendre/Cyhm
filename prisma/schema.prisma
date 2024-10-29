@@ -21,9 +21,90 @@ model User {
   image     String? 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  members   Member[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  members     Member[]
+  tables      Table[]
+}
+
+model Member {
+  id        String   @id @default(cuid())
+  userId    String
+  projectId String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
+}
+
+model Table {
+  id        String     @id @default(cuid())
+  name      String
+  projectId String
+  color     String
+  isExpanded Boolean   @default(false)
+  isEditing  Boolean    @default(false)
+  position   Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project    Project   @relation(fields: [projectId], references: [id])
+}
+
+model Column {
+  id            String             @id @default(cuid())
+  name          String
+  type          ColumnType
+  tableId       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  columnConstraints   ColumnConstraint[]
+}
+
+model ColumnConstraint {
+  id        String @id @default(cuid())
+  type      ColumnConstraintType
+  constraintValue String?
+  columnId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  column    Column @relation(fields: [columnId], references: [id])
 }
 
 enum Provider {
   google
   github
+}
+
+enum Role {
+  owner
+  admin
+  editor
+  member
+}
+
+enum ColumnType {
+  INT
+  VARCHAR
+  BOOLEAN
+  DATE
+  TEXT
+  FLOAT
+  DOUBLE
+}
+
+enum ColumnConstraintType {
+  PRIMARY_KEY
+  NOT_NULL
+  UNIQUE
+  FOREIGN_KEY
+  CHECK
+  DEFAULT
 }
