@@ -2,10 +2,22 @@
 import { Box } from '@mui/material';
 import { TopLayoutProps } from '../../interfaces';
 import { TopHeader, TopLoading, TopMain } from './section';
-import { useLayout } from '../../hooks';
+import { useLayout, useProject } from '../../hooks';
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 export const TopLayout = ({ children }: TopLayoutProps) => {
 	const { isCreatingProject } = useLayout();
+	const { handleFetchUserProjects } = useProject();
+	const { data: session } = useSession();
+
+	useEffect(() => {
+		(async () => {
+			if (session && session.user) {
+				await handleFetchUserProjects({ userId: session.user.id });
+			}
+		})();
+	}, [session]);
 
 	return (
 		<>

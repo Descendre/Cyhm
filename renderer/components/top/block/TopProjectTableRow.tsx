@@ -9,9 +9,10 @@ import {
 } from '@mui/material';
 import { usePalette } from '../../../hooks';
 import { MoreVert } from '@mui/icons-material';
-import { hexToRgba } from '../../../utils';
+import { formatTimeAgo, hexToRgba } from '../../../utils';
+import { TopProjectTableRowProps } from '../../../interfaces';
 
-export const TopProjectTableRow = () => {
+export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 	const palette = usePalette();
 
 	return (
@@ -34,7 +35,7 @@ export const TopProjectTableRow = () => {
 				}}
 			>
 				<Typography color={palette.text.secondary} noWrap fontSize="0.8rem">
-					プロジェクト名aaaaaaaあああああああああああああああああああああ
+					{project.name}
 				</Typography>
 			</TableCell>
 			<TableCell
@@ -43,36 +44,23 @@ export const TopProjectTableRow = () => {
 				}}
 			>
 				<AvatarGroup
+					max={5}
 					sx={{
 						display: 'flex',
 						justifyContent: 'center',
 						alignItems: 'center',
 					}}
 				>
-					<Avatar
-						sx={{
-							width: 25,
-							height: 25,
-						}}
-					/>
-					<Avatar
-						sx={{
-							width: 25,
-							height: 25,
-						}}
-					/>
-					<Avatar
-						sx={{
-							width: 25,
-							height: 25,
-						}}
-					/>
-					<Avatar
-						sx={{
-							width: 25,
-							height: 25,
-						}}
-					/>
+					{project.members.map((member) => (
+						<Avatar
+							key={member.userId}
+							src={member.userImage}
+							sx={{
+								width: 25,
+								height: 25,
+							}}
+						/>
+					))}
 				</AvatarGroup>
 			</TableCell>
 			<TableCell
@@ -86,7 +74,7 @@ export const TopProjectTableRow = () => {
 					fontSize="0.8rem"
 					textAlign="center"
 				>
-					XX日前
+					{formatTimeAgo(new Date(project.updatedAt))}
 				</Typography>
 			</TableCell>
 			<TableCell

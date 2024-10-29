@@ -3,6 +3,7 @@ import { ReactNode, createContext, useRef, useState } from 'react';
 import {
 	ColumnsStateProps,
 	ContextProviderProps,
+	FetchUserProjectsResponse,
 	TableProps,
 	TablesStateProps,
 	windowModeProps,
@@ -25,6 +26,9 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [selectedTable, setSelectedTable] = useState<TableProps | null>(null);
 	const [isEditLeftBar, setIsEditLeftBar] = useState<boolean>(true);
 	const [isCreatingProject, setIsCreatingProject] = useState<boolean>(false);
+	const [userProjects, setUserProjects] = useState<
+		FetchUserProjectsResponse[] | null
+	>(null);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -51,6 +55,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsEditLeftBar,
 		isCreatingProject,
 		setIsCreatingProject,
+		userProjects,
+		setUserProjects,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;
