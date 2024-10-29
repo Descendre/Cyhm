@@ -2,17 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { InputAdornment, TextField } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { EditLeftBarNewBornInputProps } from '../../../interfaces';
-import { useLayout } from '../../../hooks';
+import { useLayout, useProject } from '../../../hooks';
 
 export const EditLeftBarNewBornInput = (
 	props: EditLeftBarNewBornInputProps
 ) => {
-	const {
-		setIsTableAddMode,
-		handleAddTable,
-		handleAddColumn,
-		setAddColumnIndex,
-	} = useLayout();
+	const { setIsTableAddMode, setAddColumnIndex } = useLayout();
+	const { currentProject, handleAddTable, handleAddColumn } = useProject();
 	const placeholder =
 		props.mode === 'table' ? 'テーブル名を入力' : 'カラム名を入力';
 	const focusRef = useRef<HTMLInputElement | null>(null);
@@ -23,14 +19,18 @@ export const EditLeftBarNewBornInput = (
 		if (
 			event.key === 'Enter' &&
 			focusRef.current &&
-			focusRef.current.value.length > 0
+			focusRef.current.value.length > 0 &&
+			currentProject
 		) {
 			if (props.mode === 'table') {
-				handleAddTable({ tableName: focusRef.current.value });
+				handleAddTable({
+					projectId: currentProject.id,
+					tableName: focusRef.current.value,
+				});
 			} else if (props.mode === 'column') {
 				handleAddColumn({
 					tableId: props.tableId,
-					columnName: focusRef.current.value,
+					name: focusRef.current.value,
 				});
 			}
 		}
@@ -38,13 +38,20 @@ export const EditLeftBarNewBornInput = (
 
 	const handleMouseDown = (event: React.MouseEvent): void => {
 		event.preventDefault();
-		if (focusRef.current && focusRef.current.value.length > 0) {
+		if (
+			focusRef.current &&
+			focusRef.current.value.length > 0 &&
+			currentProject
+		) {
 			if (props.mode === 'table') {
-				handleAddTable({ tableName: focusRef.current.value });
+				handleAddTable({
+					projectId: currentProject.id,
+					tableName: focusRef.current.value,
+				});
 			} else if (props.mode === 'column') {
 				handleAddColumn({
 					tableId: props.tableId,
-					columnName: focusRef.current.value,
+					name: focusRef.current.value,
 				});
 			}
 		}

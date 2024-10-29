@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { ColumnConstraintProps, ColumnProps } from '../../../interfaces';
+import { AddColumnResponse, ColumnConstraintProps } from '../../../interfaces';
 import {
 	BlockOutlined,
 	Check,
@@ -10,7 +10,7 @@ import {
 } from '@mui/icons-material';
 import { usePalette } from '../../../hooks';
 
-export const EditLeftBarConstraintsArea = (column: ColumnProps) => {
+export const EditLeftBarConstraintsArea = (column: AddColumnResponse) => {
 	const palette = usePalette();
 
 	const getConstraintIcon = (constraint: ColumnConstraintProps) => {

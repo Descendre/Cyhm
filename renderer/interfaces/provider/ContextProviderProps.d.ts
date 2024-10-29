@@ -15,8 +15,8 @@ export interface ContextProviderProps {
 	setIsMic: React.Dispatch<React.SetStateAction<boolean>>;
 	isAudio: boolean;
 	setIsAudio: React.Dispatch<React.SetStateAction<boolean>>;
-	tables: TablesStateProps;
-	setTables: React.Dispatch<React.SetStateAction<TablesStateProps>>;
+	tables: TablesStateProps | null;
+	setTables: React.Dispatch<React.SetStateAction<TablesStateProps | null>>;
 	columns: ColumnsStateProps;
 	setColumns: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
 	isTableAddMode: boolean;
@@ -35,4 +35,6 @@ export interface ContextProviderProps {
 	setCurrentProject: React.Dispatch<
 		React.SetStateAction<FetchUserProjectsResponse | null>
 	>;
+	isSubscribed: boolean;
+	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 }

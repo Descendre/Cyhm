@@ -1,10 +1,10 @@
 'use client';
 import { ReactNode, createContext, useRef, useState } from 'react';
 import {
+	AddTableResponse,
 	ColumnsStateProps,
 	ContextProviderProps,
 	FetchUserProjectsResponse,
-	TableProps,
 	TablesStateProps,
 	windowModeProps,
 } from '../interfaces';
@@ -19,17 +19,20 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [windowMode, setWindowMode] = useState<windowModeProps>('top');
 	const [isMic, setIsMic] = useState<boolean>(false);
 	const [isAudio, setIsAudio] = useState<boolean>(false);
-	const [tables, setTables] = useState<TablesStateProps>(null);
-	const [columns, setColumns] = useState<ColumnsStateProps>(null);
+	const [tables, setTables] = useState<TablesStateProps>({});
+	const [columns, setColumns] = useState<ColumnsStateProps>({});
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
-	const [selectedTable, setSelectedTable] = useState<TableProps | null>(null);
+	const [selectedTable, setSelectedTable] = useState<AddTableResponse | null>(
+		null
+	);
 	const [isEditLeftBar, setIsEditLeftBar] = useState<boolean>(true);
 	const [userProjects, setUserProjects] = useState<
 		FetchUserProjectsResponse[] | null
 	>(null);
 	const [currentProject, setCurrentProject] =
 		useState<FetchUserProjectsResponse | null>(null);
+	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -58,6 +61,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
+		isSubscribed,
+		setIsSubscribed,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

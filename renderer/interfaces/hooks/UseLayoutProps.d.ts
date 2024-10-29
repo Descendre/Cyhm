@@ -27,32 +27,14 @@ export interface UseLayoutProps {
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 
 	handleEndProject: () => void;
-	handleAddTable: ({ tableName }: handleAddTableProps) => void;
 	handleTableExpansion: ({ tableId }: handleTableExpansionProps) => void;
-	handleOpenTableExpansion: ({
-		tableId,
-	}: handleOpenTableExpansionProps) => void;
 	handleAllTableExpansion: (expand: boolean) => void;
-	handleAddColumn: ({ tableId, columnName }: handleAddColumnProps) => void;
 	handleGetNodesFromTables: () => Node[];
 	handleTableEditMode: (tablId: string) => void;
 }
 
-export interface handleAddTableProps {
-	tableName: string;
-}
-
 export interface handleTableExpansionProps {
 	tableId: string;
-}
-
-export interface handleOpenTableExpansionProps {
-	tableId: string;
-}
-
-export interface handleAddColumnProps {
-	tableId: string;
-	columnName: string;
 }
 
 export interface EditReactFlowCustomNodeDataProps {
