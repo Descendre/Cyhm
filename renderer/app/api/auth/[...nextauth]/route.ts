@@ -50,8 +50,8 @@ const handler = NextAuth({
 			return token;
 		},
 		async session({ session, token, user }: any) {
-			session.provider = token.provider;
-			session.id = token.id;
+			session.user.provider = token.provider;
+			session.user.id = token.id;
 			return session;
 		},
 	},

@@ -43,15 +43,6 @@ export const useLayout = (): UseLayoutProps => {
 		setIsEditLeftBar,
 	} = context;
 
-	const handleStartProject = (): void => {
-		if (typeof window !== 'undefined' && window.ipc) {
-			window.ipc.send('project-start');
-		} else {
-			console.error('IPC is not available');
-		}
-		setWindowMode('edit');
-	};
-
 	const handleEndProject = (): void => {
 		if (typeof window !== 'undefined' && window.ipc) {
 			window.ipc.send('project-end');
@@ -215,7 +206,6 @@ export const useLayout = (): UseLayoutProps => {
 		isEditLeftBar,
 		setIsEditLeftBar,
 
-		handleStartProject,
 		handleEndProject,
 		handleAddTable,
 		handleTableExpansion,
