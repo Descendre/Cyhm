@@ -41,6 +41,8 @@ export const useLayout = (): UseLayoutProps => {
 		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isCreatingProject,
+		setIsCreatingProject,
 	} = context;
 
 	const handleEndProject = (): void => {
@@ -205,6 +207,8 @@ export const useLayout = (): UseLayoutProps => {
 		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isCreatingProject,
+		setIsCreatingProject,
 
 		handleEndProject,
 		handleAddTable,

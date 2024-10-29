@@ -23,6 +23,11 @@ export const darkTheme = createTheme({
 			main: '#303040',
 		},
 		layout: {
+			topLayout: {
+				CreatingProjectLoading: {
+					bg: '#000000',
+				},
+			},
 			editLayout: {
 				header: {
 					bg: '#101014',

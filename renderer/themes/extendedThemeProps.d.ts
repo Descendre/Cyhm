@@ -3,6 +3,11 @@ import '@mui/material/styles';
 declare module '@mui/material/styles' {
 	interface Palette {
 		layout: {
+			topLayout: {
+				CreatingProjectLoading: {
+					bg: string;
+				};
+			};
 			editLayout: {
 				header: {
 					bg: string;
@@ -94,6 +99,11 @@ declare module '@mui/material/styles' {
 	}
 	interface PaletteOptions {
 		layout: {
+			topLayout: {
+				CreatingProjectLoading: {
+					bg: string;
+				};
+			};
 			editLayout: {
 				header: {
 					bg: string;
