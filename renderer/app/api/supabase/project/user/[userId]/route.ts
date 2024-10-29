@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../../libs';
+import { FetchUserProjectsResponse } from '../../../../../../interfaces';
 
 export const GET = async (
 	req: NextRequest,
@@ -41,20 +42,22 @@ export const GET = async (
 			},
 		});
 
-		const formattedProjects = projects.map((project) => ({
-			id: project.id,
-			name: project.name,
-			isActive: project.isActive,
-			createdAt: project.createdAt,
-			updatedAt: project.updatedAt,
-			members: project.members.map((member) => ({
-				userId: member.user.id,
-				userName: member.user.name,
-				userImage: member.user.image,
-				joinedAt: member.createdAt,
-				role: member.role,
-			})),
-		}));
+		const formattedProjects: FetchUserProjectsResponse[] = projects.map(
+			(project) => ({
+				id: project.id,
+				name: project.name,
+				isActive: project.isActive,
+				createdAt: project.createdAt,
+				updatedAt: project.updatedAt,
+				members: project.members.map((member) => ({
+					userId: member.user.id,
+					userName: member.user.name,
+					userImage: member.user.image,
+					joinedAt: member.createdAt,
+					role: member.role,
+				})),
+			})
+		);
 
 		return NextResponse.json(formattedProjects);
 	} catch (error) {

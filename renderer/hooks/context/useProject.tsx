@@ -5,6 +5,7 @@ import { axiosFetch } from '../../libs';
 import { generateCUID } from '../../utils';
 import {
 	CreateProjectResponse,
+	FetchProjectResponse,
 	FetchUserProjectsResponse,
 	handleCreateProjectProps,
 	handleFetchUserProjectsProps,
@@ -43,6 +44,10 @@ export const useProject = (): UseProjectProps => {
 				projectId: newProject.id,
 				role: 'owner',
 			});
+			const newCurrentProject = await axiosFetch.get<FetchProjectResponse>(
+				`/api/supabase/project/${newProject.id}`
+			);
+			setCurrentProject(newCurrentProject);
 		} else {
 			console.error('IPC is not available');
 		}
