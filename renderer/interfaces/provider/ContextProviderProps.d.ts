@@ -27,10 +27,12 @@ export interface ContextProviderProps {
 	setSelectedTable: React.Dispatch<React.SetStateAction<TableProps | null>>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
-	isCreatingProject: boolean;
-	setIsCreatingProject: React.Dispatch<React.SetStateAction<boolean>>;
 	userProjects: FetchUserProjectsResponse[] | null;
 	setUserProjects: React.Dispatch<
 		React.SetStateAction<FetchUserProjectsResponse[] | null>
+	>;
+	currentProject: FetchUserProjectsResponse | null;
+	setCurrentProject: React.Dispatch<
+		React.SetStateAction<FetchUserProjectsResponse | null>
 	>;
 }

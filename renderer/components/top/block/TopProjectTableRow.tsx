@@ -7,16 +7,18 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
-import { usePalette } from '../../../hooks';
+import { usePalette, useProject } from '../../../hooks';
 import { MoreVert } from '@mui/icons-material';
 import { formatTimeAgo, hexToRgba } from '../../../utils';
 import { TopProjectTableRowProps } from '../../../interfaces';
 
 export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 	const palette = usePalette();
+	const { handleStartProject } = useProject();
 
 	return (
 		<TableRow
+			onClick={() => handleStartProject({ project: project })}
 			sx={{
 				cursor: 'pointer',
 				border: `solid 1px transparent`,
