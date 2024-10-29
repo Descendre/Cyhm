@@ -2,6 +2,7 @@ import { windowModeProps } from './windowModeProps';
 import { TableProps, TablesStateProps } from './TableProps';
 import { ColumnsStateProps } from './ColumnProps';
 import React from 'react';
+import { FetchUserProjectsResponse } from '../api';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -28,4 +29,8 @@ export interface ContextProviderProps {
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 	isCreatingProject: boolean;
 	setIsCreatingProject: React.Dispatch<React.SetStateAction<boolean>>;
+	userProjects: FetchUserProjectsResponse[] | null;
+	setUserProjects: React.Dispatch<
+		React.SetStateAction<FetchUserProjectsResponse[] | null>
+	>;
 }

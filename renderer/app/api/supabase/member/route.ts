@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../libs';
-import { AddMemberRequest, AddMemberResponse } from '../../../../interfaces';
+import { AddMemberRequest } from '../../../../interfaces';
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: AddMemberRequest = await req.json();
 		const { userId, projectId, role } = body;
-		const member: AddMemberResponse = await prisma.member.create({
+		const member = await prisma.member.create({
 			data: {
 				userId: userId,
 				projectId: projectId,

@@ -5,7 +5,9 @@ import { axiosFetch } from '../../libs';
 import { generateCUID } from '../../utils';
 import {
 	CreateProjectResponse,
+	FetchUserProjectsResponse,
 	handleCreateProjectProps,
+	handleFetchUserProjectsProps,
 	UseProjectProps,
 } from '../../interfaces';
 
@@ -15,7 +17,8 @@ export const useProject = (): UseProjectProps => {
 		throw new Error('Context is not provided');
 	}
 
-	const { setWindowMode, setIsCreatingProject } = context;
+	const { setWindowMode, setIsCreatingProject, userProjects, setUserProjects } =
+		context;
 
 	const handleCreateProject = async ({
 		userId,
@@ -42,7 +45,20 @@ export const useProject = (): UseProjectProps => {
 		}
 	};
 
+	const handleFetchUserProjects = async ({
+		userId,
+	}: handleFetchUserProjectsProps): Promise<void> => {
+		const userProjects = await axiosFetch.get<FetchUserProjectsResponse[]>(
+			`/api/supabase/project/user/${userId}`
+		);
+		setUserProjects(userProjects);
+	};
+
 	return {
+		userProjects,
+		setUserProjects,
+
 		handleCreateProject,
+		handleFetchUserProjects,
 	};
 };
