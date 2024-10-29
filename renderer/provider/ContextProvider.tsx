@@ -24,6 +24,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
 	const [selectedTable, setSelectedTable] = useState<TableProps | null>(null);
 	const [isEditLeftBar, setIsEditLeftBar] = useState<boolean>(true);
+	const [isCreatingProject, setIsCreatingProject] = useState<boolean>(false);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -48,6 +49,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isCreatingProject,
+		setIsCreatingProject,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

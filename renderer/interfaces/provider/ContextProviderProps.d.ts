@@ -26,4 +26,6 @@ export interface ContextProviderProps {
 	setSelectedTable: React.Dispatch<React.SetStateAction<TableProps | null>>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
+	isCreatingProject: boolean;
+	setIsCreatingProject: React.Dispatch<React.SetStateAction<boolean>>;
 }

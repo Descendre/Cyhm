@@ -15,11 +15,12 @@ export const useProject = (): UseProjectProps => {
 		throw new Error('Context is not provided');
 	}
 
-	const { setWindowMode } = context;
+	const { setWindowMode, setIsCreatingProject } = context;
 
 	const handleCreateProject = async ({
 		userId,
 	}: handleCreateProjectProps): Promise<void> => {
+		setIsCreatingProject(true);
 		if (typeof window !== 'undefined' && window.ipc) {
 			const newProject = await axiosFetch.post<CreateProjectResponse>(
 				`/api/supabase/project`,
@@ -34,8 +35,10 @@ export const useProject = (): UseProjectProps => {
 			});
 			setWindowMode('edit');
 			window.ipc.send('project-start');
+			setIsCreatingProject(false);
 		} else {
 			console.error('IPC is not available');
+			setIsCreatingProject(false);
 		}
 	};
 
