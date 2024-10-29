@@ -1,7 +1,9 @@
-import { AvatarGroup } from '@mui/material';
-import { EditHeaderAvatar } from '../atom';
+import { Avatar, AvatarGroup } from '@mui/material';
+import { useProject } from '../../../hooks';
 
 export const EditHeaderAvatars = () => {
+	const { currentProject } = useProject();
+
 	return (
 		<AvatarGroup
 			max={5}
@@ -16,13 +18,9 @@ export const EditHeaderAvatars = () => {
 				},
 			}}
 		>
-			<EditHeaderAvatar />
-			<EditHeaderAvatar />
-			<EditHeaderAvatar />
-			<EditHeaderAvatar />
-			<EditHeaderAvatar />
-			<EditHeaderAvatar />
-			<EditHeaderAvatar />
+			{currentProject?.members.map((member) => (
+				<Avatar key={member.userId} src={member.userImage} />
+			))}
 		</AvatarGroup>
 	);
 };

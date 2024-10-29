@@ -1,11 +1,13 @@
 import { Typography } from '@mui/material';
-import { usePalette } from '../../../hooks';
+import { usePalette, useProject } from '../../../hooks';
 
 export const EditHeaderProjectTitle = () => {
 	const palette = usePalette();
+	const { currentProject } = useProject();
+
 	return (
 		<Typography variant="body2" color={palette.text.disabled} noWrap>
-			無題Lorem ipsum dolor sit, amet consectet
+			{currentProject?.name}
 		</Typography>
 	);
 };
