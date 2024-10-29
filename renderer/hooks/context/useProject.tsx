@@ -8,6 +8,7 @@ import {
 	FetchUserProjectsResponse,
 	handleCreateProjectProps,
 	handleFetchUserProjectsProps,
+	handleStartProjectProps,
 	UseProjectProps,
 } from '../../interfaces';
 
@@ -17,14 +18,20 @@ export const useProject = (): UseProjectProps => {
 		throw new Error('Context is not provided');
 	}
 
-	const { setWindowMode, setIsCreatingProject, userProjects, setUserProjects } =
-		context;
+	const {
+		setWindowMode,
+		userProjects,
+		setUserProjects,
+		currentProject,
+		setCurrentProject,
+	} = context;
 
 	const handleCreateProject = async ({
 		userId,
 	}: handleCreateProjectProps): Promise<void> => {
-		setIsCreatingProject(true);
 		if (typeof window !== 'undefined' && window.ipc) {
+			window.ipc.send('project-start');
+			setWindowMode('edit');
 			const newProject = await axiosFetch.post<CreateProjectResponse>(
 				`/api/supabase/project`,
 				{
@@ -36,12 +43,8 @@ export const useProject = (): UseProjectProps => {
 				projectId: newProject.id,
 				role: 'owner',
 			});
-			setWindowMode('edit');
-			window.ipc.send('project-start');
-			setIsCreatingProject(false);
 		} else {
 			console.error('IPC is not available');
-			setIsCreatingProject(false);
 		}
 	};
 
@@ -54,11 +57,24 @@ export const useProject = (): UseProjectProps => {
 		setUserProjects(userProjects);
 	};
 
+	const handleStartProject = ({ project }: handleStartProjectProps): void => {
+		if (typeof window !== 'undefined' && window.ipc) {
+			window.ipc.send('project-start');
+			setWindowMode('edit');
+			setCurrentProject(project);
+		} else {
+			console.error('IPC is not available');
+		}
+	};
+
 	return {
 		userProjects,
 		setUserProjects,
+		currentProject,
+		setCurrentProject,
 
 		handleCreateProject,
 		handleFetchUserProjects,
+		handleStartProject,
 	};
 };

@@ -1,13 +1,12 @@
 'use client';
 import { Box } from '@mui/material';
 import { TopLayoutProps } from '../../interfaces';
-import { TopHeader, TopLoading, TopMain } from './section';
-import { useLayout, useProject } from '../../hooks';
+import { TopHeader, TopMain } from './section';
+import { useProject } from '../../hooks';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 
 export const TopLayout = ({ children }: TopLayoutProps) => {
-	const { isCreatingProject } = useLayout();
 	const { handleFetchUserProjects } = useProject();
 	const { data: session } = useSession();
 
@@ -25,10 +24,6 @@ export const TopLayout = ({ children }: TopLayoutProps) => {
 				<TopHeader />
 				<TopMain>{children}</TopMain>
 			</Box>
-
-			{isCreatingProject && (
-				<TopLoading text="プロジェクトをセットアップ中..." />
-			)}
 		</>
 	);
 };
