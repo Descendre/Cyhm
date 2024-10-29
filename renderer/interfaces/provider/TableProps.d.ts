@@ -1,14 +1,3 @@
-export interface TableProps {
-	id: string;
-	name: string;
-	columns: string[];
-	color: string;
-	isExpanded: boolean;
-	isEditing: boolean;
-	position: {
-		x: number;
-		y: number;
-	};
-}
+import { AddTableResponse } from '../api';
 
-export type TablesStateProps = { [key: string]: TableProps } | null;
+export type TablesStateProps = { [key: string]: AddTableResponse };

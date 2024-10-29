@@ -5,7 +5,7 @@ import {
 	EditLeftBarNewBorn,
 	EditLeftBarTableArea,
 } from '../block';
-import { TableProps } from '../../../interfaces';
+import { AddTableResponse } from '../../../interfaces';
 
 export const EditLeftBar = () => {
 	const palette = usePalette();
@@ -50,7 +50,7 @@ export const EditLeftBar = () => {
 				>
 					{isTableAddMode && <EditLeftBarNewBorn mode="table" />}
 					{tables &&
-						Object.values(tables).map((table: TableProps) => (
+						Object.values(tables).map((table: AddTableResponse) => (
 							<EditLeftBarTableArea key={table.id} table={table} />
 						))}
 				</Box>

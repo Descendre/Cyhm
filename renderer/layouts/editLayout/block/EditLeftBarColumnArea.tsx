@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import { usePalette } from '../../../hooks';
-import { ColumnProps } from '../../../interfaces';
-import { EditLefBarConstraintsArea } from './EditLefBarConstraintsArea';
 import { ColumnTypeTexts } from '../../../components';
+import { AddColumnResponse } from '../../../interfaces';
+import { EditLeftBarConstraintsArea } from './EditLeftBarConstraintsArea';
 
-export const EditLeftBarColumnArea = (props: ColumnProps) => {
+export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 	const palette = usePalette();
 
 	return (
@@ -37,7 +37,7 @@ export const EditLeftBarColumnArea = (props: ColumnProps) => {
 				width="100%"
 				height="25px"
 			>
-				<EditLefBarConstraintsArea {...props} />
+				<EditLeftBarConstraintsArea {...props} />
 				<ColumnTypeTexts type={props.type} />
 			</Box>
 		</Box>

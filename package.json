@@ -19,6 +19,7 @@
 		"@mui/material": "^6.1.5",
 		"@mui/material-nextjs": "^6.1.5",
 		"@prisma/client": "^5.21.1",
+		"@supabase/supabase-js": "^2.46.0",
 		"@xyflow/react": "^12.3.2",
 		"axios": "^1.7.7",
 		"electron-serve": "^1.3.0",
@@ -28,7 +29,9 @@
 	},
 	"devDependencies": {
 		"@types/node": "^20.11.16",
+		"@types/plist": "^3.0.5",
 		"@types/react": "^18.2.52",
+		"@types/verror": "^1.10.10",
 		"@typescript-eslint/parser": "^8.11.0",
 		"electron": "^31.0.1",
 		"electron-builder": "^24.13.3",

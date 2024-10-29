@@ -9,4 +9,4 @@ export * from './EditLeftBarTableHeader';
 export * from './EditLeftBarNewBorn';
 export * from './EditLeftBarTableArea';
 export * from './EditLeftBarColumnArea';
-export * from './EditLefBarConstraintsArea';
+export * from './EditLeftBarConstraintsArea';
