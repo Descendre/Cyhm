@@ -11,4 +11,8 @@ declare module 'next-auth' {
 		expires: ISODateString;
 		provider?: string;
 	}
+	interface Profile extends DefaultProfile {
+		picture?: string;
+		avatar_url?: string;
+	}
 }

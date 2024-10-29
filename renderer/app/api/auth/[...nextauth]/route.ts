@@ -26,7 +26,7 @@ const handler = NextAuth({
 				const providerName = account.provider as Provider;
 				const userName = profile?.name as string;
 				const userEmail = profile?.email as string;
-				const userImage = profile?.image as string;
+				const userImage = profile?.picture || profile?.avatar_url || '';
 
 				await prisma.user.upsert({
 					where: {
