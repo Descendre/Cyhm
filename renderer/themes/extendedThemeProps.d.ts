@@ -63,6 +63,11 @@ declare module '@mui/material/styles' {
 						bg: string;
 					};
 				};
+				projectTable: {
+					skeleton: {
+						bg: string;
+					};
+				};
 			};
 			edit: {
 				reactFlow: {
@@ -156,6 +161,11 @@ declare module '@mui/material/styles' {
 			top: {
 				projectHeader: {
 					searchBar: {
+						bg: string;
+					};
+				};
+				projectTable: {
+					skeleton: {
 						bg: string;
 					};
 				};

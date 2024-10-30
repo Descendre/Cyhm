@@ -83,6 +83,11 @@ export const darkTheme = createTheme({
 						bg: '#161618',
 					},
 				},
+				projectTable: {
+					skeleton: {
+						bg: '#38383c',
+					},
+				},
 			},
 			edit: {
 				reactFlow: {
