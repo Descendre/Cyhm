@@ -21,6 +21,7 @@ export interface UseProjectProps {
 		userId,
 	}: handleFetchUserProjectsProps) => Promise<void>;
 	handleStartProject: ({ userId }: handleStartProjectProps) => void;
+	handleEndProject: () => void;
 	handleAddTable: ({
 		projectId,
 		tableName,

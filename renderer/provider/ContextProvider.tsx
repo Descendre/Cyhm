@@ -33,6 +33,9 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [currentProject, setCurrentProject] =
 		useState<FetchUserProjectsResponse | null>(null);
 	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+	const [isPreparingProject, setIsPreparingProject] = useState<string | null>(
+		null
+	);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -63,6 +66,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setCurrentProject,
 		isSubscribed,
 		setIsSubscribed,
+		isPreparingProject,
+		setIsPreparingProject,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

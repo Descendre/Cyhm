@@ -2,12 +2,14 @@
 import { Box } from '@mui/material';
 import { TopLayoutProps } from '../../interfaces';
 import { TopHeader, TopMain } from './section';
-import { useProject } from '../../hooks';
+import { useLayout, useProject } from '../../hooks';
 import { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { TopLoading } from './section/TopLoading';
 
 export const TopLayout = ({ children }: TopLayoutProps) => {
 	const { handleFetchUserProjects } = useProject();
+	const { isPreparingProject } = useLayout();
 	const { data: session } = useSession();
 
 	useEffect(() => {
@@ -24,6 +26,8 @@ export const TopLayout = ({ children }: TopLayoutProps) => {
 				<TopHeader />
 				<TopMain>{children}</TopMain>
 			</Box>
+
+			{isPreparingProject && <TopLoading text={isPreparingProject} />}
 		</>
 	);
 };

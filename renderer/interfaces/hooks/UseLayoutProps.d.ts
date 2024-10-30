@@ -25,8 +25,9 @@ export interface UseLayoutProps {
 	setSelectedTable: React.Dispatch<React.SetStateAction<TableProps | null>>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
+	isPreparingProject: string | null;
+	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
 
-	handleEndProject: () => void;
 	handleTableExpansion: ({ tableId }: handleTableExpansionProps) => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleGetNodesFromTables: () => Node[];

@@ -34,16 +34,9 @@ export const useLayout = (): UseLayoutProps => {
 		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isPreparingProject,
+		setIsPreparingProject,
 	} = context;
-
-	const handleEndProject = (): void => {
-		if (typeof window !== 'undefined' && window.ipc) {
-			window.ipc.send('project-end');
-		} else {
-			console.error('IPC is not available');
-		}
-		setWindowMode('top');
-	};
 
 	const handleTableExpansion = ({
 		tableId,
@@ -121,8 +114,9 @@ export const useLayout = (): UseLayoutProps => {
 		setSelectedTable,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isPreparingProject,
+		setIsPreparingProject,
 
-		handleEndProject,
 		handleTableExpansion,
 		handleAllTableExpansion,
 		handleGetNodesFromTables,

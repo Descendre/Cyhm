@@ -37,4 +37,6 @@ export interface ContextProviderProps {
 	>;
 	isSubscribed: boolean;
 	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
+	isPreparingProject: string | null;
+	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
 }

@@ -44,6 +44,7 @@ export const useProject = (): UseProjectProps => {
 		setCurrentProject,
 		isSubscribed,
 		setIsSubscribed,
+		setIsPreparingProject,
 	} = context;
 
 	const SUPABASE_CHANNEL_NAME = `project_${currentProject?.id}`;
@@ -51,9 +52,8 @@ export const useProject = (): UseProjectProps => {
 	const handleCreateProject = async ({
 		userId,
 	}: handleCreateProjectProps): Promise<void> => {
-		if (typeof window !== 'undefined' && window.ipc) {
-			window.ipc.send('project-start');
-			setWindowMode('edit');
+		try {
+			setIsPreparingProject('プロジェクトの作成中...');
 			const newProject = await axiosFetch.post<CreateProjectResponse>(
 				`/api/supabase/project`,
 				{
@@ -69,35 +69,66 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/project/${newProject.id}`
 			);
 			setCurrentProject(newCurrentProject);
-		} else {
-			console.error('IPC is not available');
+			if (typeof window !== 'undefined' && window.ipc) {
+				window.ipc.send('project-start');
+			} else {
+				console.error('IPC is not available');
+			}
+			setWindowMode('edit');
+			setIsPreparingProject(null);
+		} catch (error) {
+			console.error(error);
+			setIsPreparingProject(null);
 		}
 	};
 
 	const handleFetchUserProjects = async ({
 		userId,
 	}: handleFetchUserProjectsProps): Promise<void> => {
-		const userProjects = await axiosFetch.get<FetchUserProjectsResponse[]>(
-			`/api/supabase/project/user/${userId}`
-		);
-		setUserProjects(userProjects);
+		try {
+			const userProjects = await axiosFetch.get<FetchUserProjectsResponse[]>(
+				`/api/supabase/project/user/${userId}`
+			);
+			setUserProjects(userProjects);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const handleStartProject = async ({
 		project,
 	}: handleStartProjectProps): Promise<void> => {
-		if (typeof window !== 'undefined' && window.ipc) {
-			window.ipc.send('project-start');
-			setWindowMode('edit');
-			setCurrentProject(project);
+		try {
+			setIsPreparingProject('プロジェクトを起動中...');
 			const allProjectContents = await axiosFetch.get<FetchAllContentsResponse>(
 				`/api/supabase/project/allContents/${project.id}`
 			);
 			setTables(allProjectContents.tables);
 			setColumns(allProjectContents.columns);
+			setCurrentProject(project);
+			setWindowMode('edit');
+			if (typeof window !== 'undefined' && window.ipc) {
+				window.ipc.send('project-start');
+			} else {
+				console.error('IPC is not available');
+			}
+			setIsPreparingProject(null);
+		} catch (error) {
+			console.error(error);
+			setIsPreparingProject(null);
+		}
+	};
+
+	const handleEndProject = (): void => {
+		if (typeof window !== 'undefined' && window.ipc) {
+			window.ipc.send('project-end');
 		} else {
 			console.error('IPC is not available');
 		}
+		setWindowMode('top');
+		setCurrentProject(null);
+		setTables(null);
+		setColumns(null);
 	};
 
 	const handleAddTable = async ({
@@ -247,6 +278,7 @@ export const useProject = (): UseProjectProps => {
 		handleCreateProject,
 		handleFetchUserProjects,
 		handleStartProject,
+		handleEndProject,
 		handleAddTable,
 		handleAddColumn,
 		handleOpenTableExpansion,
