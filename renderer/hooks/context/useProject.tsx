@@ -8,6 +8,7 @@ import {
 	AddTableResponse,
 	ColumnChannelPayloadProps,
 	CreateProjectResponse,
+	FetchAllContentsResponse,
 	FetchProjectResponse,
 	FetchUserProjectsResponse,
 	handleAddColumnProps,
@@ -82,11 +83,18 @@ export const useProject = (): UseProjectProps => {
 		setUserProjects(userProjects);
 	};
 
-	const handleStartProject = ({ project }: handleStartProjectProps): void => {
+	const handleStartProject = async ({
+		project,
+	}: handleStartProjectProps): Promise<void> => {
 		if (typeof window !== 'undefined' && window.ipc) {
 			window.ipc.send('project-start');
 			setWindowMode('edit');
 			setCurrentProject(project);
+			const allProjectContents = await axiosFetch.get<FetchAllContentsResponse>(
+				`/api/supabase/project/allContents/${project.id}`
+			);
+			setTables(allProjectContents.tables);
+			setColumns(allProjectContents.columns);
 		} else {
 			console.error('IPC is not available');
 		}
@@ -226,7 +234,7 @@ export const useProject = (): UseProjectProps => {
 			channel.unsubscribe();
 			setIsSubscribed(false);
 		};
-	}, []);
+	}, []); // eslint-disable-line
 
 	return {
 		userProjects,

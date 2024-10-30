@@ -7,7 +7,7 @@ import {
 	TablesStateProps,
 	UseLayoutProps,
 } from '../../interfaces';
-import { Node } from '@xyflow/react';
+import { Node, XYPosition } from '@xyflow/react';
 
 export const useLayout = (): UseLayoutProps => {
 	const context = useContext(Context);
@@ -84,7 +84,7 @@ export const useLayout = (): UseLayoutProps => {
 			data: {
 				tableData: table,
 			} as EditReactFlowCustomNodeDataProps,
-			position: table.position,
+			position: table.position as XYPosition,
 		}));
 	};
 

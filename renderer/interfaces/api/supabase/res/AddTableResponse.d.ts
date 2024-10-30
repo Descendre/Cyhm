@@ -1,3 +1,5 @@
+import { JsonValue } from '@prisma/client/runtime/library';
+
 export interface AddTableResponse {
 	projectId: string;
 	color: string;
