@@ -57,7 +57,7 @@ export const useProject = (): UseProjectProps => {
 			const newProject = await axiosFetch.post<CreateProjectResponse>(
 				`/api/supabase/project`,
 				{
-					name: `Project-${generateCUID()}`,
+					name: `プロジェクト_${generateCUID()}`,
 				}
 			);
 			await axiosFetch.post(`/api/supabase/member`, {
