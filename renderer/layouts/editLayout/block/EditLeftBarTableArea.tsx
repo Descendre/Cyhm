@@ -9,7 +9,7 @@ export const EditLeftBarTableArea = ({ table }: EditLeftBarTableAreaProps) => {
 	const palette = usePalette();
 	const { tables, columns, addColumnIndex, selectedTable, setSelectedTable } =
 		useLayout();
-	const isTableSelected: boolean = table === selectedTable;
+	const isTableSelected: boolean = table.id === selectedTable?.id;
 
 	return (
 		<Box
