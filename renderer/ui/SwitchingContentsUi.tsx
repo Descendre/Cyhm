@@ -1,10 +1,19 @@
 import { useSession } from 'next-auth/react';
 import { useLayout } from '../hooks';
-import { EditContents, LoginContents, TopContents } from '../contents';
+import {
+	EditContents,
+	LoadingContents,
+	LoginContents,
+	TopContents,
+} from '../contents';
 
 export const SwitchingContentsUi = () => {
 	const { windowMode } = useLayout();
-	const { data: session } = useSession();
+	const { data: session, status } = useSession();
+
+	if (status === 'loading') {
+		return <LoadingContents />;
+	}
 
 	return (
 		<>
