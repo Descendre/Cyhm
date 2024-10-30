@@ -50,7 +50,7 @@ model Table {
   name      String
   projectId String
   color     String
-  isExpanded Boolean   @default(false)
+  isExpanded Boolean   @default(true)
   isEditing  Boolean    @default(false)
   position   Json
   createdAt   DateTime @default(now())

@@ -15,6 +15,7 @@ import {
 	handleAddTableProps,
 	handleCreateProjectProps,
 	handleFetchUserProjectsProps,
+	handleNodeDragStopProps,
 	handleOpenTableExpansionProps,
 	handleStartProjectProps,
 	TableChannelPayloadProps,
@@ -23,6 +24,7 @@ import {
 import { usePalette } from '../common';
 import { useSession } from 'next-auth/react';
 import { ColumnType } from '@prisma/client';
+import { UpdateTablePositionResponse } from '../../interfaces';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
@@ -125,10 +127,10 @@ export const useProject = (): UseProjectProps => {
 		} else {
 			console.error('IPC is not available');
 		}
-		setWindowMode('top');
 		setCurrentProject(null);
 		setTables(null);
 		setColumns(null);
+		setWindowMode('top');
 	};
 
 	const handleAddTable = async ({
@@ -144,8 +146,8 @@ export const useProject = (): UseProjectProps => {
 				tableName: tableName,
 				color: palette.components.edit.reactFlow.tableHeader.default,
 				position: {
-					x: 200,
-					y: 300,
+					x: 0,
+					y: 0,
 				},
 			}
 		);
@@ -207,6 +209,30 @@ export const useProject = (): UseProjectProps => {
 				},
 			};
 		});
+	};
+
+	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
+		const { id, position } = node;
+		try {
+			const updatedTable = await axiosFetch.put<UpdateTablePositionResponse>(
+				'/api/supabase/table/position',
+				{
+					tableId: id,
+					position: position,
+				}
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'table_add',
+				payload: {
+					newTable: updatedTable,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	useEffect(() => {
@@ -282,5 +308,6 @@ export const useProject = (): UseProjectProps => {
 		handleAddTable,
 		handleAddColumn,
 		handleOpenTableExpansion,
+		handleNodeDragStop,
 	};
 };
