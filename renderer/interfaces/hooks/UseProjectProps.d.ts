@@ -1,3 +1,4 @@
+import { Node } from '@xyflow/react';
 import {
 	AddColumnResponse,
 	AddTableResponse,
@@ -34,6 +35,7 @@ export interface UseProjectProps {
 	handleOpenTableExpansion: ({
 		tableId,
 	}: handleOpenTableExpansionProps) => void;
+	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
 export interface handleCreateProjectProps {
@@ -60,6 +62,10 @@ export interface handleAddColumnProps {
 
 export interface handleOpenTableExpansionProps {
 	tableId: string;
+}
+
+export interface handleNodeDragStopProps {
+	node: Node;
 }
 
 export interface TableChannelPayloadProps {

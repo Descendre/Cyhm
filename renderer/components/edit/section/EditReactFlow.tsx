@@ -7,7 +7,7 @@ import {
 	EditReactFlowMiniMap,
 } from '../block';
 import { EditReactFlowCustomNode } from '../block/EditReactFlowCustomNode';
-import { useLayout } from '../../../hooks';
+import { useLayout, useProject } from '../../../hooks';
 import { useEffect } from 'react';
 import { EditReactFlowCustomNodeDataProps } from '../../../interfaces';
 
@@ -18,6 +18,7 @@ export const EditReactFlow = () => {
 		setSelectedTable,
 		tables,
 	} = useLayout();
+	const { handleNodeDragStop } = useProject();
 	const [nodes, setNodes, onNodesChange] = useNodesState(
 		handleGetNodesFromTables()
 	); // useNodesStateを使用
@@ -35,6 +36,7 @@ export const EditReactFlow = () => {
 			nodes={nodes} // 状態からノードを取得
 			onNodesChange={onNodesChange} // ノードの変更を処理
 			onEdgesChange={onEdgesChange} // エッジの変更を処理（必要に応じて）
+			onNodeDragStop={(event, node) => handleNodeDragStop({ node: node })}
 			onNodeClick={(
 				event: React.MouseEvent,
 				node: Node<EditReactFlowCustomNodeDataProps>
