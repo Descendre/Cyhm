@@ -1,5 +1,5 @@
-import { TableProps } from '../../../provider';
+import { AddTableResponse } from '../../../api';
 
 export interface EditLeftBarTableAreaProps {
-	table: TableProps;
+	table: AddTableResponse;
 }

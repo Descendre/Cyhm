@@ -5,6 +5,7 @@ import {
 	TablesStateProps,
 	windowModeProps,
 } from '../provider';
+import { AddTableResponse } from '../api';
 
 export interface UseLayoutProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -21,8 +22,10 @@ export interface UseLayoutProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
-	selectedTable: TableProps | null;
-	setSelectedTable: React.Dispatch<React.SetStateAction<TableProps | null>>;
+	selectedTable: AddTableResponse | null;
+	setSelectedTable: React.Dispatch<
+		React.SetStateAction<AddTableResponse | null>
+	>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 	isPreparingProject: string | null;

@@ -1,8 +1,8 @@
 import { windowModeProps } from './windowModeProps';
-import { TableProps, TablesStateProps } from './TableProps';
+import { TablesStateProps } from './TableProps';
 import { ColumnsStateProps } from './ColumnProps';
 import React from 'react';
-import { FetchUserProjectsResponse } from '../api';
+import { AddTableResponse, FetchUserProjectsResponse } from '../api';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -23,8 +23,10 @@ export interface ContextProviderProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
-	selectedTable: TableProps | null;
-	setSelectedTable: React.Dispatch<React.SetStateAction<TableProps | null>>;
+	selectedTable: AddTableResponse | null;
+	setSelectedTable: React.Dispatch<
+		React.SetStateAction<AddTableResponse | null>
+	>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
 	userProjects: FetchUserProjectsResponse[] | null;
