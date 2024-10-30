@@ -1,8 +1,9 @@
 import { ExitToApp } from '@mui/icons-material';
-import { useLayout } from '../../../hooks';
+import { useProject } from '../../../hooks';
 
 export const EditHeaderExitButton = () => {
-	const { handleEndProject } = useLayout();
+	const { handleEndProject } = useProject();
+
 	return (
 		<ExitToApp
 			titleAccess="終了する"
