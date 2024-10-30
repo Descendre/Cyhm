@@ -4,3 +4,4 @@ export * from './FetchUserProjectsResponse';
 export * from './FetchProjectResponse';
 export * from './AddTableResponse';
 export * from './AddColumnResponse';
+export * from './FetchAllContentsResponse';

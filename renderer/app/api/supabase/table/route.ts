@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../libs';
 import { AddTableRequest, AddTableResponse } from '../../../../interfaces';
+import { JsonValue } from '@prisma/client/runtime/library';
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
@@ -12,10 +13,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 				projectId: projectId,
 				name: tableName,
 				color: color,
-				position: {
-					x: position.x,
-					y: position.y,
-				},
+				position: position,
 			},
 		});
 

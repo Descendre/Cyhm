@@ -11,10 +11,10 @@ export interface AddColumnResponse {
 }
 
 type ColumnConstraintProps =
-	| 'PRIMARY_KEY'
-	| 'NOT_NULL'
-	| 'UNIQUE'
-	| 'FOREIGN_KEY'
+	| { type: 'PRIMARY_KEY' }
+	| { type: 'NOT_NULL' }
+	| { type: 'UNIQUE' }
+	| { type: 'FOREIGN_KEY' }
 	| CheckConstraintProps
 	| DefaultConstraintProps;
 

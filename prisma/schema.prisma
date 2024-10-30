@@ -55,6 +55,7 @@ model Table {
   position   Json
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  columns    Column[]
   project    Project   @relation(fields: [projectId], references: [id])
 }
 
@@ -66,6 +67,7 @@ model Column {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   columnConstraints   ColumnConstraint[]
+  table         Table   @relation(fields: [tableId], references: [id])
 }
 
 model ColumnConstraint {
