@@ -5,8 +5,8 @@ export interface AddColumnResponse {
 	type: ColumnType;
 	tableId: string;
 	id: string;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt?: Date;
+	updatedAt?: Date;
 	constraints: ColumnConstraintProps[];
 }
 

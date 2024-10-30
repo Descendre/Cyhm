@@ -1,17 +1,17 @@
 import { Edit } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import { useLayout, usePalette } from '../../../hooks';
+import { usePalette, useProject } from '../../../hooks';
 import { EditReactFlowCommandsEditIconProps } from '../../../interfaces';
 
 export const EditReactFlowCommandsEditIcon = ({
 	table,
 }: EditReactFlowCommandsEditIconProps) => {
-	const { handleTableEditMode } = useLayout();
+	const { handleTableEditMode } = useProject();
 	const palette = usePalette();
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
 		event.stopPropagation();
-		handleTableEditMode(table.id);
+		handleTableEditMode({ tableId: table.id });
 	};
 
 	return (

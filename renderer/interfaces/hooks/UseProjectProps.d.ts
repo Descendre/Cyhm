@@ -35,6 +35,10 @@ export interface UseProjectProps {
 	handleOpenTableExpansion: ({
 		tableId,
 	}: handleOpenTableExpansionProps) => void;
+	handleTableExpansion: ({
+		tableId,
+	}: handleTableExpansionProps) => Promose<void>;
+	handleTableEditMode: ({ tableId }: handleTableEditProps) => Promose<void>;
 	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
@@ -61,6 +65,14 @@ export interface handleAddColumnProps {
 }
 
 export interface handleOpenTableExpansionProps {
+	tableId: string;
+}
+
+export interface handleTableExpansionProps {
+	tableId: string;
+}
+
+export interface handleTableEditProps {
 	tableId: string;
 }
 

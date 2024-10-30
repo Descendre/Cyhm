@@ -1,12 +1,12 @@
 import { Edit, EditOff } from '@mui/icons-material';
-import { useLayout, usePalette } from '../../../hooks';
+import { usePalette, useProject } from '../../../hooks';
 import { EditLeftBarToggleEditIconProps } from '../../../interfaces';
 
 export const EditLeftBarToggleEditIcon = ({
 	table,
 }: EditLeftBarToggleEditIconProps) => {
 	const palette = usePalette();
-	const { handleTableEditMode } = useLayout();
+	const { handleTableEditMode } = useProject();
 
 	return (
 		<>
@@ -15,7 +15,7 @@ export const EditLeftBarToggleEditIcon = ({
 					fontSize="small"
 					titleAccess="編集中のテーブル"
 					color="primary"
-					onClick={() => handleTableEditMode(table.id)}
+					onClick={() => handleTableEditMode({ tableId: table.id })}
 					sx={{
 						color: palette.primary.main,
 						cursor: 'pointer',
@@ -27,7 +27,7 @@ export const EditLeftBarToggleEditIcon = ({
 					fontSize="small"
 					titleAccess="編集ロック中"
 					color="primary"
-					onClick={() => handleTableEditMode(table.id)}
+					onClick={() => handleTableEditMode({ tableId: table.id })}
 					sx={{
 						color: palette.text.disabled,
 						cursor: 'pointer',
