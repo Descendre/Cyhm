@@ -4,6 +4,7 @@ import { useLayout } from '../hooks';
 import { SwitchingLayoutUiProps } from '../interfaces';
 import { EditLayout, LoginLayout, TopLayout } from '../layouts';
 import { useEffect } from 'react';
+import { LoadingLayout } from '../layouts/loadingLayout';
 
 export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 	const {
@@ -13,7 +14,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 		windowMode,
 		setSelectedTable,
 	} = useLayout();
-	const { data: session } = useSession();
+	const { data: session, status } = useSession();
 
 	useEffect(() => {
 		const handleDisplayClick = (event: MouseEvent) => {
@@ -43,6 +44,10 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 			document.removeEventListener('click', handleDisplayClick);
 		};
 	}, []); // eslint-disable-line
+
+	if (status === 'loading') {
+		return <LoadingLayout>{children}</LoadingLayout>;
+	}
 
 	return (
 		<>
