@@ -28,14 +28,8 @@ export interface UseLayoutProps {
 	isPreparingProject: string | null;
 	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
 
-	handleTableExpansion: ({ tableId }: handleTableExpansionProps) => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleGetNodesFromTables: () => Node[];
-	handleTableEditMode: (tablId: string) => void;
-}
-
-export interface handleTableExpansionProps {
-	tableId: string;
 }
 
 export interface EditReactFlowCustomNodeDataProps {

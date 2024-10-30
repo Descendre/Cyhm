@@ -18,13 +18,18 @@ import {
 	handleNodeDragStopProps,
 	handleOpenTableExpansionProps,
 	handleStartProjectProps,
+	handleTableEditProps,
 	TableChannelPayloadProps,
+	UpdateTableExpandRequest,
+	UpdateTableExpandResponse,
+	UpdateTableLockRequest,
+	UpdateTableLockResponse,
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
 import { useSession } from 'next-auth/react';
 import { ColumnType } from '@prisma/client';
-import { UpdateTablePositionResponse } from '../../interfaces';
+import { UpdateTablePositionResponse } from '../../interfaces/api/supabase/res/UpdateTablePositionResponse';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
@@ -35,6 +40,7 @@ export const useProject = (): UseProjectProps => {
 	}
 
 	const {
+		tables,
 		setTables,
 		setColumns,
 		setIsTableAddMode,
@@ -170,30 +176,61 @@ export const useProject = (): UseProjectProps => {
 		name,
 		tableId,
 	}: handleAddColumnProps): Promise<void> => {
-		if (!session.user) return;
-		const newColumn = await axiosFetch.post<AddColumnResponse>(
-			`/api/supabase/column`,
-			{
-				name: name,
-				type: 'INT' as ColumnType,
-				tableId: tableId,
-			}
-		);
-		setColumns((prevColumns) => ({
-			...prevColumns,
-			[newColumn.tableId]: [...(prevColumns[tableId] || []), newColumn],
-		}));
-		setAddColumnIndex(null);
-		handleOpenTableExpansion({ tableId: tableId });
-		const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
-		channel.send({
-			type: 'broadcast',
-			event: 'column_add',
-			payload: {
-				newColumn: newColumn,
-				userId: session.user.id,
-			} as ColumnChannelPayloadProps,
-		});
+		try {
+			if (!session.user) return;
+			setAddColumnIndex(null);
+
+			const tempCUID = generateCUID();
+			setColumns((prevColumns) => {
+				const newColumn: AddColumnResponse = {
+					id: tempCUID,
+					name: name,
+					tableId: tableId,
+					type: 'INT',
+					constraints: [],
+				};
+				if (!prevColumns) {
+					return {
+						...prevColumns,
+						[tableId]: [newColumn],
+					};
+				}
+				return {
+					...prevColumns,
+					[tableId]: [...prevColumns[tableId], newColumn],
+				};
+			});
+
+			const newColumn = await axiosFetch.post<AddColumnResponse>(
+				`/api/supabase/column`,
+				{
+					name: name,
+					type: 'INT' as ColumnType,
+					tableId: tableId,
+				}
+			);
+
+			handleOpenTableExpansion({ tableId: tableId });
+
+			setColumns((prevColumns) => ({
+				...prevColumns,
+				[tableId]: prevColumns[tableId].map((col) =>
+					col.id === tempCUID ? newColumn : col
+				),
+			}));
+
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'column_add',
+				payload: {
+					newColumn: newColumn,
+					userId: session.user.id,
+				} as ColumnChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const handleOpenTableExpansion = ({
@@ -211,9 +248,91 @@ export const useProject = (): UseProjectProps => {
 		});
 	};
 
-	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
-		const { id, position } = node;
+	const handleTableExpansion = async ({
+		tableId,
+	}: handleOpenTableExpansionProps): Promise<void> => {
 		try {
+			if (!tables || !tables[tableId]) return;
+			setTables((prevTables) => {
+				if (!prevTables || !prevTables[tableId]) return prevTables;
+				return {
+					...prevTables,
+					[tableId]: {
+						...prevTables[tableId],
+						isExpanded: !prevTables[tableId].isExpanded,
+					},
+				};
+			});
+			const updatedTable = await axiosFetch.put<UpdateTableExpandResponse>(
+				`/api/supabase/table/expand`,
+				{
+					tableId: tableId,
+					isExpand: !tables[tableId].isExpanded,
+				} as UpdateTableExpandRequest
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'table_update',
+				payload: {
+					newTable: updatedTable,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleTableEditMode = async ({
+		tableId,
+	}: handleTableEditProps): Promise<void> => {
+		try {
+			if (!tables || !tables[tableId]) return;
+			setTables((prevTables) => {
+				if (!prevTables || !prevTables[tableId]) return prevTables;
+				return {
+					...prevTables,
+					[tableId]: {
+						...prevTables[tableId],
+						isEditing: !prevTables[tableId].isEditing,
+					},
+				};
+			});
+			const updatedTable = await axiosFetch.put<UpdateTableLockResponse>(
+				`/api/supabase/table/lock`,
+				{
+					tableId: tableId,
+					isEdit: !tables[tableId].isEditing,
+				} as UpdateTableLockRequest
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'table_update',
+				payload: {
+					newTable: updatedTable,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
+		try {
+			const { id, position } = node;
+			setTables((prevTables) => {
+				if (!prevTables || !prevTables[id]) return prevTables;
+				return {
+					...prevTables,
+					[id]: {
+						...prevTables[id],
+						position: position,
+					},
+				};
+			});
 			const updatedTable = await axiosFetch.put<UpdateTablePositionResponse>(
 				'/api/supabase/table/position',
 				{
@@ -308,6 +427,8 @@ export const useProject = (): UseProjectProps => {
 		handleAddTable,
 		handleAddColumn,
 		handleOpenTableExpansion,
+		handleTableEditMode,
+		handleTableExpansion,
 		handleNodeDragStop,
 	};
 };

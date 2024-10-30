@@ -1,5 +1,5 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { useLayout, usePalette } from '../../../hooks';
+import { usePalette, useProject } from '../../../hooks';
 import { EditLeftBarTableExpandIconProps } from '../../../interfaces';
 
 export const EditLeftBarTableExpandIcon = ({
@@ -7,7 +7,7 @@ export const EditLeftBarTableExpandIcon = ({
 	isExpanded,
 }: EditLeftBarTableExpandIconProps) => {
 	const palette = usePalette();
-	const { handleTableExpansion } = useLayout();
+	const { handleTableExpansion } = useProject();
 
 	return (
 		<>

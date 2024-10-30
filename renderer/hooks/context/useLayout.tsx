@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { Context } from '../../provider';
 import {
 	EditReactFlowCustomNodeDataProps,
-	handleTableExpansionProps,
 	TablesStateProps,
 	UseLayoutProps,
 } from '../../interfaces';
@@ -38,21 +37,6 @@ export const useLayout = (): UseLayoutProps => {
 		setIsPreparingProject,
 	} = context;
 
-	const handleTableExpansion = ({
-		tableId,
-	}: handleTableExpansionProps): void => {
-		setTables((prevTables) => {
-			if (!prevTables || !prevTables[tableId]) return prevTables;
-			return {
-				...prevTables,
-				[tableId]: {
-					...prevTables[tableId],
-					isExpanded: !prevTables[tableId].isExpanded,
-				},
-			};
-		});
-	};
-
 	const handleAllTableExpansion = (expand: boolean): void => {
 		setTables((prevTables) => {
 			if (!prevTables) return prevTables;
@@ -81,20 +65,6 @@ export const useLayout = (): UseLayoutProps => {
 		}));
 	};
 
-	const handleTableEditMode = (tableId: string): void => {
-		setTables((prevTables) => {
-			if (!prevTables) return null;
-			const updatedTables = { ...prevTables };
-			if (updatedTables[tableId]) {
-				updatedTables[tableId] = {
-					...updatedTables[tableId],
-					isEditing: !updatedTables[tableId].isEditing,
-				};
-			}
-			return updatedTables;
-		});
-	};
-
 	return {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
@@ -117,9 +87,7 @@ export const useLayout = (): UseLayoutProps => {
 		isPreparingProject,
 		setIsPreparingProject,
 
-		handleTableExpansion,
 		handleAllTableExpansion,
 		handleGetNodesFromTables,
-		handleTableEditMode,
 	};
 };
