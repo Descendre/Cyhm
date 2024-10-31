@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../libs';
 import {
+	AddTableResponse,
 	UpdateTableLockRequest,
-	UpdateTableLockResponse,
 } from '../../../../../interfaces';
 
 export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: UpdateTableLockRequest = await req.json();
 		const { tableId, isEdit } = body;
-		const updatedTable: UpdateTableLockResponse = await prisma.table.update({
+		const updatedTable: AddTableResponse = await prisma.table.update({
 			where: { id: tableId },
 			data: {
 				isEditing: isEdit,

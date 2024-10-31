@@ -5,6 +5,7 @@ import {
 	ColumnsStateProps,
 	ContextProviderProps,
 	FetchUserProjectsResponse,
+	TableEditStateProps,
 	TablesStateProps,
 	windowModeProps,
 } from '../interfaces';
@@ -41,6 +42,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isPreparingProject, setIsPreparingProject] = useState<string | null>(
 		null
 	);
+	const [tableEditInfo, setTableEditInfo] = useState<TableEditStateProps>({});
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -78,6 +80,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsSubscribed,
 		isPreparingProject,
 		setIsPreparingProject,
+		tableEditInfo,
+		setTableEditInfo,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

@@ -6,7 +6,7 @@ import {
 	EditRightPopperTableNameInput,
 } from '../atom';
 import { Circle, DriveFileRenameOutline } from '@mui/icons-material';
-import { usePalette } from '../../../hooks';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 import { EditRightPopperTableSettingAreaProps } from '../../../interfaces';
 import { useRef, useState } from 'react';
 
@@ -14,10 +14,14 @@ export const EditRightPopperTableSettingArea = ({
 	table,
 }: EditRightPopperTableSettingAreaProps) => {
 	const palette = usePalette();
+	const { tables } = useLayout();
+	const { tableEditInfo } = useProject();
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 	const boxRef = useRef<HTMLElement | null>(null);
+	const isEditable: boolean = tables[table?.id]?.isEditing;
 
 	const handleCircleClick = (event: React.MouseEvent<HTMLElement>): void => {
+		if (!isEditable) return;
 		setAnchorEl(event.currentTarget);
 	};
 
@@ -52,7 +56,7 @@ export const EditRightPopperTableSettingArea = ({
 							cursor: 'pointer',
 						}}
 					/>
-					<EditRightPopperTableNameInput />
+					<EditRightPopperTableNameInput table={table} />
 				</Box>
 				<Box
 					display="flex"
@@ -67,14 +71,12 @@ export const EditRightPopperTableSettingArea = ({
 						titleAccess="テーブルカラーを変更"
 						fontSize="small"
 						sx={{
-							color: table
-								? table.color
-								: palette.components.edit.reactFlow.tableHeader.default,
+							color: '#' + tableEditInfo[table?.id]?.color || '',
 							fontSize: '1.1rem',
 							cursor: 'pointer',
 						}}
 					/>
-					<EditRightPopperTableColorInput />
+					<EditRightPopperTableColorInput table={table} />
 				</Box>
 				<EditRightPopperTableModeSelect table={table} />
 			</Box>
@@ -84,6 +86,7 @@ export const EditRightPopperTableSettingArea = ({
 				anchorEl={anchorEl}
 				onClose={handlePopperClose}
 				parentRef={boxRef}
+				table={table}
 			/>
 		</>
 	);

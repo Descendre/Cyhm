@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../libs';
 import {
+	AddTableResponse,
 	UpdateTableExpandRequest,
-	UpdateTableExpandResponse,
 } from '../../../../../interfaces';
 
 export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: UpdateTableExpandRequest = await req.json();
 		const { tableId, isExpand } = body;
-		const updatedTable: UpdateTableExpandResponse = await prisma.table.update({
+		const updatedTable: AddTableResponse = await prisma.table.update({
 			where: { id: tableId },
 			data: {
 				isExpanded: isExpand,

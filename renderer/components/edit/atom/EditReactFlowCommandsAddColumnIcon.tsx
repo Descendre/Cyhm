@@ -1,11 +1,12 @@
 import { IconButton } from '@mui/material';
-import { useLayout } from '../../../hooks';
+import { useLayout, usePalette } from '../../../hooks';
 import { Add } from '@mui/icons-material';
 import { EditReactFlowCommandsAddColumnIconProps } from '../../../interfaces';
 
 export const EditReactFlowCommandsAddColumnIcon = ({
 	table,
 }: EditReactFlowCommandsAddColumnIconProps) => {
+	const palette = usePalette();
 	const { setAddColumnIndex, setSelectedTable, setIsEditLeftBar } = useLayout();
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -24,7 +25,7 @@ export const EditReactFlowCommandsAddColumnIcon = ({
 				handleClick(event)
 			}
 			sx={{
-				backgroundColor: table.color,
+				backgroundColor: palette.components.edit.reactFlow.tableHeader.default,
 			}}
 		>
 			<Add

@@ -3,16 +3,24 @@ import { Popper } from '@mui/material';
 import { Sketch } from '@uiw/react-color';
 import { EditRightPopperSketchPickerProps } from '../../../interfaces';
 import { useEffect, useRef } from 'react';
-import { usePalette } from '../../../hooks';
+import { usePalette, useProject } from '../../../hooks';
 
 export const EditRightPopperSketchPicker = ({
 	open,
 	anchorEl,
 	onClose,
 	parentRef,
+	table,
 }: EditRightPopperSketchPickerProps) => {
 	const popperRef = useRef<HTMLDivElement | null>(null);
 	const palette = usePalette();
+	const { tableEditInfo, handleTableColorChange } = useProject();
+
+	const handleColorChange = (color: string) => {
+		const tableId = table?.id;
+		if (!tableId) return;
+		handleTableColorChange({ tableId: tableId, color: color });
+	};
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -52,6 +60,8 @@ export const EditRightPopperSketchPicker = ({
 		>
 			<Sketch
 				disableAlpha
+				color={tableEditInfo[table?.id]?.color || ''}
+				onChange={(color) => handleColorChange(color.hex.substring(1))}
 				style={{
 					backgroundColor: palette.layout.editLayout.rightPopper.bg,
 					borderRadius: '5px 0 0 5px',

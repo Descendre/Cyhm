@@ -5,3 +5,5 @@ export * from './AddColumnRequest';
 export * from './UpdateTablePositionRequest';
 export * from './UpdateTableExpandRequest';
 export * from './UpdateTableLockRequest';
+export * from './UpdateTableNameRequest';
+export * from './UpdateTableColorRequest';

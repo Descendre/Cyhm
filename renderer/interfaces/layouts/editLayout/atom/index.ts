@@ -7,3 +7,5 @@ export * from './EditLeftBarToggleEditIconProps';
 export * from './EditRightPoperTableTitleProps';
 export * from './EditRightPopperTableModeSelectProps';
 export * from './EditRightPopperSketchPickerProps';
+export * from './EditRightPopperTableNameInputProps';
+export * from './EditRightPopperTableColorInputProps';

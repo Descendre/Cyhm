@@ -4,6 +4,7 @@ import {
 	AddTableResponse,
 	FetchUserProjectsResponse,
 } from '../api';
+import { TableEditStateProps } from '../provider';
 
 export interface UseProjectProps {
 	userProjects: FetchUserProjectsResponse[] | null;
@@ -16,6 +17,8 @@ export interface UseProjectProps {
 	>;
 	isSubscribed: boolean;
 	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
+	tableEditInfo: TableEditStateProps;
+	setTableEditInfo: React.Dispatch<React.SetStateAction<TableEditStateProps>>;
 
 	handleCreateProject: ({ userId }: handleCreateProjectProps) => Promise<void>;
 	handleFetchUserProjects: ({
@@ -39,6 +42,22 @@ export interface UseProjectProps {
 		tableId,
 	}: handleTableExpansionProps) => Promose<void>;
 	handleTableEditMode: ({ tableId }: handleTableEditProps) => Promose<void>;
+	handleTableNameChange: ({
+		tableId,
+		event,
+	}: handleTableNameChangeProps) => void;
+	handleTableNameUpdate: ({
+		tableId,
+		name,
+	}: handleTableNameUpdateProps) => Promise<void>;
+	handleTableColorChange: ({
+		tableId,
+		color,
+	}: handleTableColorChangeProps) => void;
+	handleTableColorUpdate: ({
+		tableId,
+		color,
+	}: handleTableColorUpdateProps) => Promise<void>;
 	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
@@ -74,6 +93,26 @@ export interface handleTableExpansionProps {
 
 export interface handleTableEditProps {
 	tableId: string;
+}
+
+export interface handleTableNameChangeProps {
+	tableId: string;
+	event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+}
+
+export interface handleTableNameUpdateProps {
+	tableId: string;
+	name: string;
+}
+
+export interface handleTableColorChangeProps {
+	tableId: string;
+	color: string;
+}
+
+export interface handleTableColorUpdateProps {
+	tableId: string;
+	color: string;
 }
 
 export interface handleNodeDragStopProps {
