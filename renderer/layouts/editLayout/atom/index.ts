@@ -14,3 +14,5 @@ export * from './EditLeftBarTableAddColumnIcon';
 export * from './EditLeftBarNewBornInput';
 export * from './EditLeftBarToggleIcon';
 export * from './EditLeftBarToggleEditIcon';
+export * from './EditRightPoperTableTitle';
+export * from './EditRightPopperListIcon';

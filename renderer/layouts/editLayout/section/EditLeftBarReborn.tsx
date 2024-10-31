@@ -17,6 +17,9 @@ export const EditLeftBarReborn = () => {
 			alignItems="center"
 			height="35px"
 			padding="0 10px"
+			sx={{
+				pointerEvents: 'none',
+			}}
 		>
 			<Subject
 				fontSize="small"
@@ -25,6 +28,7 @@ export const EditLeftBarReborn = () => {
 				sx={{
 					cursor: 'pointer',
 					color: palette.text.secondary,
+					pointerEvents: 'auto',
 				}}
 			/>
 		</Box>

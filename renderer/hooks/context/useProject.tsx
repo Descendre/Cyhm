@@ -195,9 +195,10 @@ export const useProject = (): UseProjectProps => {
 						[tableId]: [newColumn],
 					};
 				}
+				const prevTableColumns = prevColumns[tableId] || [];
 				return {
 					...prevColumns,
-					[tableId]: [...prevColumns[tableId], newColumn],
+					[tableId]: [...prevTableColumns, newColumn],
 				};
 			});
 

@@ -32,11 +32,9 @@ export const EditLeftBar = () => {
 				width="100%"
 				height="calc(100% - 35px)"
 				sx={{
-					overflowY: 'overlay',
-					'&:not(:hover)': {
-						'&::-webkit-scrollbar-thumb': {
-							backgroundColor: 'transparent',
-						},
+					overflowY: 'scroll',
+					'&::-webkit-scrollbar': {
+						width: '0px',
 					},
 				}}
 			>

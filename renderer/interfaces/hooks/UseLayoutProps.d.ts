@@ -11,6 +11,7 @@ export interface UseLayoutProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
 	EditReactFlowAreaRef: React.RefObject<HTMLDivElement | null>;
 	EditFooterAddColumnIconRef: React.RefObject<HTMLDivElement | null>;
+	EditRightPopperRef: React.RefObject<HTMLDivElement | null>;
 
 	windowMode: windowModeProps;
 	setWindowMode: React.Dispatch<React.SetStateAction<windowModeProps | null>>;
@@ -26,12 +27,17 @@ export interface UseLayoutProps {
 	setSelectedTable: React.Dispatch<
 		React.SetStateAction<AddTableResponse | null>
 	>;
+	lastSelectedTableId: string | null;
+	setLastSelectedTableId: React.Dispatch<React.SetStateAction<string | null>>;
 	isEditLeftBar: boolean;
 	setIsEditLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
+	isEditRightPopper: boolean;
+	setIsEditRightPopper: React.Dispatch<React.SetStateAction<boolean>>;
 	isPreparingProject: string | null;
 	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
 
 	handleAllTableExpansion: (expand: boolean) => void;
+	handleSelectTable: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];
 }
 

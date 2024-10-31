@@ -2,6 +2,7 @@
 import { useContext } from 'react';
 import { Context } from '../../provider';
 import {
+	AddTableResponse,
 	EditReactFlowCustomNodeDataProps,
 	TablesStateProps,
 	UseLayoutProps,
@@ -18,6 +19,7 @@ export const useLayout = (): UseLayoutProps => {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
 		EditFooterAddColumnIconRef,
+		EditRightPopperRef,
 
 		windowMode,
 		setWindowMode,
@@ -31,8 +33,12 @@ export const useLayout = (): UseLayoutProps => {
 		setAddColumnIndex,
 		selectedTable,
 		setSelectedTable,
+		lastSelectedTableId,
+		setLastSelectedTableId,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isEditRightPopper,
+		setIsEditRightPopper,
 		isPreparingProject,
 		setIsPreparingProject,
 	} = context;
@@ -52,6 +58,13 @@ export const useLayout = (): UseLayoutProps => {
 		});
 	};
 
+	const handleSelectTable = (table: AddTableResponse | null): void => {
+		setSelectedTable(table);
+		if (table) {
+			setLastSelectedTableId(table.id);
+		}
+	};
+
 	const handleGetNodesFromTables = (): Node[] => {
 		if (!tables) return [];
 
@@ -69,6 +82,7 @@ export const useLayout = (): UseLayoutProps => {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
 		EditFooterAddColumnIconRef,
+		EditRightPopperRef,
 
 		windowMode,
 		setWindowMode,
@@ -82,12 +96,17 @@ export const useLayout = (): UseLayoutProps => {
 		setAddColumnIndex,
 		selectedTable,
 		setSelectedTable,
+		lastSelectedTableId,
+		setLastSelectedTableId,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isEditRightPopper,
+		setIsEditRightPopper,
 		isPreparingProject,
 		setIsPreparingProject,
 
 		handleAllTableExpansion,
+		handleSelectTable,
 		handleGetNodesFromTables,
 	};
 };

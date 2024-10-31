@@ -15,6 +15,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const EditLeftBarTableAreaRef = useRef<HTMLDivElement | null>(null);
 	const EditReactFlowAreaRef = useRef<HTMLDivElement | null>(null);
 	const EditFooterAddColumnIconRef = useRef<HTMLDivElement | null>(null);
+	const EditRightPopperRef = useRef<HTMLDivElement | null>(null);
 
 	const [windowMode, setWindowMode] = useState<windowModeProps>('top');
 	const [isMic, setIsMic] = useState<boolean>(false);
@@ -26,7 +27,11 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [selectedTable, setSelectedTable] = useState<AddTableResponse | null>(
 		null
 	);
+	const [lastSelectedTableId, setLastSelectedTableId] = useState<string | null>(
+		null
+	);
 	const [isEditLeftBar, setIsEditLeftBar] = useState<boolean>(true);
+	const [isEditRightPopper, setIsEditRightPopper] = useState<boolean>(true);
 	const [userProjects, setUserProjects] = useState<
 		FetchUserProjectsResponse[] | null
 	>(null);
@@ -41,6 +46,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
 		EditFooterAddColumnIconRef,
+		EditRightPopperRef,
 
 		windowMode,
 		setWindowMode,
@@ -58,8 +64,12 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setAddColumnIndex,
 		selectedTable,
 		setSelectedTable,
+		lastSelectedTableId,
+		setLastSelectedTableId,
 		isEditLeftBar,
 		setIsEditLeftBar,
+		isEditRightPopper,
+		setIsEditRightPopper,
 		userProjects,
 		setUserProjects,
 		currentProject,

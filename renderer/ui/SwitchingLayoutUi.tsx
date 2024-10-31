@@ -11,6 +11,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
 		EditFooterAddColumnIconRef,
+		EditRightPopperRef,
 		windowMode,
 		setSelectedTable,
 	} = useLayout();
@@ -21,7 +22,8 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 			if (
 				EditLeftBarTableAreaRef.current &&
 				EditReactFlowAreaRef.current &&
-				EditFooterAddColumnIconRef.current
+				EditFooterAddColumnIconRef.current &&
+				EditRightPopperRef.current
 			) {
 				const isClickOutsideReactFlow = !EditReactFlowAreaRef.current.contains(
 					event.target as Node
@@ -30,10 +32,14 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 					!EditLeftBarTableAreaRef.current.contains(event.target as Node);
 				const isClickOutsideEditFooterAddColumnIcon =
 					!EditFooterAddColumnIconRef.current.contains(event.target as Node);
+				const isClickOutsideRightPopper = !EditRightPopperRef.current.contains(
+					event.target as Node
+				);
 				if (
 					isClickOutsideReactFlow &&
 					isClickOutsideLeftBarTableArea &&
-					isClickOutsideEditFooterAddColumnIcon
+					isClickOutsideEditFooterAddColumnIcon &&
+					isClickOutsideRightPopper
 				) {
 					setSelectedTable(null);
 				}
