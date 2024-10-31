@@ -4,6 +4,7 @@ import { ColumnsStateProps } from './ColumnProps';
 import React from 'react';
 import { AddTableResponse, FetchUserProjectsResponse } from '../api';
 import { TableEditStateProps } from './TableEditInfoProps';
+import { ColumnEditStateProps } from './ColumnEditInfoProps';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -49,4 +50,6 @@ export interface ContextProviderProps {
 	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
 	tableEditInfo: TableEditStateProps;
 	setTableEditInfo: React.Dispatch<React.SetStateAction<TableEditStateProps>>;
+	columnEditInfo: ColumnEditStateProps;
+	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnEditStateProps>>;
 }

@@ -20,7 +20,6 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 			id: newColumn.id,
 			createdAt: newColumn.createdAt,
 			updatedAt: newColumn.updatedAt,
-			constraints: [],
 		};
 		return NextResponse.json(formattedNewColumn);
 	} catch (error) {

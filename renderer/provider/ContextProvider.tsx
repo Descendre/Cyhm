@@ -2,6 +2,7 @@
 import { ReactNode, createContext, useRef, useState } from 'react';
 import {
 	AddTableResponse,
+	ColumnEditStateProps,
 	ColumnsStateProps,
 	ContextProviderProps,
 	FetchUserProjectsResponse,
@@ -43,6 +44,9 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		null
 	);
 	const [tableEditInfo, setTableEditInfo] = useState<TableEditStateProps>({});
+	const [columnEditInfo, setColumnEditInfo] = useState<ColumnEditStateProps>(
+		{}
+	);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -82,6 +86,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsPreparingProject,
 		tableEditInfo,
 		setTableEditInfo,
+		columnEditInfo,
+		setColumnEditInfo,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

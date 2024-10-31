@@ -7,3 +7,5 @@ export * from './UpdateTableExpandRequest';
 export * from './UpdateTableLockRequest';
 export * from './UpdateTableNameRequest';
 export * from './UpdateTableColorRequest';
+export * from './UpdateColumnNameRequest';
+export * from './UpdateColumnTypeRequest';

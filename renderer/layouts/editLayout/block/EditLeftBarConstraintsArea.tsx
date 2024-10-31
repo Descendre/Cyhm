@@ -98,11 +98,13 @@ export const EditLeftBarConstraintsArea = (column: AddColumnResponse) => {
 			height="100%"
 			sx={{
 				cursor: 'pointer',
+				pointerEvents: column ? 'none' : 'none',
 			}}
 		>
-			{column.constraints.map((constraint, index) => (
+			{/* {column.constraints.map((constraint, index) => (
 				<Box key={index}>{getConstraintIcon(constraint)}</Box>
-			))}
+			))} */}
+			{getConstraintIcon({ type: 'NOT_NULL' })}
 		</Box>
 	);
 };

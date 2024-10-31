@@ -2,6 +2,7 @@
 import { Box } from '@mui/material';
 import { useBreakPoint, useLayout, usePalette } from '../../../hooks';
 import {
+	EditRightPopperColumnSettingArea,
 	EditRightPopperHeader,
 	EditRightPopperSettingArea,
 	EditRightPopperTableSettingArea,
@@ -47,7 +48,7 @@ export const EditRightPopper = ({ table }: EditRightPopperProps) => {
 					<EditRightPopperTableSettingArea table={table} />
 				</EditRightPopperSettingArea>
 				<EditRightPopperSettingArea title="カラム一覧">
-					<></>
+					<EditRightPopperColumnSettingArea table={table} />
 				</EditRightPopperSettingArea>
 			</Box>
 		</Box>
