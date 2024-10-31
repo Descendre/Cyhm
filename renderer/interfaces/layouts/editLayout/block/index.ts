@@ -5,3 +5,4 @@ export * from './EditLeftBarTableAreaProps';
 export * from './EditRightPopperSettingAreaProps';
 export * from './EditRightPopperSettingHeaderProps';
 export * from './EditRightPopperTableSettingAreaProps';
+export * from './EditRightPopperColumnSettingAreaProps';

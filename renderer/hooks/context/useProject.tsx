@@ -13,6 +13,8 @@ import {
 	FetchUserProjectsResponse,
 	handleAddColumnProps,
 	handleAddTableProps,
+	handleColumnNameChangeProps,
+	handleColumnNameUpdateProps,
 	handleCreateProjectProps,
 	handleFetchUserProjectsProps,
 	handleNodeDragStopProps,
@@ -23,7 +25,10 @@ import {
 	handleTableEditProps,
 	handleTableNameChangeProps,
 	handleTableNameUpdateProps,
+	handleUpdateColumnTypeProps,
 	TableChannelPayloadProps,
+	UpdateColumnNameRequest,
+	UpdateColumnTypeRequest,
 	UpdateTableColorRequest,
 	UpdateTableExpandRequest,
 	UpdateTableLockRequest,
@@ -46,6 +51,7 @@ export const useProject = (): UseProjectProps => {
 	const {
 		tables,
 		setTables,
+		columns,
 		setColumns,
 		setIsTableAddMode,
 		setAddColumnIndex,
@@ -59,6 +65,8 @@ export const useProject = (): UseProjectProps => {
 		setIsPreparingProject,
 		tableEditInfo,
 		setTableEditInfo,
+		columnEditInfo,
+		setColumnEditInfo,
 	} = context;
 
 	const SUPABASE_CHANNEL_NAME = `project_${currentProject?.id}`;
@@ -134,6 +142,19 @@ export const useProject = (): UseProjectProps => {
 				return updatedTableInfo;
 			});
 
+			setColumnEditInfo((prevState) => {
+				const updatedColumnInfo = { ...prevState };
+				Object.keys(allProjectContents.columns).forEach((tableId) => {
+					const columns = allProjectContents.columns[tableId];
+					updatedColumnInfo[tableId] = columns.map((column) => ({
+						id: column.id,
+						name: column.name,
+						type: column.type,
+					}));
+				});
+				return updatedColumnInfo;
+			});
+
 			if (typeof window !== 'undefined' && window.ipc) {
 				window.ipc.send('project-start');
 			} else {
@@ -145,10 +166,6 @@ export const useProject = (): UseProjectProps => {
 			setIsPreparingProject(null);
 		}
 	};
-
-	useEffect(() => {
-		console.log(tableEditInfo);
-	}, [tableEditInfo]);
 
 	const handleEndProject = (): void => {
 		if (typeof window !== 'undefined' && window.ipc) {
@@ -210,7 +227,6 @@ export const useProject = (): UseProjectProps => {
 					name: name,
 					tableId: tableId,
 					type: 'INT',
-					constraints: [],
 				};
 				if (!prevColumns) {
 					return {
@@ -449,6 +465,116 @@ export const useProject = (): UseProjectProps => {
 		}
 	};
 
+	const handleColumnNameChange = ({
+		tableId,
+		columnId,
+		name,
+	}: handleColumnNameChangeProps) => {
+		setColumnEditInfo((prevState) => {
+			const updatedState = { ...prevState };
+			const columnArray = updatedState[tableId];
+			const columnToUpdate = columnArray.find(
+				(column) => column.id === columnId
+			);
+			if (columnToUpdate) {
+				columnToUpdate.name = name;
+			}
+			return updatedState;
+		});
+	};
+
+	const handleColumnNameUpdate = async ({
+		tableId,
+		columnId,
+		name,
+	}: handleColumnNameUpdateProps): Promise<void> => {
+		try {
+			if (!session.user) return;
+
+			const currentColumn = columns[tableId]?.find(
+				(column) => column.id === columnId
+			);
+			if (!currentColumn || currentColumn.name === name) return;
+
+			setColumns((prevState) => {
+				const updatedState = { ...prevState };
+				const columnArray = updatedState[tableId];
+				const columnToUpdate = columnArray.find(
+					(column) => column.id === columnId
+				);
+				if (columnToUpdate) {
+					columnToUpdate.name = name;
+				}
+				return updatedState;
+			});
+			const updatedColumn = await axiosFetch.put<AddTableResponse>(
+				`/api/supabase/column/name`,
+				{
+					columnId: columnId,
+					name: name,
+				} as UpdateColumnNameRequest
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'column_update',
+				payload: {
+					newTable: updatedColumn,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleUpdateColumnType = async ({
+		tableId,
+		columnId,
+		type,
+	}: handleUpdateColumnTypeProps): Promise<void> => {
+		try {
+			if (!session.user) return;
+
+			const currentColumn = columns[tableId]?.find(
+				(column) => column.id === columnId
+			);
+			if (!currentColumn || currentColumn.type === type) {
+				return;
+			}
+
+			setColumns((prevState) => {
+				const updatedState = { ...prevState };
+				const columnIndex = updatedState[tableId].findIndex(
+					(col) => col.id === columnId
+				);
+				if (columnIndex !== -1) {
+					updatedState[tableId][columnIndex].type = type;
+				}
+				return updatedState;
+			});
+
+			const updatedColumn = await axiosFetch.put<AddTableResponse>(
+				`/api/supabase/column/type`,
+				{
+					columnId: columnId,
+					type: type,
+				} as UpdateColumnTypeRequest
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'column_update',
+				payload: {
+					newTable: updatedColumn,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
 		try {
 			const { id, position } = node;
@@ -550,6 +676,8 @@ export const useProject = (): UseProjectProps => {
 		setIsSubscribed,
 		tableEditInfo,
 		setTableEditInfo,
+		columnEditInfo,
+		setColumnEditInfo,
 
 		handleCreateProject,
 		handleFetchUserProjects,
@@ -564,6 +692,9 @@ export const useProject = (): UseProjectProps => {
 		handleTableNameUpdate,
 		handleTableColorChange,
 		handleTableColorUpdate,
+		handleColumnNameChange,
+		handleColumnNameUpdate,
+		handleUpdateColumnType,
 		handleNodeDragStop,
 	};
 };

@@ -4,7 +4,8 @@ import {
 	AddTableResponse,
 	FetchUserProjectsResponse,
 } from '../api';
-import { TableEditStateProps } from '../provider';
+import { ColumnEditStateProps, TableEditStateProps } from '../provider';
+import { ColumnType } from '@prisma/client';
 
 export interface UseProjectProps {
 	userProjects: FetchUserProjectsResponse[] | null;
@@ -19,6 +20,8 @@ export interface UseProjectProps {
 	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 	tableEditInfo: TableEditStateProps;
 	setTableEditInfo: React.Dispatch<React.SetStateAction<TableEditStateProps>>;
+	columnEditInfo: ColumnEditStateProps;
+	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnEditStateProps>>;
 
 	handleCreateProject: ({ userId }: handleCreateProjectProps) => Promise<void>;
 	handleFetchUserProjects: ({
@@ -58,6 +61,21 @@ export interface UseProjectProps {
 		tableId,
 		color,
 	}: handleTableColorUpdateProps) => Promise<void>;
+	handleColumnNameChange: ({
+		tableId,
+		columnId,
+		name,
+	}: handleColumnNameChangeProps) => void;
+	handleColumnNameUpdate: ({
+		tableId,
+		columnId,
+		name,
+	}: handleColumnNameUpdateProps) => Promose<void>;
+	handleUpdateColumnType: ({
+		tableId,
+		columnId,
+		type,
+	}: handleUpdateColumnTypeProps) => Promose<void>;
 	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
@@ -113,6 +131,24 @@ export interface handleTableColorChangeProps {
 export interface handleTableColorUpdateProps {
 	tableId: string;
 	color: string;
+}
+
+export interface handleColumnNameChangeProps {
+	tableId: string;
+	columnId: string;
+	name: string;
+}
+
+export interface handleColumnNameUpdateProps {
+	tableId: string;
+	columnId: string;
+	name: string;
+}
+
+export interface handleUpdateColumnTypeProps {
+	tableId: string;
+	columnId: string;
+	type: ColumnType;
 }
 
 export interface handleNodeDragStopProps {

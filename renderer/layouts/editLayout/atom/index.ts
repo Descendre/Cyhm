@@ -20,3 +20,5 @@ export * from './EditRightPopperTableNameInput';
 export * from './EditRightPopperTableColorInput';
 export * from './EditRightPopperTableModeSelect';
 export * from './EditRightPopperSketchPicker';
+export * from './EditRightPopperColumnNameInput';
+export * from './EditRightPopperColumnTypeSelect';

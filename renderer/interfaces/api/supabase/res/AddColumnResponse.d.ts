@@ -7,7 +7,6 @@ export interface AddColumnResponse {
 	id: string;
 	createdAt?: Date;
 	updatedAt?: Date;
-	constraints: ColumnConstraintProps[];
 }
 
 type ColumnConstraintProps =

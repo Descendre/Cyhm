@@ -9,3 +9,5 @@ export * from './EditRightPopperTableModeSelectProps';
 export * from './EditRightPopperSketchPickerProps';
 export * from './EditRightPopperTableNameInputProps';
 export * from './EditRightPopperTableColorInputProps';
+export * from './EditRightPopperColumnNameInputProps';
+export * from './EditRightPopperColumnTypeSelectProps';
