@@ -5,3 +5,5 @@ export * from './TableModeProps';
 export * from './EditLeftBarTableAddColumnIconProps';
 export * from './EditLeftBarToggleEditIconProps';
 export * from './EditRightPoperTableTitleProps';
+export * from './EditRightPopperTableModeSelectProps';
+export * from './EditRightPopperSketchPickerProps';

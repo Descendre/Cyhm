@@ -16,3 +16,7 @@ export * from './EditLeftBarToggleIcon';
 export * from './EditLeftBarToggleEditIcon';
 export * from './EditRightPoperTableTitle';
 export * from './EditRightPopperListIcon';
+export * from './EditRightPopperTableNameInput';
+export * from './EditRightPopperTableColorInput';
+export * from './EditRightPopperTableModeSelect';
+export * from './EditRightPopperSketchPicker';

@@ -12,3 +12,6 @@ export * from './EditLeftBarTableArea';
 export * from './EditLeftBarColumnArea';
 export * from './EditLeftBarConstraintsArea';
 export * from './EditRightPopperHeader';
+export * from './EditRightPopperSettingArea';
+export * from './EditRightPopperSettingHeader';
+export * from './EditRightPopperTableSettingArea';
