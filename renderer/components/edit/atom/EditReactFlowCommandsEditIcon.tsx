@@ -23,7 +23,9 @@ export const EditReactFlowCommandsEditIcon = ({
 				handleClick(event)
 			}
 			sx={{
-				backgroundColor: table.isEditing ? palette.primary.main : table.color,
+				backgroundColor: table.isEditing
+					? palette.primary.main
+					: palette.components.edit.reactFlow.tableHeader.default,
 			}}
 		>
 			<Edit

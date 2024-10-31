@@ -1,5 +1,5 @@
 import { AddTableResponse } from '../../../api';
 
-export interface EditReactFlowCommandsAddColumnIconProps {
+export interface EditRightPopperTableNameInputProps {
 	table: AddTableResponse;
 }

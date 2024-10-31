@@ -2,17 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../libs';
 import {
 	AddTableResponse,
-	UpdateTablePositionRequest,
+	UpdateTableNameRequest,
 } from '../../../../../interfaces';
 
 export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 	try {
-		const body: UpdateTablePositionRequest = await req.json();
-		const { tableId, position } = body;
+		const body: UpdateTableNameRequest = await req.json();
+		const { tableId, name } = body;
 		const updatedTable: AddTableResponse = await prisma.table.update({
 			where: { id: tableId },
 			data: {
-				position: position,
+				name: name,
 			},
 		});
 		return NextResponse.json(updatedTable);

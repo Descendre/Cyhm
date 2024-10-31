@@ -18,12 +18,16 @@ import {
 	handleNodeDragStopProps,
 	handleOpenTableExpansionProps,
 	handleStartProjectProps,
+	handleTableColorChangeProps,
+	handleTableColorUpdateProps,
 	handleTableEditProps,
+	handleTableNameChangeProps,
+	handleTableNameUpdateProps,
 	TableChannelPayloadProps,
+	UpdateTableColorRequest,
 	UpdateTableExpandRequest,
-	UpdateTableExpandResponse,
 	UpdateTableLockRequest,
-	UpdateTableLockResponse,
+	UpdateTableNameRequest,
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
@@ -53,6 +57,8 @@ export const useProject = (): UseProjectProps => {
 		isSubscribed,
 		setIsSubscribed,
 		setIsPreparingProject,
+		tableEditInfo,
+		setTableEditInfo,
 	} = context;
 
 	const SUPABASE_CHANNEL_NAME = `project_${currentProject?.id}`;
@@ -115,6 +121,19 @@ export const useProject = (): UseProjectProps => {
 			setColumns(allProjectContents.columns);
 			setCurrentProject(project);
 			setWindowMode('edit');
+
+			setTableEditInfo((prevState) => {
+				const updatedTableInfo = { ...prevState };
+				Object.keys(allProjectContents.tables).forEach((tableId) => {
+					const tableData = allProjectContents.tables[tableId];
+					updatedTableInfo[tableId] = {
+						name: tableData.name,
+						color: tableData.color.substring(1),
+					};
+				});
+				return updatedTableInfo;
+			});
+
 			if (typeof window !== 'undefined' && window.ipc) {
 				window.ipc.send('project-start');
 			} else {
@@ -126,6 +145,10 @@ export const useProject = (): UseProjectProps => {
 			setIsPreparingProject(null);
 		}
 	};
+
+	useEffect(() => {
+		console.log(tableEditInfo);
+	}, [tableEditInfo]);
 
 	const handleEndProject = (): void => {
 		if (typeof window !== 'undefined' && window.ipc) {
@@ -264,7 +287,7 @@ export const useProject = (): UseProjectProps => {
 					},
 				};
 			});
-			const updatedTable = await axiosFetch.put<UpdateTableExpandResponse>(
+			const updatedTable = await axiosFetch.put<AddTableResponse>(
 				`/api/supabase/table/expand`,
 				{
 					tableId: tableId,
@@ -289,7 +312,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleTableEditProps): Promise<void> => {
 		try {
-			if (!tables || !tables[tableId]) return;
+			if (!tables || !tables[tableId] || !session.user) return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
 				return {
@@ -300,12 +323,117 @@ export const useProject = (): UseProjectProps => {
 					},
 				};
 			});
-			const updatedTable = await axiosFetch.put<UpdateTableLockResponse>(
+			const updatedTable = await axiosFetch.put<AddTableResponse>(
 				`/api/supabase/table/lock`,
 				{
 					tableId: tableId,
 					isEdit: !tables[tableId].isEditing,
 				} as UpdateTableLockRequest
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'table_update',
+				payload: {
+					newTable: updatedTable,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleTableNameChange = ({
+		tableId,
+		event,
+	}: handleTableNameChangeProps) => {
+		setTableEditInfo((prevState) => ({
+			...prevState,
+			[tableId]: {
+				...prevState[tableId],
+				name: event.target.value,
+			},
+		}));
+	};
+
+	const handleTableNameUpdate = async ({
+		tableId,
+		name,
+	}: handleTableNameUpdateProps): Promise<void> => {
+		try {
+			if (!session.user || tables[tableId].name === tableEditInfo[tableId].name)
+				return;
+			setTables((prevTables) => {
+				if (!prevTables || !prevTables[tableId]) return prevTables;
+				return {
+					...prevTables,
+					[tableId]: {
+						...prevTables[tableId],
+						name: name,
+					},
+				};
+			});
+			const updatedTable = await axiosFetch.put<AddTableResponse>(
+				`/api/supabase/table/name`,
+				{
+					tableId: tableId,
+					name: name,
+				} as UpdateTableNameRequest
+			);
+			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
+			channel.send({
+				type: 'broadcast',
+				event: 'table_update',
+				payload: {
+					newTable: updatedTable,
+					userId: session.user.id,
+				} as TableChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleTableColorChange = ({
+		tableId,
+		color,
+	}: handleTableColorChangeProps) => {
+		setTableEditInfo((prevState) => ({
+			...prevState,
+			[tableId]: {
+				...prevState[tableId],
+				color: color,
+			},
+		}));
+	};
+
+	const handleTableColorUpdate = async ({
+		tableId,
+		color,
+	}: handleTableColorUpdateProps): Promise<void> => {
+		try {
+			if (
+				!session.user ||
+				tables[tableId].color === '#' + tableEditInfo[tableId].color
+			)
+				return;
+			setTables((prevTables) => {
+				if (!prevTables || !prevTables[tableId]) return prevTables;
+				return {
+					...prevTables,
+					[tableId]: {
+						...prevTables[tableId],
+						color: '#' + color,
+					},
+				};
+			});
+			const updatedTable = await axiosFetch.put<AddTableResponse>(
+				`/api/supabase/table/color`,
+				{
+					tableId: tableId,
+					color: '#' + color,
+				} as UpdateTableColorRequest
 			);
 			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
 			channel.send({
@@ -420,6 +548,8 @@ export const useProject = (): UseProjectProps => {
 		setCurrentProject,
 		isSubscribed,
 		setIsSubscribed,
+		tableEditInfo,
+		setTableEditInfo,
 
 		handleCreateProject,
 		handleFetchUserProjects,
@@ -430,6 +560,10 @@ export const useProject = (): UseProjectProps => {
 		handleOpenTableExpansion,
 		handleTableEditMode,
 		handleTableExpansion,
+		handleTableNameChange,
+		handleTableNameUpdate,
+		handleTableColorChange,
+		handleTableColorUpdate,
 		handleNodeDragStop,
 	};
 };
