@@ -1,4 +1,5 @@
 export * from './EditHeaderLeftCommands';
+export * from './EditHeaderRightCommands';
 export * from './EditHeaderCenterCommands';
 export * from './EditHeaderRightCommands';
 export * from './EditHeaderAvatars';
@@ -10,3 +11,4 @@ export * from './EditLeftBarNewBorn';
 export * from './EditLeftBarTableArea';
 export * from './EditLeftBarColumnArea';
 export * from './EditLeftBarConstraintsArea';
+export * from './EditRightPopperHeader';

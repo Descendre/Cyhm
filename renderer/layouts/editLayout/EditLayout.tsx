@@ -7,11 +7,17 @@ import {
 	EditLeftBarReborn,
 	EditMain,
 	EditRightPopper,
+	EditRightPopperFix,
 } from './section';
 import { useLayout } from '../../hooks';
 
 export const EditLayout = ({ children }: EditLayoutProps) => {
-	const { isEditLeftBar } = useLayout();
+	const { tables, isEditLeftBar, isEditRightPopper, lastSelectedTableId } =
+		useLayout();
+	const lastSelectedTableInfo =
+		lastSelectedTableId && tables && tables[lastSelectedTableId]
+			? tables[lastSelectedTableId]
+			: null;
 
 	return (
 		<>
@@ -30,10 +36,13 @@ export const EditLayout = ({ children }: EditLayoutProps) => {
 						{children}
 						<EditFooter />
 					</EditMain>
+					{isEditRightPopper && lastSelectedTableInfo ? (
+						<EditRightPopper />
+					) : (
+						<EditRightPopperFix table={lastSelectedTableInfo} />
+					)}
 				</Box>
 			</Box>
-
-			<EditRightPopper />
 		</>
 	);
 };
