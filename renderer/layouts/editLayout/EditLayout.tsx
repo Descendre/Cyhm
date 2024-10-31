@@ -37,7 +37,7 @@ export const EditLayout = ({ children }: EditLayoutProps) => {
 						<EditFooter />
 					</EditMain>
 					{isEditRightPopper && lastSelectedTableInfo ? (
-						<EditRightPopper />
+						<EditRightPopper table={lastSelectedTableInfo} />
 					) : (
 						<EditRightPopperFix table={lastSelectedTableInfo} />
 					)}

@@ -14,9 +14,14 @@ type ColumnConstraintProps =
 	| { type: 'PRIMARY_KEY' }
 	| { type: 'NOT_NULL' }
 	| { type: 'UNIQUE' }
-	| { type: 'FOREIGN_KEY' }
+	| ForeignKeyConstraintProps
 	| CheckConstraintProps
 	| DefaultConstraintProps;
+
+interface ForeignKeyConstraintProps {
+	type: 'FOREIGN_KEY';
+	value: string;
+}
 
 interface DefaultConstraintProps {
 	type: 'DEFAULT';

@@ -1,9 +1,14 @@
 'use client';
 import { Box } from '@mui/material';
 import { useBreakPoint, useLayout, usePalette } from '../../../hooks';
-import { EditRightPopperHeader } from '../block';
+import {
+	EditRightPopperHeader,
+	EditRightPopperSettingArea,
+	EditRightPopperTableSettingArea,
+} from '../block';
+import { EditRightPopperProps } from '../../../interfaces';
 
-export const EditRightPopper = () => {
+export const EditRightPopper = ({ table }: EditRightPopperProps) => {
 	const palette = usePalette();
 	const breakpoint = useBreakPoint();
 	const { EditRightPopperRef } = useLayout();
@@ -23,6 +28,28 @@ export const EditRightPopper = () => {
 			overflow="hidden"
 		>
 			<EditRightPopperHeader />
+			<Box
+				display="flex"
+				justifyContent="start"
+				alignItems="center"
+				flexDirection="column"
+				width="100%"
+				height="calc(100% - 35px)"
+				padding="10px"
+				sx={{
+					overflowY: 'scroll',
+					'&::-webkit-scrollbar': {
+						width: '0px',
+					},
+				}}
+			>
+				<EditRightPopperSettingArea title="テーブル設定">
+					<EditRightPopperTableSettingArea table={table} />
+				</EditRightPopperSettingArea>
+				<EditRightPopperSettingArea title="カラム一覧">
+					<></>
+				</EditRightPopperSettingArea>
+			</Box>
 		</Box>
 	);
 };
