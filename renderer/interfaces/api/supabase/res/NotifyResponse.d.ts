@@ -10,6 +10,8 @@ export interface NotifyResponse {
 	type: NotifyType;
 	message: string | null;
 	isRead: boolean;
+	isAccepted: boolean;
+	isRejected: boolean;
 	createdAt: Date;
 	updatedAt: Date;
 }

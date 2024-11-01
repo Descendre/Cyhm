@@ -9,7 +9,7 @@ export const TopNotifyModalNotify = ({ notify }: TopNotifyModalNotifyProps) => {
 			display="flex"
 			justifyContent="center"
 			alignItems="start"
-			gap="10px"
+			gap="15px"
 			width="100%"
 			padding="15px"
 		>
@@ -31,7 +31,9 @@ export const TopNotifyModalNotify = ({ notify }: TopNotifyModalNotifyProps) => {
 				height="100%"
 			>
 				<TopNotifyModalNotifyTitle notify={notify} />
-				{notify.type === 'INVITATION' && <TopNotifyModalInvationCommands />}
+				{notify.type === 'INVITATION' && (
+					<TopNotifyModalInvationCommands notify={notify} />
+				)}
 			</Box>
 		</Box>
 	);

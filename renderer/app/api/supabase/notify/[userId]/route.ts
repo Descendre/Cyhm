@@ -17,7 +17,7 @@ export const GET = async (
 				project: true,
 			},
 			orderBy: {
-				createdAt: 'desc',
+				updatedAt: 'desc',
 			},
 		});
 		return NextResponse.json(notifications);

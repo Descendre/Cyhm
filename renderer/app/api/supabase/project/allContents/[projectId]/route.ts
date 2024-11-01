@@ -28,6 +28,8 @@ export const GET = async (
 			await prisma.notify.findMany({
 				where: {
 					projectId: projectId,
+					isAccepted: false,
+					isRejected: false,
 					type: 'INVITATION',
 				},
 				distinct: ['toUserId'],
