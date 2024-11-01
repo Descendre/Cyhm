@@ -22,6 +22,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   members   Member[]
+  sentNotifications Notify[] @relation("NotifyFrom")
+  receivedNotifications Notify[] @relation("NotifyTo")
 }
 
 model Project {
@@ -32,6 +34,7 @@ model Project {
   updatedAt   DateTime @updatedAt
   members     Member[]
   tables      Table[]
+  notifications Notify[]
 }
 
 model Member {
@@ -80,6 +83,23 @@ model ColumnConstraint {
   column    Column @relation(fields: [columnId], references: [id])
 }
 
+model Notify {
+  id          String    @id @default(cuid())
+  fromUserId  String
+  toUserId    String
+  projectId   String?
+  type        NotifyType
+  message     String?
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  fromUser    User      @relation("NotifyFrom", fields: [fromUserId], references: [id])
+  toUser      User      @relation("NotifyTo", fields: [toUserId], references: [id])
+  project     Project?  @relation(fields: [projectId], references: [id])
+
+  @@index([toUserId])
+}
+
 enum Provider {
   google
   github
@@ -109,4 +129,8 @@ enum ColumnConstraintType {
   FOREIGN_KEY
   CHECK
   DEFAULT
+}
+
+enum NotifyType {
+  INVITATION
 }

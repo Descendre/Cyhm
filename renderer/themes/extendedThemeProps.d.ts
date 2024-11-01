@@ -15,6 +15,11 @@ declare module '@mui/material/styles' {
 					searchBar: {
 						bg: string;
 					};
+					userPoper: {
+						bg: string;
+						line: string;
+						boxShadow: string;
+					};
 				};
 				leftBar: {
 					bg: string;
@@ -115,6 +120,11 @@ declare module '@mui/material/styles' {
 					line: string;
 					searchBar: {
 						bg: string;
+					};
+					userPoper: {
+						bg: string;
+						line: string;
+						boxShadow: string;
 					};
 				};
 				leftBar: {

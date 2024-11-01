@@ -8,6 +8,7 @@ import {
 	FetchUserProjectsResponse,
 	TableEditStateProps,
 	TablesStateProps,
+	UserSearchResultsProps,
 	windowModeProps,
 } from '../interfaces';
 
@@ -47,6 +48,13 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [columnEditInfo, setColumnEditInfo] = useState<ColumnEditStateProps>(
 		{}
 	);
+	const [userSearchResults, setUserSearchResults] =
+		useState<UserSearchResultsProps>({
+			invite: {
+				result: [],
+				query: '',
+			},
+		});
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -88,6 +96,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setTableEditInfo,
 		columnEditInfo,
 		setColumnEditInfo,
+		userSearchResults,
+		setUserSearchResults,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

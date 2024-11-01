@@ -6,9 +6,8 @@ import {
 	EditRightPopperTableNameInput,
 } from '../atom';
 import { Circle, DriveFileRenameOutline } from '@mui/icons-material';
-import { useLayout, usePalette, useProject } from '../../../hooks';
+import { useLayout, usePalette, usePopper, useProject } from '../../../hooks';
 import { EditRightPopperTableSettingAreaProps } from '../../../interfaces';
-import { useRef, useState } from 'react';
 
 export const EditRightPopperTableSettingArea = ({
 	table,
@@ -16,18 +15,11 @@ export const EditRightPopperTableSettingArea = ({
 	const palette = usePalette();
 	const { tables } = useLayout();
 	const { tableEditInfo } = useProject();
-	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-	const boxRef = useRef<HTMLElement | null>(null);
+	const { anchorEl, parentRef, popperRef, handleOpen } = usePopper<
+		HTMLDivElement,
+		HTMLDivElement
+	>({});
 	const isEditable: boolean = tables[table?.id]?.isEditing;
-
-	const handleCircleClick = (event: React.MouseEvent<HTMLElement>): void => {
-		if (!isEditable) return;
-		setAnchorEl(event.currentTarget);
-	};
-
-	const handlePopperClose = (): void => {
-		setAnchorEl(null);
-	};
 
 	return (
 		<>
@@ -64,8 +56,8 @@ export const EditRightPopperTableSettingArea = ({
 					alignItems="center"
 					gap="10px"
 					width="100%"
-					onClick={handleCircleClick}
-					ref={boxRef}
+					onClick={handleOpen}
+					ref={parentRef}
 				>
 					<Circle
 						titleAccess="テーブルカラーを変更"
@@ -82,10 +74,9 @@ export const EditRightPopperTableSettingArea = ({
 			</Box>
 
 			<EditRightPopperSketchPicker
-				open={Boolean(anchorEl)}
+				open={Boolean(anchorEl) && isEditable}
 				anchorEl={anchorEl}
-				onClose={handlePopperClose}
-				parentRef={boxRef}
+				popperRef={popperRef}
 				table={table}
 			/>
 		</>

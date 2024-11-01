@@ -6,3 +6,5 @@ export * from './EditRightPopperSettingAreaProps';
 export * from './EditRightPopperSettingHeaderProps';
 export * from './EditRightPopperTableSettingAreaProps';
 export * from './EditRightPopperColumnSettingAreaProps';
+export * from './EditHeaderUserPopperProps';
+export * from './EditHeaderUserPopperHeaderProps';

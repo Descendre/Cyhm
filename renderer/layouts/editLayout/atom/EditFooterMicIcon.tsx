@@ -1,31 +1,37 @@
 import { Mic, MicOff } from '@mui/icons-material';
 import { useRTC } from '../../../hooks/context/useRTC';
+import { Box } from '@mui/material';
 
 export const EditFooterMicIcon = () => {
 	const { isMic, setIsMic } = useRTC();
 
 	return (
-		<>
+		<Box
+			title={isMic ? 'マイクをオフ' : 'マイクをオン'}
+			display="flex"
+			justifyContent="center"
+			alignItems="center"
+			height="100%"
+			onClick={() => setIsMic((prev) => !prev)}
+		>
 			{isMic ? (
 				<Mic
-					titleAccess="マイクをオフ"
 					fontSize="small"
 					sx={{
 						cursor: 'pointer',
+						pointerEvents: 'none',
 					}}
-					onClick={() => setIsMic((prev) => !prev)}
 				/>
 			) : (
 				<MicOff
-					titleAccess="マイクをオン"
 					fontSize="small"
 					color="error"
 					sx={{
 						cursor: 'pointer',
+						pointerEvents: 'none',
 					}}
-					onClick={() => setIsMic((prev) => !prev)}
 				/>
 			)}
-		</>
+		</Box>
 	);
 };

@@ -6,3 +6,5 @@ export * from './AddTableResponse';
 export * from './AddColumnResponse';
 export * from './FetchAllContentsResponse';
 export * from './UpdateTablePositionResponse';
+export * from './UserResponse';
+export * from './UserLikeSearchResponse';
