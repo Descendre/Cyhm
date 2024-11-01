@@ -1,38 +1,16 @@
-<p align="center"><img src="https://i.imgur.com/NZfsD1p.png"></p>
+## 作品紹介
 
-## Usage
+作品名: Cyhm
 
-### Create an App
+作品概要: リアルタイムDBスキーマ編集アプリ
 
-```
-# with npx
-$ npx create-nextron-app my-app --example basic-lang-typescript
+出展: 技育CAMPハッカソン2024 vol.17
 
-# with yarn
-$ yarn create nextron-app my-app --example basic-lang-typescript
+開発チーム: KiCK HACK
 
-# with pnpm
-$ pnpm dlx create-nextron-app my-app --example basic-lang-typescript
-```
+開発メンバー: 
 
-### Install Dependencies
+Hinata0607(https://github.com/Hinata0607)
+Sirayume(https://github.com/Sirayume)
 
-```
-$ cd my-app
-
-# using yarn or npm
-$ yarn (or `npm install`)
-
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
-
-### Use it
-
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```
+## 作品資料
