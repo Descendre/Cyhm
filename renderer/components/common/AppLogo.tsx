@@ -4,7 +4,7 @@ import { AppLogoProps } from '../../interfaces';
 export const AppLogo = ({ width, height }: AppLogoProps) => {
 	return (
 		<Avatar
-			src={'/SOZO_logo_transparent2.svg'}
+			src={'/Cyhm_logo2.svg'}
 			variant="square"
 			sx={{
 				width: width,

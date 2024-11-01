@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../../libs';
 import {
-	CheckConstraintProps,
-	ColumnConstraintProps,
-	DefaultConstraintProps,
 	FetchAllContentsResponse,
+	FetchNotifyInvitedUserResponse,
 } from '../../../../../../interfaces';
 
 export const GET = async (
@@ -26,9 +24,36 @@ export const GET = async (
 			},
 		});
 
+		const invitedUsers: FetchNotifyInvitedUserResponse[] =
+			await prisma.notify.findMany({
+				where: {
+					projectId: projectId,
+					type: 'INVITATION',
+				},
+				distinct: ['toUserId'],
+				select: {
+					createdAt: true,
+					toUser: {
+						select: {
+							id: true,
+							createdAt: true,
+							updatedAt: true,
+							image: true,
+							name: true,
+							email: true,
+							provider: true,
+						},
+					},
+				},
+				orderBy: {
+					createdAt: 'desc',
+				},
+			});
+
 		const response: FetchAllContentsResponse = {
 			tables: {},
 			columns: {},
+			invitedUsers: invitedUsers,
 		};
 
 		allContents.forEach((table) => {

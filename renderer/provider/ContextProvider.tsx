@@ -5,9 +5,12 @@ import {
 	ColumnEditStateProps,
 	ColumnsStateProps,
 	ContextProviderProps,
+	FetchNotifyInvitedUserResponse,
 	FetchUserProjectsResponse,
+	NotifyWithDetail,
 	TableEditStateProps,
 	TablesStateProps,
+	UserPopperViewModeProps,
 	UserSearchResultsProps,
 	windowModeProps,
 } from '../interfaces';
@@ -55,6 +58,12 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 				query: '',
 			},
 		});
+	const [userPopperViewMode, setUserPopperViewMode] =
+		useState<UserPopperViewModeProps>('member');
+	const [invitedUsers, setInvitedUsers] = useState<
+		FetchNotifyInvitedUserResponse[]
+	>([]);
+	const [notifies, setNotifies] = useState<NotifyWithDetail[] | null>(null);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -98,6 +107,12 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setColumnEditInfo,
 		userSearchResults,
 		setUserSearchResults,
+		userPopperViewMode,
+		setUserPopperViewMode,
+		invitedUsers,
+		setInvitedUsers,
+		notifies,
+		setNotifies,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

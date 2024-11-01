@@ -52,6 +52,10 @@ declare module '@mui/material/styles' {
 			common: {
 				appModal: {
 					bg: string;
+					backdrop: string;
+					header: {
+						bg: string;
+					};
 				};
 			};
 			login: {
@@ -158,6 +162,10 @@ declare module '@mui/material/styles' {
 			common: {
 				appModal: {
 					bg: string;
+					backdrop: string;
+					header: {
+						bg: string;
+					};
 				};
 			};
 			login: {

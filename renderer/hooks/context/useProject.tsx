@@ -67,6 +67,7 @@ export const useProject = (): UseProjectProps => {
 		setTableEditInfo,
 		columnEditInfo,
 		setColumnEditInfo,
+		setInvitedUsers,
 	} = context;
 
 	const SUPABASE_CHANNEL_NAME = `project_${currentProject?.id}`;
@@ -127,6 +128,7 @@ export const useProject = (): UseProjectProps => {
 			);
 			setTables(allProjectContents.tables);
 			setColumns(allProjectContents.columns);
+			setInvitedUsers(allProjectContents.invitedUsers);
 			setCurrentProject(project);
 			setWindowMode('edit');
 

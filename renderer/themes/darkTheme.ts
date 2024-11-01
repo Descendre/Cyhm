@@ -71,7 +71,11 @@ export const darkTheme = createTheme({
 		components: {
 			common: {
 				appModal: {
-					bg: '#202127',
+					bg: '#1b1b1f',
+					backdrop: 'rgba(50, 50, 60, 0.7)',
+					header: {
+						bg: '#101014',
+					},
 				},
 			},
 			login: {

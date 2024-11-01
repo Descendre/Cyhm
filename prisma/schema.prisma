@@ -91,6 +91,7 @@ model Notify {
   type        NotifyType
   message     String?
   isRead      Boolean   @default(false)
+  isRejected  Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   fromUser    User      @relation("NotifyFrom", fields: [fromUserId], references: [id])
@@ -98,6 +99,7 @@ model Notify {
   project     Project?  @relation(fields: [projectId], references: [id])
 
   @@index([toUserId])
+  @@unique([fromUserId, toUserId, projectId])
 }
 
 enum Provider {

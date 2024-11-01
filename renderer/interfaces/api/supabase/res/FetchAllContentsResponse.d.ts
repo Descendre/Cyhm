@@ -1,5 +1,6 @@
 import { AddTableResponse } from './AddTableResponse';
 import { AddColumnResponse } from './AddColumnResponse';
+import { FetchNotifyInvitedUserResponse } from './FetchNotifyInvitedUserResponse';
 
 export interface FetchAllContentsResponse {
 	tables: {
@@ -8,4 +9,5 @@ export interface FetchAllContentsResponse {
 	columns: {
 		[tableId: string]: AddColumnResponse[];
 	};
+	invitedUsers: FetchNotifyInvitedUserResponse[];
 }

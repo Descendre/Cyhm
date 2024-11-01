@@ -3,6 +3,7 @@ import {
 	ColumnsStateProps,
 	TableProps,
 	TablesStateProps,
+	UserPopperViewModeProps,
 	windowModeProps,
 } from '../provider';
 import { AddTableResponse } from '../api';
@@ -35,10 +36,15 @@ export interface UseLayoutProps {
 	setIsEditRightPopper: React.Dispatch<React.SetStateAction<boolean>>;
 	isPreparingProject: string | null;
 	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
+	userPopperViewMode: UserPopperViewModeProps;
+	setUserPopperViewMode: React.Dispatch<
+		React.SetStateAction<UserPopperViewModeProps>
+	>;
 
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleSelectTable: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];
+	handleSwitchUserPopperViewMode: () => void;
 }
 
 export interface EditReactFlowCustomNodeDataProps {

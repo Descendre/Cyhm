@@ -21,3 +21,4 @@ export * from './EditHeaderUserPopper';
 export * from './EditHeaderUserPopperHeader';
 export * from './EditHeaderUserPopperMemberList';
 export * from './EditHeaderUserPopperInviteList';
+export * from './EditHeaderUserPopperInvitedList';

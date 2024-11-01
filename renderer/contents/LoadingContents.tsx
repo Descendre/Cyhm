@@ -1,5 +1,5 @@
 import { AppLogo } from '../components';
 
 export const LoadingContents = () => {
-	return <AppLogo width="auto" height="60px" />;
+	return <AppLogo width="auto" height="80px" />;
 };

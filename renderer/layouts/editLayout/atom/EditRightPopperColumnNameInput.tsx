@@ -12,7 +12,7 @@ export const EditRightPopperColumnNameInput = ({
 	const { columnEditInfo, handleColumnNameChange, handleColumnNameUpdate } =
 		useProject();
 	const isEditable: boolean = tables[table?.id]?.isEditing;
-	const editColumnInfo = columnEditInfo[table.id].find(
+	const editColumnInfo = columnEditInfo?.[table.id]?.find(
 		(col) => col.id === column.id
 	);
 

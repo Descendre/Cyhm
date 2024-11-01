@@ -1,24 +1,26 @@
 import { TextField } from '@mui/material';
-import { usePalette, useUser } from '../../../hooks';
-import { EditHeaderUserPopperSearchBarProps } from '../../../interfaces';
+import { useLayout, usePalette, useUser } from '../../../hooks';
 
-export const EditHeaderUserPopperSearchBar = ({
-	isUserView,
-}: EditHeaderUserPopperSearchBarProps) => {
+export const EditHeaderUserPopperSearchBar = () => {
 	const palette = usePalette();
 	const { userSearchResults, handleUserLikeSearch } = useUser();
+	const { userPopperViewMode } = useLayout();
 
 	return (
 		<TextField
 			fullWidth
 			variant="outlined"
 			size="small"
-			placeholder={
-				isUserView ? 'メンバーを検索' : 'メールアドレスまたはユーザー名で検索'
+			placeholder={'ユーザー名もしくはメールアドレスを入力'}
+			value={
+				userPopperViewMode === 'member'
+					? ''
+					: userPopperViewMode === 'invite'
+						? userSearchResults.invite?.query
+						: ''
 			}
-			value={isUserView ? '' : userSearchResults.invite?.query}
 			onChange={(event) => {
-				if (!isUserView) {
+				if (userPopperViewMode === 'invite') {
 					handleUserLikeSearch({ keyWord: event.target.value });
 				}
 			}}

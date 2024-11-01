@@ -25,3 +25,4 @@ export * from './EditRightPopperColumnTypeSelect';
 export * from './EditHeaderUserPopperSearchBar';
 export * from './EditHeaderUserPopperMemberListItem';
 export * from './EditHeaderUserPopperInviteListItem';
+export * from './EditHeaderUserPopperInvitedListItem';
