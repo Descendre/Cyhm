@@ -11,3 +11,4 @@ export * from './UpdateColumnNameRequest';
 export * from './UpdateColumnTypeRequest';
 export * from './AddInviteNotifyRequest';
 export * from './DeleteInviteNotifyRequest';
+export * from './AcceptOrRejectInviteNotifyRequest';

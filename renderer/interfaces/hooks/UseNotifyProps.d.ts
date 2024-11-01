@@ -16,6 +16,16 @@ export interface useNotifyProps {
 		toUserId,
 		projectId,
 	}: handleCreateInviteNotifyProps) => Promise<void>;
+	handleAcceptInviteNotify: ({
+		fromUserId,
+		toUserId,
+		projectId,
+	}: handleAcceptOrRejectInviteNotifyProps) => Promise<void>;
+	handleRejectInviteNotify: ({
+		fromUserId,
+		toUserId,
+		projectId,
+	}: handleAcceptOrRejectInviteNotifyProps) => Promise<void>;
 	handleDeleteInviteNotify: ({
 		fromUserId,
 		toUserId,
@@ -31,6 +41,11 @@ export interface handleFetchUserNotifyProps {
 }
 
 export interface handleCreateInviteNotifyProps {
+	fromUserId: string;
+	toUserId: string;
+	projectId: string;
+}
+export interface handleAcceptOrRejectInviteNotifyProps {
 	fromUserId: string;
 	toUserId: string;
 	projectId: string;

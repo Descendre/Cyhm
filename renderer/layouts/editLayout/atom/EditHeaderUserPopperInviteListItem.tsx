@@ -94,7 +94,7 @@ export const EditHeaderUserPopperInviteListItem = ({
 					},
 				}}
 			/>
-			{isMember ? (
+			{isSelf ? (
 				<Typography
 					variant="body2"
 					color="text.disabled"
