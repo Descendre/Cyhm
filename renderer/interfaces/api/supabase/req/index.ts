@@ -9,3 +9,5 @@ export * from './UpdateTableNameRequest';
 export * from './UpdateTableColorRequest';
 export * from './UpdateColumnNameRequest';
 export * from './UpdateColumnTypeRequest';
+export * from './AddInviteNotifyRequest';
+export * from './DeleteInviteNotifyRequest';

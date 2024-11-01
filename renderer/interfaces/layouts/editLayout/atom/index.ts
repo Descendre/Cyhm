@@ -12,5 +12,5 @@ export * from './EditRightPopperTableColorInputProps';
 export * from './EditRightPopperColumnNameInputProps';
 export * from './EditRightPopperColumnTypeSelectProps';
 export * from './EditHeaderUserPopperMemberListItemProps';
-export * from './EditHeaderUserPopperSearchBarProps';
 export * from './EditHeaderUserPopperInviteListItemProps';
+export * from './EditHeaderUserPopperInvitedListItemProps';

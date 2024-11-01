@@ -8,3 +8,5 @@ export * from './FetchAllContentsResponse';
 export * from './UpdateTablePositionResponse';
 export * from './UserResponse';
 export * from './UserLikeSearchResponse';
+export * from './FetchNotifyInvitedUserResponse';
+export * from './NotifyResponse';

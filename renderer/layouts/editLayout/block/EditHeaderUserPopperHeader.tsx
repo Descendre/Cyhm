@@ -1,15 +1,14 @@
-import { Close, SwitchLeft, SwitchRight } from '@mui/icons-material';
+import { Close, PeopleAlt, PersonAdd, PersonSearch } from '@mui/icons-material';
 import { Box, Divider, Typography } from '@mui/material';
 import { EditHeaderUserPopperHeaderProps } from '../../../interfaces';
-import { usePalette } from '../../../hooks';
+import { useLayout, usePalette } from '../../../hooks';
 import { EditHeaderUserPopperSearchBar } from '../atom';
 
 export const EditHeaderUserPopperHeader = ({
 	setAnchorEl,
-	isUserView,
-	setIsUserView,
 }: EditHeaderUserPopperHeaderProps) => {
 	const palette = usePalette();
+	const { userPopperViewMode, handleSwitchUserPopperViewMode } = useLayout();
 
 	return (
 		<>
@@ -29,16 +28,22 @@ export const EditHeaderUserPopperHeader = ({
 					flexGrow={1}
 					maxWidth="90%"
 					height="100%"
-					onClick={() => setIsUserView((prev) => !prev)}
+					onClick={() => handleSwitchUserPopperViewMode()}
 					sx={{
 						cursor: 'pointer',
-						'&: hover .title': {
-							textDecoration: 'underline',
-						},
 					}}
 				>
-					{isUserView ? (
-						<SwitchLeft
+					{userPopperViewMode === 'member' ? (
+						<PeopleAlt
+							fontSize="small"
+							sx={{
+								color: palette.text.secondary,
+								fontSize: '1.2rem',
+								pointerEvents: 'none',
+							}}
+						/>
+					) : userPopperViewMode === 'invite' ? (
+						<PersonSearch
 							fontSize="small"
 							sx={{
 								color: palette.text.secondary,
@@ -47,7 +52,7 @@ export const EditHeaderUserPopperHeader = ({
 							}}
 						/>
 					) : (
-						<SwitchRight
+						<PersonAdd
 							fontSize="small"
 							sx={{
 								color: palette.text.secondary,
@@ -58,7 +63,6 @@ export const EditHeaderUserPopperHeader = ({
 					)}
 					<Typography
 						noWrap
-						className="title"
 						variant="body2"
 						fontSize="0.8rem"
 						color="text.secondary"
@@ -66,7 +70,11 @@ export const EditHeaderUserPopperHeader = ({
 							userSelect: 'none',
 						}}
 					>
-						{isUserView ? 'メンバー設定' : 'メンバーを追加'}
+						{userPopperViewMode === 'member'
+							? 'メンバー設定'
+							: userPopperViewMode === 'invite'
+								? 'メンバーを追加'
+								: '招待済みユーザー'}
 					</Typography>
 				</Box>
 				<Close
@@ -94,7 +102,7 @@ export const EditHeaderUserPopperHeader = ({
 				height="50px"
 				padding="5px 10px"
 			>
-				<EditHeaderUserPopperSearchBar isUserView={isUserView} />
+				<EditHeaderUserPopperSearchBar />
 			</Box>
 		</>
 	);

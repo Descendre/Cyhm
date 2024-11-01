@@ -14,7 +14,7 @@ export const TopHeader = () => {
 			maxWidth="900px"
 			paddingBottom="15px"
 		>
-			<AppLogo width="auto" height="50px" />
+			<AppLogo width="auto" height="45px" />
 			<TopHeaderButtons />
 		</Box>
 	);

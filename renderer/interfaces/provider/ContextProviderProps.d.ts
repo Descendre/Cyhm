@@ -2,10 +2,15 @@ import { windowModeProps } from './windowModeProps';
 import { TablesStateProps } from './TableProps';
 import { ColumnsStateProps } from './ColumnProps';
 import React from 'react';
-import { AddTableResponse, FetchUserProjectsResponse } from '../api';
+import {
+	AddTableResponse,
+	FetchNotifyInvitedUserResponse,
+	FetchUserProjectsResponse,
+} from '../api';
 import { TableEditStateProps } from './TableEditInfoProps';
 import { ColumnEditStateProps } from './ColumnEditInfoProps';
 import { UserSearchResultsProps } from './UserSearchResultsProps';
+import { UserPopperViewModeProps } from './UserPopperVoewModeProps';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -56,5 +61,13 @@ export interface ContextProviderProps {
 	userSearchResults: UserSearchResultsProps;
 	setUserSearchResults: React.Dispatch<
 		React.SetStateAction<UserSearchResultsProps>
+	>;
+	userPopperViewMode: UserPopperViewModeProps;
+	setUserPopperViewMode: React.Dispatch<
+		React.SetStateAction<UserPopperViewModeProps>
+	>;
+	invitedUsers: FetchNotifyInvitedUserResponse[];
+	setInvitedUsers: React.Dispatch<
+		React.SetStateAction<FetchNotifyInvitedUserResponse[]>
 	>;
 }

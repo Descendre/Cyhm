@@ -1,11 +1,11 @@
 'use client';
 import { Box, Popper } from '@mui/material';
 import { EditHeaderUserPopperProps } from '../../../interfaces';
-import { useBreakPoint, usePalette } from '../../../hooks';
+import { useBreakPoint, useLayout, usePalette } from '../../../hooks';
 import { EditHeaderUserPopperHeader } from './EditHeaderUserPopperHeader';
-import { useState } from 'react';
 import { EditHeaderUserPopperMemberList } from './EditHeaderUserPopperMemberList';
 import { EditHeaderUserPopperInviteList } from './EditHeaderUserPopperInviteList';
+import { EditHeaderUserPopperInvitedList } from './EditHeaderUserPopperInvitedList';
 
 export const EditHeaderUserPopper = ({
 	open,
@@ -14,9 +14,9 @@ export const EditHeaderUserPopper = ({
 	setAnchorEl,
 }: EditHeaderUserPopperProps) => {
 	const palette = usePalette();
+	const { userPopperViewMode } = useLayout();
 	const breakpoint = useBreakPoint();
 	const isLg: boolean = ['lg', 'xl'].includes(breakpoint);
-	const [isUserView, setIsUserView] = useState<boolean>(true);
 
 	return (
 		<Popper open={open} ref={popperRef} anchorEl={anchorEl} placement="bottom">
@@ -31,11 +31,7 @@ export const EditHeaderUserPopper = ({
 					boxShadow: palette.layout.editLayout.header.userPoper.boxShadow,
 				}}
 			>
-				<EditHeaderUserPopperHeader
-					setAnchorEl={setAnchorEl}
-					isUserView={isUserView}
-					setIsUserView={setIsUserView}
-				/>
+				<EditHeaderUserPopperHeader setAnchorEl={setAnchorEl} />
 				<Box
 					display="flex"
 					justifyContent="start"
@@ -44,10 +40,12 @@ export const EditHeaderUserPopper = ({
 					width="100%"
 					height="calc(100% - 85px)"
 				>
-					{isUserView ? (
+					{userPopperViewMode === 'member' ? (
 						<EditHeaderUserPopperMemberList />
-					) : (
+					) : userPopperViewMode === 'invite' ? (
 						<EditHeaderUserPopperInviteList />
+					) : (
+						<EditHeaderUserPopperInvitedList />
 					)}
 				</Box>
 			</Box>

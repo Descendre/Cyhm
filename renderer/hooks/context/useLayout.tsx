@@ -39,6 +39,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsEditLeftBar,
 		isEditRightPopper,
 		setIsEditRightPopper,
+		userPopperViewMode,
+		setUserPopperViewMode,
 		isPreparingProject,
 		setIsPreparingProject,
 	} = context;
@@ -78,6 +80,21 @@ export const useLayout = (): UseLayoutProps => {
 		}));
 	};
 
+	const handleSwitchUserPopperViewMode = (): void => {
+		setUserPopperViewMode((prevMode) => {
+			switch (prevMode) {
+				case 'member':
+					return 'invite';
+				case 'invite':
+					return 'invited';
+				case 'invited':
+					return 'member';
+				default:
+					return 'member';
+			}
+		});
+	};
+
 	return {
 		EditLeftBarTableAreaRef,
 		EditReactFlowAreaRef,
@@ -102,11 +119,14 @@ export const useLayout = (): UseLayoutProps => {
 		setIsEditLeftBar,
 		isEditRightPopper,
 		setIsEditRightPopper,
+		userPopperViewMode,
+		setUserPopperViewMode,
 		isPreparingProject,
 		setIsPreparingProject,
 
 		handleAllTableExpansion,
 		handleSelectTable,
 		handleGetNodesFromTables,
+		handleSwitchUserPopperViewMode,
 	};
 };

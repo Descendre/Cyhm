@@ -5,3 +5,4 @@ export * from './ColumnProps';
 export * from './TableEditInfoProps';
 export * from './ColumnEditInfoProps';
 export * from './UserSearchResultsProps';
+export * from './UserPopperViewModeProps';
