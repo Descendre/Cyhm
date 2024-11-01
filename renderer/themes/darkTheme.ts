@@ -35,6 +35,11 @@ export const darkTheme = createTheme({
 					searchBar: {
 						bg: '#161618',
 					},
+					userPoper: {
+						bg: '#161618',
+						line: '#26262a',
+						boxShadow: '-2px 2px 3px rgba(40, 40, 50, 0.5)',
+					},
 				},
 				leftBar: {
 					bg: '#101014',

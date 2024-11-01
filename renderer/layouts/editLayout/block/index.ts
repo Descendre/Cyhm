@@ -17,3 +17,7 @@ export * from './EditRightPopperSettingHeader';
 export * from './EditRightPopperTableSettingArea';
 export * from './EditRightPopperColumnSettingArea';
 export * from './EditLeftBarColumnArea';
+export * from './EditHeaderUserPopper';
+export * from './EditHeaderUserPopperHeader';
+export * from './EditHeaderUserPopperMemberList';
+export * from './EditHeaderUserPopperInviteList';

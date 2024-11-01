@@ -5,6 +5,7 @@ import React from 'react';
 import { AddTableResponse, FetchUserProjectsResponse } from '../api';
 import { TableEditStateProps } from './TableEditInfoProps';
 import { ColumnEditStateProps } from './ColumnEditInfoProps';
+import { UserSearchResultsProps } from './UserSearchResultsProps';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -52,4 +53,8 @@ export interface ContextProviderProps {
 	setTableEditInfo: React.Dispatch<React.SetStateAction<TableEditStateProps>>;
 	columnEditInfo: ColumnEditStateProps;
 	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnEditStateProps>>;
+	userSearchResults: UserSearchResultsProps;
+	setUserSearchResults: React.Dispatch<
+		React.SetStateAction<UserSearchResultsProps>
+	>;
 }

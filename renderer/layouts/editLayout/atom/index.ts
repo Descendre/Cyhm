@@ -22,3 +22,6 @@ export * from './EditRightPopperTableModeSelect';
 export * from './EditRightPopperSketchPicker';
 export * from './EditRightPopperColumnNameInput';
 export * from './EditRightPopperColumnTypeSelect';
+export * from './EditHeaderUserPopperSearchBar';
+export * from './EditHeaderUserPopperMemberListItem';
+export * from './EditHeaderUserPopperInviteListItem';
