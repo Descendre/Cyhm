@@ -8,18 +8,33 @@ import {
 	handleCreateInviteNotifyProps,
 	handleDeleteInviteNotifyProps,
 	handleFetchInvitedUsersProps,
+	handleFetchUserNotifyProps,
 	NotifyResponse,
-	UseNotifyProps,
+	NotifyWithDetail,
+	useNotifyProps,
 } from '../../interfaces';
 import { axiosFetch } from '../../libs';
 
-export const useNotify = (): UseNotifyProps => {
+export const useNotify = (): useNotifyProps => {
 	const context = useContext(Context);
 	if (!context) {
 		throw new Error('Context is not provided');
 	}
 
-	const { invitedUsers, setInvitedUsers } = context;
+	const { invitedUsers, setInvitedUsers, notifies, setNotifies } = context;
+
+	const handleFetchUserNotify = async ({
+		userId,
+	}: handleFetchUserNotifyProps): Promise<void> => {
+		try {
+			const userNotifies = await axiosFetch.get<NotifyWithDetail[]>(
+				`/api/supabase/notify/${userId}`
+			);
+			setNotifies(userNotifies);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	const handleCreateInviteNotify = async ({
 		fromUserId,
@@ -71,7 +86,10 @@ export const useNotify = (): UseNotifyProps => {
 	return {
 		invitedUsers,
 		setInvitedUsers,
+		notifies,
+		setNotifies,
 
+		handleFetchUserNotify,
 		handleCreateInviteNotify,
 		handleDeleteInviteNotify,
 		handleFetchInvitedUsers,

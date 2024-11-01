@@ -1,11 +1,16 @@
-import { FetchNotifyInvitedUserResponse } from '../api';
+import { FetchNotifyInvitedUserResponse, NotifyWithDetail } from '../api';
 
-export interface UseNotifyProps {
+export interface useNotifyProps {
 	invitedUsers: FetchNotifyInvitedUserResponse[];
 	setInvitedUsers: React.Dispatch<
 		React.SetStateAction<FetchNotifyInvitedUserResponse[]>
 	>;
+	notifies: NotifyWithDetail[];
+	setNotifies: React.Dispatch<React.SetStateAction<NotifyWithDetail[]>>;
 
+	handleFetchUserNotify: ({
+		userId,
+	}: handleFetchUserNotifyProps) => Promise<void>;
 	handleCreateInviteNotify: ({
 		fromUserId,
 		toUserId,
@@ -19,6 +24,10 @@ export interface UseNotifyProps {
 	handleFetchInvitedUsers: ({
 		projectId,
 	}: handleFetchInvitedUsersProps) => Promise<void>;
+}
+
+export interface handleFetchUserNotifyProps {
+	userId: string;
 }
 
 export interface handleCreateInviteNotifyProps {

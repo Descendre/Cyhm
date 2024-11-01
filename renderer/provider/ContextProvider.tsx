@@ -7,6 +7,7 @@ import {
 	ContextProviderProps,
 	FetchNotifyInvitedUserResponse,
 	FetchUserProjectsResponse,
+	NotifyWithDetail,
 	TableEditStateProps,
 	TablesStateProps,
 	UserPopperViewModeProps,
@@ -62,6 +63,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [invitedUsers, setInvitedUsers] = useState<
 		FetchNotifyInvitedUserResponse[]
 	>([]);
+	const [notifies, setNotifies] = useState<NotifyWithDetail[] | null>(null);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -109,6 +111,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setUserPopperViewMode,
 		invitedUsers,
 		setInvitedUsers,
+		notifies,
+		setNotifies,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

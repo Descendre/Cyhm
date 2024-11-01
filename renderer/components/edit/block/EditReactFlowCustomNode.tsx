@@ -33,7 +33,7 @@ export const EditReactFlowCustomNode = ({
 				justifyContent="center"
 				alignItems="center"
 				flexDirection="column"
-				borderRadius={columns[id]?.length > 0 ? '10px' : '10px 10px 0 0'}
+				borderRadius={columns?.[id]?.length ? '10px' : '10px 10px 0 0'}
 				overflow="hidden"
 			>
 				<EditReactFlowCustomNodeHeader title={name} color={color} />

@@ -6,6 +6,7 @@ import {
 	AddTableResponse,
 	FetchNotifyInvitedUserResponse,
 	FetchUserProjectsResponse,
+	NotifyWithDetail,
 } from '../api';
 import { TableEditStateProps } from './TableEditInfoProps';
 import { ColumnEditStateProps } from './ColumnEditInfoProps';
@@ -70,4 +71,6 @@ export interface ContextProviderProps {
 	setInvitedUsers: React.Dispatch<
 		React.SetStateAction<FetchNotifyInvitedUserResponse[]>
 	>;
+	notifies: NotifyWithDetail[];
+	setNotifies: React.Dispatch<React.SetStateAction<NotifyWithDetail[]>>;
 }

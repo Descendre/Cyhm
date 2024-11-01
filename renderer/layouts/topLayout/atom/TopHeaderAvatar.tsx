@@ -1,5 +1,5 @@
 'use client';
-import { ArrowDropDown } from '@mui/icons-material';
+import { ArrowDropDown, ManageAccounts } from '@mui/icons-material';
 import { Avatar, Chip } from '@mui/material';
 import { signOut, useSession } from 'next-auth/react';
 import React from 'react';
@@ -18,7 +18,7 @@ export const TopHeaderAvatar = () => {
 				avatar={<Avatar src={session?.user?.image} />}
 				label={session?.user?.name}
 				deleteIcon={<ArrowDropDown />}
-				onDelete={() => openModal()}
+				onDelete={() => openModal('topAvatarModal')}
 				sx={{
 					paddingLeft: '5px',
 					marginLeft: '13px',
@@ -28,10 +28,19 @@ export const TopHeaderAvatar = () => {
 						backgroundColor: 'transparent !important',
 					},
 				}}
-				onClick={() => openModal()}
+				onClick={() => openModal('topAvatarModal')}
 			/>
 
-			<AppModal isOpen={isOpen} closeModal={closeModal}>
+			<AppModal
+				isOpen={isOpen('topAvatarModal')}
+				closeModal={() => closeModal('topAvatarModal')}
+				width="60vw"
+				height="80vh"
+				maxWidth="650px"
+				maxHeight="520px"
+				icon={<ManageAccounts fontSize="small" />}
+				title="ユーザー管理"
+			>
 				<button onClick={() => signOut()}>aaaaaaaaaaa</button>
 			</AppModal>
 		</>

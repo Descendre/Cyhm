@@ -1,4 +1,6 @@
 import { NotifyType } from '@prisma/client';
+import { UserResponse } from './UserResponse';
+import { CreateProjectResponse } from './CreateProjectResponse';
 
 export interface NotifyResponse {
 	projectId: string | null;
@@ -10,4 +12,9 @@ export interface NotifyResponse {
 	isRead: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+}
+
+export interface NotifyWithDetail extends NotifyResponse {
+	fromUser: UserResponse;
+	project: CreateProjectResponse;
 }
