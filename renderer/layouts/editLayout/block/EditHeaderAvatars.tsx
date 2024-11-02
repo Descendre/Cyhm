@@ -27,7 +27,7 @@ export const EditHeaderAvatars = () => {
 				ref={parentRef}
 				onClick={handleOpen}
 			>
-				{currentProject?.members.map((member) => (
+				{currentProject?.members?.map((member) => (
 					<Avatar key={member.userId} src={member.userImage} />
 				))}
 			</AvatarGroup>

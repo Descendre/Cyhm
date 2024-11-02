@@ -23,7 +23,7 @@ export const EditRightPopperColumnSettingArea = ({
 			width="100%"
 			padding="20px 0"
 		>
-			{columns[table?.id]?.map((column) => (
+			{columns?.[table?.id]?.map((column) => (
 				<Box
 					key={column.id}
 					display="flex"
