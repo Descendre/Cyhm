@@ -13,13 +13,15 @@ export const EditFooterAudioIcon = () => {
 			alignItems="center"
 			height="100%"
 			onClick={() => setIsAudio((prev) => !prev)}
+			sx={{
+				pointerEvents: 'none',
+			}}
 		>
 			{isAudio ? (
 				<Headset
 					fontSize="small"
 					sx={{
 						cursor: 'pointer',
-						pointerEvents: 'none',
 					}}
 				/>
 			) : (
@@ -28,7 +30,6 @@ export const EditFooterAudioIcon = () => {
 					color="error"
 					sx={{
 						cursor: 'pointer',
-						pointerEvents: 'none',
 					}}
 				/>
 			)}

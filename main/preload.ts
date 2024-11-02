@@ -5,6 +5,10 @@ const handler = {
 	send(channel: string, value: unknown = null) {
 		ipcRenderer.send(channel, value);
 	},
+	// 追加カスタムメソッド(返り値型ジェネリクス指定)
+	async invoke<T>(channel: string, value: unknown = null): Promise<T> {
+		return await ipcRenderer.invoke(channel, value);
+	},
 	on(channel: string, callback: (...args: unknown[]) => void) {
 		const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
 			callback(...args);

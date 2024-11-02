@@ -22,7 +22,8 @@ export const EditHeaderUserPopper = ({
 		<Popper open={open} ref={popperRef} anchorEl={anchorEl} placement="bottom">
 			<Box
 				width={isLg ? '350px' : '300px'}
-				height="calc(100vh - 150px)"
+				height="500px"
+				maxHeight="calc(100vh - 50px)"
 				bgcolor={palette.layout.editLayout.header.userPoper.bg}
 				border={`solid 1px ${palette.layout.editLayout.header.userPoper.line}`}
 				borderRadius="0 0 0 5px"

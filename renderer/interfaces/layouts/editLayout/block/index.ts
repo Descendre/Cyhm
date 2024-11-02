@@ -8,3 +8,4 @@ export * from './EditRightPopperTableSettingAreaProps';
 export * from './EditRightPopperColumnSettingAreaProps';
 export * from './EditHeaderUserPopperProps';
 export * from './EditHeaderUserPopperHeaderProps';
+export * from './EditHeaderDownloadPopperProps';
