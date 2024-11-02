@@ -2,7 +2,6 @@
 import { ReactNode, createContext, useRef, useState } from 'react';
 import {
 	AddTableResponse,
-	ColumnEditStateProps,
 	ColumnsStateProps,
 	ContextProviderProps,
 	FetchNotifyInvitedUserResponse,
@@ -48,9 +47,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		null
 	);
 	const [tableEditInfo, setTableEditInfo] = useState<TableEditStateProps>({});
-	const [columnEditInfo, setColumnEditInfo] = useState<ColumnEditStateProps>(
-		{}
-	);
+	const [columnEditInfo, setColumnEditInfo] = useState<ColumnsStateProps>({});
 	const [userSearchResults, setUserSearchResults] =
 		useState<UserSearchResultsProps>({
 			invite: {

@@ -59,7 +59,7 @@ export const EditReactFlowCustomNode = ({
 					width="100%"
 					height="100%"
 					border={`solid 2px ${palette.primary.main}`}
-					borderRadius={columns[id]?.length > 0 ? '10px' : '10px 10px 0 0'}
+					borderRadius={columns?.[id]?.length > 0 ? '10px' : '10px 10px 0 0'}
 					sx={{
 						pointerEvents: 'none',
 					}}

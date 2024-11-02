@@ -33,12 +33,12 @@ import {
 	UpdateTableExpandRequest,
 	UpdateTableLockRequest,
 	UpdateTableNameRequest,
+	UpdateTablePositionResponse,
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
 import { useSession } from 'next-auth/react';
 import { ColumnType } from '@prisma/client';
-import { UpdateTablePositionResponse } from '../../interfaces/api/supabase/res/UpdateTablePositionResponse';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
@@ -148,10 +148,16 @@ export const useProject = (): UseProjectProps => {
 				const updatedColumnInfo = { ...prevState };
 				Object.keys(allProjectContents.columns).forEach((tableId) => {
 					const columns = allProjectContents.columns[tableId];
+					// 新しくオブジェクトを生成しないとなぜかcolumnEditInfoとcolumnsの内容が同期する模様
+					// 原因不明
+					// ChatGPTによると「setColumnEditInfo の中で、状態を更新する際にオブジェクトの参照が共有されてしまう問題は、JavaScriptのオブジェクトが参照型であることに起因しています。具体的には、元のオブジェクトを直接コピーすると、両者が同じ参照を持つため、一方の変更が他方に影響を及ぼすことがあります。」
 					updatedColumnInfo[tableId] = columns.map((column) => ({
 						id: column.id,
 						name: column.name,
+						tableId: column.tableId,
 						type: column.type,
+						createdAt: column.createdAt,
+						updatedAt: column.updatedAt,
 					}));
 				});
 				return updatedColumnInfo;
@@ -242,6 +248,25 @@ export const useProject = (): UseProjectProps => {
 					[tableId]: [...prevTableColumns, newColumn],
 				};
 			});
+			setColumnEditInfo((prevInfo) => {
+				const newInfo: AddColumnResponse = {
+					id: tempCUID,
+					name: name,
+					tableId: tableId,
+					type: 'INT',
+				};
+				if (!prevInfo) {
+					return {
+						...prevInfo,
+						[tableId]: [newInfo],
+					};
+				}
+				const prevColumnEditInfo = prevInfo[tableId] || [];
+				return {
+					...prevInfo,
+					[tableId]: [...prevColumnEditInfo, newInfo],
+				};
+			});
 
 			const newColumn = await axiosFetch.post<AddColumnResponse>(
 				`/api/supabase/column`,
@@ -258,6 +283,21 @@ export const useProject = (): UseProjectProps => {
 				...prevColumns,
 				[tableId]: prevColumns[tableId].map((col) =>
 					col.id === tempCUID ? newColumn : col
+				),
+			}));
+			setColumnEditInfo((prevInfo) => ({
+				...prevInfo,
+				[tableId]: prevInfo[tableId].map((col) =>
+					col.id === tempCUID
+						? {
+								id: newColumn.id,
+								name: newColumn.name,
+								tableId: newColumn.tableId,
+								type: newColumn.type,
+								createdAt: newColumn.createdAt,
+								updatedAt: newColumn.updatedAt,
+							}
+						: col
 				),
 			}));
 
@@ -509,7 +549,7 @@ export const useProject = (): UseProjectProps => {
 				}
 				return updatedState;
 			});
-			const updatedColumn = await axiosFetch.put<AddTableResponse>(
+			const updatedColumn = await axiosFetch.put<AddColumnResponse>(
 				`/api/supabase/column/name`,
 				{
 					columnId: columnId,
@@ -521,9 +561,9 @@ export const useProject = (): UseProjectProps => {
 				type: 'broadcast',
 				event: 'column_update',
 				payload: {
-					newTable: updatedColumn,
+					newColumn: updatedColumn,
 					userId: session.user.id,
-				} as TableChannelPayloadProps,
+				} as ColumnChannelPayloadProps,
 			});
 		} catch (error) {
 			console.error(error);
@@ -556,7 +596,7 @@ export const useProject = (): UseProjectProps => {
 				return updatedState;
 			});
 
-			const updatedColumn = await axiosFetch.put<AddTableResponse>(
+			const updatedColumn = await axiosFetch.put<AddColumnResponse>(
 				`/api/supabase/column/type`,
 				{
 					columnId: columnId,
@@ -568,9 +608,9 @@ export const useProject = (): UseProjectProps => {
 				type: 'broadcast',
 				event: 'column_update',
 				payload: {
-					newTable: updatedColumn,
+					newColumn: updatedColumn,
 					userId: session.user.id,
-				} as TableChannelPayloadProps,
+				} as ColumnChannelPayloadProps,
 			});
 		} catch (error) {
 			console.error(error);
@@ -600,7 +640,7 @@ export const useProject = (): UseProjectProps => {
 			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
 			channel.send({
 				type: 'broadcast',
-				event: 'table_add',
+				event: 'table_update',
 				payload: {
 					newTable: updatedTable,
 					userId: session.user.id,
@@ -623,6 +663,10 @@ export const useProject = (): UseProjectProps => {
 				...prevTables,
 				[newTable.id]: newTable,
 			}));
+			setTableEditInfo((prevTableInfo) => ({
+				...prevTableInfo,
+				[newTable.id]: newTable,
+			}));
 		};
 
 		const handleTableUpdate = (payload: {
@@ -634,6 +678,10 @@ export const useProject = (): UseProjectProps => {
 				...prevTables,
 				[newTable.id]: newTable,
 			}));
+			setTableEditInfo((prevTableInfo) => ({
+				...prevTableInfo,
+				[newTable.id]: newTable,
+			}));
 		};
 
 		const handleColumnAdd = (payload: {
@@ -643,7 +691,24 @@ export const useProject = (): UseProjectProps => {
 			if (userId === session.user.id) return;
 			setColumns((prevColumns) => ({
 				...prevColumns,
-				[newColumn.id]: [...(prevColumns[newColumn.id] || []), newColumn],
+				[newColumn.tableId]: [
+					...(prevColumns[newColumn.tableId] || []),
+					newColumn,
+				],
+			}));
+			setColumnEditInfo((prevColumns) => ({
+				...prevColumns,
+				[newColumn.tableId]: [
+					...(prevColumns[newColumn.tableId] || []),
+					{
+						id: newColumn.id,
+						tableId: newColumn.tableId,
+						name: newColumn.name,
+						type: newColumn.type,
+						createdAt: newColumn.createdAt,
+						updatedAt: newColumn.updatedAt,
+					},
+				],
 			}));
 		};
 
@@ -654,7 +719,24 @@ export const useProject = (): UseProjectProps => {
 			if (userId === session.user.id) return;
 			setColumns((prevColumns) => ({
 				...prevColumns,
-				[newColumn.id]: [...(prevColumns[newColumn.id] || []), newColumn],
+				[newColumn.tableId]: prevColumns[newColumn.tableId].map((column) =>
+					column.id === newColumn.id ? { ...newColumn } : column
+				),
+			}));
+			setColumnEditInfo((prevColumns) => ({
+				...prevColumns,
+				[newColumn.tableId]: prevColumns[newColumn.tableId].map((column) =>
+					column.id === newColumn.id
+						? {
+								id: newColumn.id,
+								tableId: newColumn.tableId,
+								name: newColumn.name,
+								type: newColumn.type,
+								createdAt: newColumn.createdAt,
+								updatedAt: newColumn.updatedAt,
+							}
+						: column
+				),
 			}));
 		};
 		channel
