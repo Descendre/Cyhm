@@ -1,7 +1,9 @@
 import path from 'path';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import serve from 'electron-serve';
-import { createWindow } from './helpers';
+import * as fs from 'node:fs';
+import { convertToCSV, createDBSchema, createWindow } from './helpers';
+import { SaveFileContentProps } from './interfaces';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -52,6 +54,44 @@ ipcMain.on('project-end', async () => {
 		mainWindow.unmaximize();
 	}
 });
+
+// ファイル出力
+ipcMain.handle(
+	'save-file',
+	async (
+		event,
+		{ project, tables, columns, fileType }: SaveFileContentProps
+	) => {
+		const filters =
+			fileType === 'csv'
+				? [{ name: 'CSV Files', extensions: ['csv'] }]
+				: fileType === 'json'
+					? [{ name: 'JSON Files', extensions: ['json'] }]
+					: [{ name: 'SQLite Database Files', extensions: ['db'] }];
+
+		const defaultFileName = `${project.name}.${fileType}`;
+
+		const { filePath } = await dialog.showSaveDialog(mainWindow, {
+			title: 'Save File',
+			defaultPath: defaultFileName,
+			filters,
+		});
+
+		if (filePath) {
+			if (fileType === 'csv') {
+				const formattedContent = convertToCSV(tables, columns);
+				fs.writeFileSync(filePath, formattedContent);
+			} else if (fileType === 'json') {
+				const formattedContent = JSON.stringify({ tables, columns }, null, 2);
+				fs.writeFileSync(filePath, formattedContent);
+			} else if (fileType === 'db') {
+				await createDBSchema(filePath, tables, columns);
+			}
+			return filePath;
+		}
+		return null;
+	}
+);
 
 app.on('window-all-closed', () => {
 	app.quit();

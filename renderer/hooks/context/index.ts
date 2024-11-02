@@ -3,3 +3,4 @@ export * from './useRTC';
 export * from './useProject';
 export * from './useUser';
 export * from './useNotify';
+export * from './useDownload';

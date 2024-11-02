@@ -14,3 +14,4 @@ export * from './EditRightPopperColumnTypeSelectProps';
 export * from './EditHeaderUserPopperMemberListItemProps';
 export * from './EditHeaderUserPopperInviteListItemProps';
 export * from './EditHeaderUserPopperInvitedListItemProps';
+export * from './EditHeaderDownloadPopperListItemProps';
