@@ -1,4 +1,4 @@
-import { InputAdornment, TextField, Typography } from '@mui/material';
+import { InputAdornment, TextField } from '@mui/material';
 import { useLayout, usePalette, useProject } from '../../../hooks';
 import { Update } from '@mui/icons-material';
 import { EditRightPopperTableColorInputProps } from '../../../interfaces';
@@ -59,20 +59,6 @@ export const EditRightPopperTableColorInput = ({
 				},
 			}}
 			InputProps={{
-				startAdornment: (
-					<InputAdornment position="start">
-						<Typography
-							variant="body2"
-							sx={{
-								color: isEditable
-									? palette.text.secondary
-									: palette.text.disabled,
-							}}
-						>
-							#
-						</Typography>
-					</InputAdornment>
-				),
 				endAdornment: (
 					<>
 						{isEditable &&

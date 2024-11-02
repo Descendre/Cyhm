@@ -17,7 +17,7 @@ export const EditLeftBarTableHeader = ({
 			width="100%"
 			height="25px"
 			padding="0 5px"
-			bgcolor={'#' + table.color}
+			bgcolor={table.color}
 			sx={{
 				userSelect: 'none',
 			}}

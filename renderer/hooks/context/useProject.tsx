@@ -139,6 +139,13 @@ export const useProject = (): UseProjectProps => {
 					updatedTableInfo[tableId] = {
 						name: tableData.name,
 						color: tableData.color,
+						projectId: tableData.projectId,
+						position: tableData.position,
+						id: tableData.id,
+						isExpanded: tableData.isExpanded,
+						isEditing: tableData.isEditing,
+						createdAt: tableData.createdAt,
+						updatedAt: tableData.updatedAt,
 					};
 				});
 				return updatedTableInfo;
@@ -214,6 +221,24 @@ export const useProject = (): UseProjectProps => {
 				[tempCUID]: tempTable,
 			};
 		});
+		setTableEditInfo((prevInfo) => {
+			const tempInfo: AddTableResponse = {
+				id: tempCUID,
+				projectId: projectId,
+				color: palette.components.edit.reactFlow.tableHeader.default,
+				name: tableName,
+				position: {
+					x: 0,
+					y: 0,
+				},
+				isEditing: false,
+				isExpanded: true,
+			};
+			return {
+				...(prevInfo || {}),
+				[tempCUID]: tempInfo,
+			};
+		});
 
 		const newTable = await axiosFetch.post<AddTableResponse>(
 			`/api/supabase/table`,
@@ -227,10 +252,24 @@ export const useProject = (): UseProjectProps => {
 				},
 			}
 		);
-		setTables((prevTables) => ({
-			...prevTables,
-			[tempCUID]: newTable,
-		}));
+
+		setTables((prevTables) => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { [tempCUID]: _, ...restTables } = prevTables || {};
+			return {
+				...restTables,
+				[newTable.id]: newTable,
+			};
+		});
+		setTableEditInfo((prevInfo) => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { [tempCUID]: _, ...restTables } = prevInfo || {};
+			return {
+				...restTables,
+				[newTable.id]: newTable,
+			};
+		});
+
 		const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
 		channel.send({
 			type: 'broadcast',
@@ -495,7 +534,7 @@ export const useProject = (): UseProjectProps => {
 		try {
 			if (
 				!session.user ||
-				tables[tableId].color === '#' + tableEditInfo[tableId].color
+				tables[tableId].color === tableEditInfo[tableId].color
 			)
 				return;
 			setTables((prevTables) => {
@@ -504,7 +543,7 @@ export const useProject = (): UseProjectProps => {
 					...prevTables,
 					[tableId]: {
 						...prevTables[tableId],
-						color: '#' + color,
+						color: color,
 					},
 				};
 			});
@@ -512,7 +551,7 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/table/color`,
 				{
 					tableId: tableId,
-					color: '#' + color,
+					color: color,
 				} as UpdateTableColorRequest
 			);
 			const channel = supabase.channel(SUPABASE_CHANNEL_NAME);

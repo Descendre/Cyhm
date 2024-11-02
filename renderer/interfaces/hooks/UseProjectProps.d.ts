@@ -4,7 +4,7 @@ import {
 	AddTableResponse,
 	FetchUserProjectsResponse,
 } from '../api';
-import { ColumnsStateProps, TableEditStateProps } from '../provider';
+import { ColumnsStateProps, TablesStateProps } from '../provider';
 import { ColumnType } from '@prisma/client';
 
 export interface UseProjectProps {
@@ -18,8 +18,8 @@ export interface UseProjectProps {
 	>;
 	isSubscribed: boolean;
 	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
-	tableEditInfo: TableEditStateProps;
-	setTableEditInfo: React.Dispatch<React.SetStateAction<TableEditStateProps>>;
+	tableEditInfo: TablesStateProps;
+	setTableEditInfo: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columnEditInfo: ColumnsStateProps;
 	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
 
