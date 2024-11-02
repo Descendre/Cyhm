@@ -8,6 +8,6 @@ export interface AddTableResponse {
 	name: string;
 	isExpanded: boolean;
 	isEditing: boolean;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt?: Date;
+	updatedAt?: Date;
 }

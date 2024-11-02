@@ -21,7 +21,7 @@ export const EditLeftBarTableArea = ({ table }: EditLeftBarTableAreaProps) => {
 			{addColumnIndex === table.id && (
 				<EditLeftBarNewBorn mode="column" tableId={table.id} />
 			)}
-			{tables[table.id].isExpanded &&
+			{tables?.[table.id]?.isExpanded &&
 				columns &&
 				columns[table.id]?.map((column) => (
 					<EditLeftBarColumnArea key={column.id} {...column} />
