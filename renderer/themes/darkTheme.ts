@@ -101,7 +101,7 @@ export const darkTheme = createTheme({
 			edit: {
 				reactFlow: {
 					tableHeader: {
-						default: '#404050',
+						default: '404050',
 					},
 					tableColumn: {
 						odd: '#101010',

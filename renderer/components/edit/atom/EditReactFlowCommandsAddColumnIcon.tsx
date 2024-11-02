@@ -25,7 +25,8 @@ export const EditReactFlowCommandsAddColumnIcon = ({
 				handleClick(event)
 			}
 			sx={{
-				backgroundColor: palette.components.edit.reactFlow.tableHeader.default,
+				backgroundColor:
+					'#' + palette.components.edit.reactFlow.tableHeader.default,
 			}}
 		>
 			<Add

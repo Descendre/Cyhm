@@ -79,7 +79,7 @@ export const EditRightPopperTableColorInput = ({
 						table &&
 						tables[table?.id] &&
 						tableEditInfo[table?.id] &&
-						tables[table.id].color !== '#' + tableEditInfo[table.id].color ? (
+						tables[table.id].color !== tableEditInfo[table.id].color ? (
 							<InputAdornment position="end">
 								<Update
 									titleAccess="更新"
