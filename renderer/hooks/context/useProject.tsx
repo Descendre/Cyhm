@@ -33,12 +33,12 @@ import {
 	UpdateTableExpandRequest,
 	UpdateTableLockRequest,
 	UpdateTableNameRequest,
+	UpdateTablePositionResponse,
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
 import { useSession } from 'next-auth/react';
 import { ColumnType } from '@prisma/client';
-import { UpdateTablePositionResponse } from '../../interfaces/api/supabase/res/UpdateTablePositionResponse';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
