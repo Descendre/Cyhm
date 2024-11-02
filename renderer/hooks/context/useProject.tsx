@@ -193,6 +193,28 @@ export const useProject = (): UseProjectProps => {
 	}: handleAddTableProps): Promise<void> => {
 		setIsTableAddMode(false);
 		if (!session.user) return;
+
+		const tempCUID = generateCUID();
+
+		setTables((prevTables) => {
+			const tempTable: AddTableResponse = {
+				id: tempCUID,
+				projectId: projectId,
+				color: palette.components.edit.reactFlow.tableHeader.default,
+				name: tableName,
+				position: {
+					x: 0,
+					y: 0,
+				},
+				isEditing: false,
+				isExpanded: true,
+			};
+			return {
+				...(prevTables || {}),
+				[tempCUID]: tempTable,
+			};
+		});
+
 		const newTable = await axiosFetch.post<AddTableResponse>(
 			`/api/supabase/table`,
 			{
@@ -207,7 +229,7 @@ export const useProject = (): UseProjectProps => {
 		);
 		setTables((prevTables) => ({
 			...prevTables,
-			[newTable.id]: newTable,
+			[tempCUID]: newTable,
 		}));
 		const channel = supabase.channel(SUPABASE_CHANNEL_NAME);
 		channel.send({
