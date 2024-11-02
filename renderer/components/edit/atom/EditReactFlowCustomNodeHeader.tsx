@@ -13,7 +13,7 @@ export const EditReactFlowCustomNodeHeader = ({
 			width="100%"
 			height="40px"
 			padding="0 10px"
-			bgcolor={color}
+			bgcolor={'#' + color}
 		>
 			<Typography
 				variant="body2"

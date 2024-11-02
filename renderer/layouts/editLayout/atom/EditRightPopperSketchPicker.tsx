@@ -37,7 +37,7 @@ export const EditRightPopperSketchPicker = ({
 			<Sketch
 				disableAlpha
 				color={tableEditInfo[table?.id]?.color || ''}
-				onChange={(color) => handleColorChange(color.hex.substring(1))}
+				onChange={(color) => handleColorChange(color.hex)}
 				style={{
 					backgroundColor: palette.layout.editLayout.rightPopper.bg,
 					borderRadius: '5px 0 0 5px',

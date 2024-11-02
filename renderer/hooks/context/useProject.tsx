@@ -33,12 +33,12 @@ import {
 	UpdateTableExpandRequest,
 	UpdateTableLockRequest,
 	UpdateTableNameRequest,
-	UpdateTablePositionResponse,
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
 import { useSession } from 'next-auth/react';
 import { ColumnType } from '@prisma/client';
+import { UpdateTablePositionResponse } from '../../interfaces/api/supabase/res/UpdateTablePositionResponse';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
@@ -138,7 +138,7 @@ export const useProject = (): UseProjectProps => {
 					const tableData = allProjectContents.tables[tableId];
 					updatedTableInfo[tableId] = {
 						name: tableData.name,
-						color: tableData.color.substring(1),
+						color: tableData.color,
 					};
 				});
 				return updatedTableInfo;
