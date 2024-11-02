@@ -63,7 +63,7 @@ export const EditRightPopperTableSettingArea = ({
 						titleAccess="テーブルカラーを変更"
 						fontSize="small"
 						sx={{
-							color: '#' + tableEditInfo[table?.id]?.color || '',
+							color: tableEditInfo[table?.id]?.color || '',
 							fontSize: '1.1rem',
 							cursor: 'pointer',
 						}}

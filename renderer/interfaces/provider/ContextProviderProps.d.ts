@@ -8,7 +8,6 @@ import {
 	FetchUserProjectsResponse,
 	NotifyWithDetail,
 } from '../api';
-import { TableEditStateProps } from './TableEditInfoProps';
 import { UserSearchResultsProps } from './UserSearchResultsProps';
 import { UserPopperViewModeProps } from './UserPopperVoewModeProps';
 
@@ -54,8 +53,8 @@ export interface ContextProviderProps {
 	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 	isPreparingProject: string | null;
 	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
-	tableEditInfo: TableEditStateProps;
-	setTableEditInfo: React.Dispatch<React.SetStateAction<TableEditStateProps>>;
+	tableEditInfo: TablesStateProps;
+	setTableEditInfo: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columnEditInfo: ColumnsStateProps;
 	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
 	userSearchResults: UserSearchResultsProps;

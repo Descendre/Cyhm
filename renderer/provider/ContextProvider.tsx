@@ -7,7 +7,6 @@ import {
 	FetchNotifyInvitedUserResponse,
 	FetchUserProjectsResponse,
 	NotifyWithDetail,
-	TableEditStateProps,
 	TablesStateProps,
 	UserPopperViewModeProps,
 	UserSearchResultsProps,
@@ -46,7 +45,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isPreparingProject, setIsPreparingProject] = useState<string | null>(
 		null
 	);
-	const [tableEditInfo, setTableEditInfo] = useState<TableEditStateProps>({});
+	const [tableEditInfo, setTableEditInfo] = useState<TablesStateProps>({});
 	const [columnEditInfo, setColumnEditInfo] = useState<ColumnsStateProps>({});
 	const [userSearchResults, setUserSearchResults] =
 		useState<UserSearchResultsProps>({
