@@ -18,7 +18,7 @@ export const EditHeaderUserPopperInvitedList = () => {
 				},
 			}}
 		>
-			{invitedUsers.map((user) => (
+			{invitedUsers?.map((user) => (
 				<EditHeaderUserPopperInvitedListItem
 					key={user.toUser.id}
 					user={user.toUser}
