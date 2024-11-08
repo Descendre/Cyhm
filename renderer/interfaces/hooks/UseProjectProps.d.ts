@@ -158,10 +158,8 @@ export interface handleNodeDragStopProps {
 
 export interface TableChannelPayloadProps {
 	newTable: AddTableResponse;
-	userId: string;
 }
 
 export interface ColumnChannelPayloadProps {
 	newColumn: AddColumnResponse;
-	userId: string;
 }

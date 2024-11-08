@@ -37,12 +37,10 @@ import {
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
-import { useSession } from 'next-auth/react';
 import { ColumnType } from '@prisma/client';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
-	const { data: session } = useSession();
 	const context = useContext(Context);
 	if (!context) {
 		throw new Error('Context is not provided');
@@ -221,7 +219,7 @@ export const useProject = (): UseProjectProps => {
 		projectId,
 		tableName,
 	}: handleAddTableProps): Promise<void> => {
-		if (!session.user || !channel) return;
+		if (!channel) return;
 		setIsTableAddMode(false);
 
 		const tempCUID = generateCUID();
@@ -298,7 +296,6 @@ export const useProject = (): UseProjectProps => {
 			event: 'table_add',
 			payload: {
 				newTable: newTable,
-				userId: session.user.id,
 			} as TableChannelPayloadProps,
 		});
 	};
@@ -308,7 +305,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleAddColumnProps): Promise<void> => {
 		try {
-			if (!session.user || !channel) return;
+			if (!channel) return;
 			setAddColumnIndex(null);
 
 			const tempCUID = generateCUID();
@@ -389,7 +386,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'column_add',
 				payload: {
 					newColumn: newColumn,
-					userId: session.user.id,
 				} as ColumnChannelPayloadProps,
 			});
 		} catch (error) {
@@ -440,7 +436,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'table_update',
 				payload: {
 					newTable: updatedTable,
-					userId: session.user.id,
 				} as TableChannelPayloadProps,
 			});
 		} catch (error) {
@@ -452,7 +447,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleTableEditProps): Promise<void> => {
 		try {
-			if (!tables || !tables[tableId] || !session.user || !channel) return;
+			if (!tables || !tables[tableId] || !channel) return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
 				return {
@@ -476,7 +471,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'table_update',
 				payload: {
 					newTable: updatedTable,
-					userId: session.user.id,
 				} as TableChannelPayloadProps,
 			});
 		} catch (error) {
@@ -502,11 +496,7 @@ export const useProject = (): UseProjectProps => {
 		name,
 	}: handleTableNameUpdateProps): Promise<void> => {
 		try {
-			if (
-				!session.user ||
-				tables[tableId].name === tableEditInfo[tableId].name ||
-				!channel
-			)
+			if (tables[tableId].name === tableEditInfo[tableId].name || !channel)
 				return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
@@ -531,7 +521,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'table_update',
 				payload: {
 					newTable: updatedTable,
-					userId: session.user.id,
 				} as TableChannelPayloadProps,
 			});
 		} catch (error) {
@@ -557,11 +546,7 @@ export const useProject = (): UseProjectProps => {
 		color,
 	}: handleTableColorUpdateProps): Promise<void> => {
 		try {
-			if (
-				!session.user ||
-				tables[tableId].color === tableEditInfo[tableId].color ||
-				!channel
-			)
+			if (tables[tableId].color === tableEditInfo[tableId].color || !channel)
 				return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
@@ -586,7 +571,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'table_update',
 				payload: {
 					newTable: updatedTable,
-					userId: session.user.id,
 				} as TableChannelPayloadProps,
 			});
 		} catch (error) {
@@ -618,7 +602,7 @@ export const useProject = (): UseProjectProps => {
 		name,
 	}: handleColumnNameUpdateProps): Promise<void> => {
 		try {
-			if (!session.user || !channel) return;
+			if (!channel) return;
 
 			const currentColumn = columns[tableId]?.find(
 				(column) => column.id === columnId
@@ -649,7 +633,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'column_update',
 				payload: {
 					newColumn: updatedColumn,
-					userId: session.user.id,
 				} as ColumnChannelPayloadProps,
 			});
 		} catch (error) {
@@ -663,7 +646,7 @@ export const useProject = (): UseProjectProps => {
 		type,
 	}: handleUpdateColumnTypeProps): Promise<void> => {
 		try {
-			if (!session.user || !channel) return;
+			if (!channel) return;
 
 			const currentColumn = columns[tableId]?.find(
 				(column) => column.id === columnId
@@ -696,7 +679,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'column_update',
 				payload: {
 					newColumn: updatedColumn,
-					userId: session.user.id,
 				} as ColumnChannelPayloadProps,
 			});
 		} catch (error) {
@@ -731,7 +713,6 @@ export const useProject = (): UseProjectProps => {
 				event: 'table_update',
 				payload: {
 					newTable: updatedTable,
-					userId: session.user.id,
 				} as TableChannelPayloadProps,
 			});
 		} catch (error) {
@@ -745,8 +726,7 @@ export const useProject = (): UseProjectProps => {
 		setChannel(newChannel);
 
 		const handleTableAdd = (payload: { payload: TableChannelPayloadProps }) => {
-			const { newTable, userId } = payload.payload;
-			if (userId === session.user.id) return;
+			const { newTable } = payload.payload;
 			setTables((prevTables) => ({
 				...prevTables,
 				[newTable.id]: newTable,
@@ -760,8 +740,8 @@ export const useProject = (): UseProjectProps => {
 		const handleTableUpdate = (payload: {
 			payload: TableChannelPayloadProps;
 		}) => {
-			const { newTable, userId } = payload.payload;
-			if (userId === session.user.id) return;
+			console.log(1234);
+			const { newTable } = payload.payload;
 			setTables((prevTables) => ({
 				...prevTables,
 				[newTable.id]: newTable,
@@ -775,8 +755,7 @@ export const useProject = (): UseProjectProps => {
 		const handleColumnAdd = (payload: {
 			payload: ColumnChannelPayloadProps;
 		}) => {
-			const { newColumn, userId } = payload.payload;
-			if (userId === session.user.id) return;
+			const { newColumn } = payload.payload;
 			setColumns((prevColumns) => ({
 				...prevColumns,
 				[newColumn.tableId]: [
@@ -803,8 +782,7 @@ export const useProject = (): UseProjectProps => {
 		const handleColumnUpdate = (payload: {
 			payload: ColumnChannelPayloadProps;
 		}) => {
-			const { newColumn, userId } = payload.payload;
-			if (userId === session.user.id) return;
+			const { newColumn } = payload.payload;
 			setColumns((prevColumns) => ({
 				...prevColumns,
 				[newColumn.tableId]: prevColumns[newColumn.tableId].map((column) =>
