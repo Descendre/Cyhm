@@ -12,6 +12,7 @@ import {
 	UserSearchResultsProps,
 	windowModeProps,
 } from '../interfaces';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 export const Context = createContext<ContextProviderProps | null>(null);
 
@@ -41,7 +42,6 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	>(null);
 	const [currentProject, setCurrentProject] =
 		useState<FetchUserProjectsResponse | null>(null);
-	const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 	const [isPreparingProject, setIsPreparingProject] = useState<string | null>(
 		null
 	);
@@ -60,6 +60,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		FetchNotifyInvitedUserResponse[]
 	>([]);
 	const [notifies, setNotifies] = useState<NotifyWithDetail[] | null>(null);
+	const [channel, setChannel] = useState<RealtimeChannel | null>(null);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -93,8 +94,6 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
-		isSubscribed,
-		setIsSubscribed,
 		isPreparingProject,
 		setIsPreparingProject,
 		tableEditInfo,
@@ -109,6 +108,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setInvitedUsers,
 		notifies,
 		setNotifies,
+		channel,
+		setChannel,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

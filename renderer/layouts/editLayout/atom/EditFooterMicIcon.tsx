@@ -14,7 +14,7 @@ export const EditFooterMicIcon = () => {
 			height="100%"
 			onClick={() => setIsMic((prev) => !prev)}
 			sx={{
-				pointerEvents: 'none',
+				cursor: 'pointer',
 			}}
 		>
 			{isMic ? (
@@ -22,6 +22,7 @@ export const EditFooterMicIcon = () => {
 					fontSize="small"
 					sx={{
 						cursor: 'pointer',
+						pointerEvents: 'none',
 					}}
 				/>
 			) : (
@@ -30,6 +31,7 @@ export const EditFooterMicIcon = () => {
 					color="error"
 					sx={{
 						cursor: 'pointer',
+						pointerEvents: 'none',
 					}}
 				/>
 			)}
