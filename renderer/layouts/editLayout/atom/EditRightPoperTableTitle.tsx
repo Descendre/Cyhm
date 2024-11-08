@@ -9,14 +9,13 @@ export const EditRightPoperTableTitle = ({
 
 	return (
 		<Typography
-			title={table?.isEditing ? '' : '編集ロック中'}
+			title={table?.isEditing ? table.name : '編集ロック中'}
 			noWrap
 			variant="body1"
 			color={table?.isEditing ? palette.text.primary : palette.text.disabled}
 			sx={{
 				flexGrow: 1,
 				textDecoration: table?.isEditing ? 'none' : 'line-through',
-				cursor: table?.isEditing ? 'default' : 'pointer',
 			}}
 		>
 			{table?.name}

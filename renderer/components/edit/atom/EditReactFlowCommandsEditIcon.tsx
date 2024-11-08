@@ -17,7 +17,7 @@ export const EditReactFlowCommandsEditIcon = ({
 	return (
 		<IconButton
 			size="small"
-			title="メニューを表示"
+			title={table.isEditing ? '編集中のテーブル' : '編集ロック中'}
 			disableRipple
 			onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
 				handleClick(event)
