@@ -41,6 +41,7 @@ export interface UseLayoutProps {
 		React.SetStateAction<UserPopperViewModeProps>
 	>;
 
+	handleGithubExternalShellOpen: () => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleSelectTable: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];

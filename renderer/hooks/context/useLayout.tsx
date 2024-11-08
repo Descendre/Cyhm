@@ -45,6 +45,14 @@ export const useLayout = (): UseLayoutProps => {
 		setIsPreparingProject,
 	} = context;
 
+	const handleGithubExternalShellOpen = (): void => {
+		if (typeof window !== 'undefined' && window.ipc) {
+			window.ipc.send('github-open');
+		} else {
+			console.error('IPC is not available');
+		}
+	};
+
 	const handleAllTableExpansion = (expand: boolean): void => {
 		setTables((prevTables) => {
 			if (!prevTables) return prevTables;
@@ -124,6 +132,7 @@ export const useLayout = (): UseLayoutProps => {
 		isPreparingProject,
 		setIsPreparingProject,
 
+		handleGithubExternalShellOpen,
 		handleAllTableExpansion,
 		handleSelectTable,
 		handleGetNodesFromTables,

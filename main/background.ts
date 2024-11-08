@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import serve from 'electron-serve';
 import * as fs from 'node:fs';
 import { convertToCSV, createDBSchema, createWindow } from './helpers';
@@ -53,6 +53,11 @@ ipcMain.on('project-end', async () => {
 	if (mainWindow) {
 		mainWindow.unmaximize();
 	}
+});
+
+// githubの外部リンクをブラウザで開く
+ipcMain.on('github-open', async () => {
+	shell.openExternal('https://github.com/Descendre/Cyhm');
 });
 
 // ファイル出力

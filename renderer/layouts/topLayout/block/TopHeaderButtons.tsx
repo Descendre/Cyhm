@@ -7,7 +7,7 @@ import {
 	Notifications,
 	Settings,
 } from '@mui/icons-material';
-import { useModal, useNotify } from '../../../hooks';
+import { useLayout, useModal, useNotify } from '../../../hooks';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { AppModal } from '../../../components';
@@ -15,6 +15,7 @@ import { TopNotifyModalInner } from './TopNotifyModalInner';
 
 export const TopHeaderButtons = () => {
 	const { data: session } = useSession();
+	const { handleGithubExternalShellOpen } = useLayout();
 	const { isOpen, openModal, closeModal } = useModal();
 	const { notifies, handleFetchUserNotify } = useNotify();
 
@@ -41,7 +42,7 @@ export const TopHeaderButtons = () => {
 				<TopHeaderButton
 					icon={<GitHub />}
 					text="github"
-					onClick={() => console.log()}
+					onClick={() => handleGithubExternalShellOpen()}
 				/>
 				<TopHeaderButton
 					icon={<NotificationsIcon />}

@@ -9,6 +9,7 @@ export const TopLoading = ({ text }: TopLoadingProps) => {
 
 	return (
 		<Box
+			zIndex={100}
 			position="fixed"
 			top={0}
 			left={0}
