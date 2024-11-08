@@ -13,7 +13,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 		EditFooterAddColumnIconRef,
 		EditRightPopperRef,
 		windowMode,
-		setSelectedTable,
+		setSelectedTableId,
 	} = useLayout();
 	const { data: session, status } = useSession();
 
@@ -41,7 +41,7 @@ export const SwitchingLayoutUi = ({ children }: SwitchingLayoutUiProps) => {
 					isClickOutsideEditFooterAddColumnIcon &&
 					isClickOutsideRightPopper
 				) {
-					setSelectedTable(null);
+					setSelectedTableId(null);
 				}
 			}
 		};

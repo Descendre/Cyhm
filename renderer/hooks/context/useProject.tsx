@@ -66,7 +66,7 @@ export const useProject = (): UseProjectProps => {
 		setInvitedUsers,
 		setIsMic,
 		setIsAudio,
-		setSelectedTable,
+		setSelectedTableId,
 		setLastSelectedTableId,
 		setIsEditLeftBar,
 		setIsEditRightPopper,
@@ -192,7 +192,7 @@ export const useProject = (): UseProjectProps => {
 		setColumns(null);
 		setIsMic(false);
 		setIsAudio(false);
-		setSelectedTable(null);
+		setSelectedTableId(null);
 		setLastSelectedTableId(null);
 		setIsEditLeftBar(true);
 		setIsEditRightPopper(true);
@@ -305,7 +305,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleAddColumnProps): Promise<void> => {
 		try {
-			if (!channel) return;
+			if (!channel || !tables[tableId]?.isEditing) return;
 			setAddColumnIndex(null);
 
 			const tempCUID = generateCUID();

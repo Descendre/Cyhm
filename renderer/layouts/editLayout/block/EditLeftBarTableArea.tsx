@@ -7,9 +7,14 @@ import { EditLeftBarTableAreaProps } from '../../../interfaces';
 
 export const EditLeftBarTableArea = ({ table }: EditLeftBarTableAreaProps) => {
 	const palette = usePalette();
-	const { tables, columns, addColumnIndex, selectedTable, handleSelectTable } =
-		useLayout();
-	const isTableSelected: boolean = table.id === selectedTable?.id;
+	const {
+		tables,
+		columns,
+		addColumnIndex,
+		selectedTableId,
+		handleSelectTable,
+	} = useLayout();
+	const isTableSelected: boolean = table.id === selectedTableId;
 
 	return (
 		<Box

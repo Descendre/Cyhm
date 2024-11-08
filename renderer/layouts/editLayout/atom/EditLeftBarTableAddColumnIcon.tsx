@@ -3,16 +3,16 @@ import { useLayout, usePalette } from '../../../hooks';
 import { EditLeftBarTableAddColumnIconProps } from '../../../interfaces';
 
 export const EditLeftBarTableAddColumnIcon = ({
-	tableId,
+	table,
 }: EditLeftBarTableAddColumnIconProps) => {
 	const palette = usePalette();
-	const { setAddColumnIndex } = useLayout();
+	const { handleSetAddColumnIndex } = useLayout();
 
 	return (
 		<Add
 			fontSize="small"
 			titleAccess="カラムを追加"
-			onClick={() => setAddColumnIndex(tableId)}
+			onClick={() => handleSetAddColumnIndex(table)}
 			sx={{
 				cursor: 'pointer',
 				color: palette.text.secondary,

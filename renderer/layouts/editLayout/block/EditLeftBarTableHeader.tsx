@@ -5,10 +5,13 @@ import {
 	EditLeftBarTableExpandIcon,
 	EditLeftBarToggleEditIcon,
 } from '../atom';
+import { usePalette } from '../../../hooks';
 
 export const EditLeftBarTableHeader = ({
 	table,
 }: EditLeftBarTableHeaderProps) => {
+	const palette = usePalette();
+
 	return (
 		<Box
 			display="flex"
@@ -22,7 +25,14 @@ export const EditLeftBarTableHeader = ({
 				userSelect: 'none',
 			}}
 		>
-			<Typography variant="body2" fontSize="0.75rem" noWrap flexGrow={1}>
+			<Typography
+				variant="body2"
+				fontSize="0.75rem"
+				noWrap
+				flexGrow={1}
+				color={table?.isEditing ? palette.text.primary : palette.text.disabled}
+				sx={{ textDecoration: table.isEditing ? 'none' : 'line-through' }}
+			>
 				{table.name}
 			</Typography>
 			<Box display="flex" justifyContent="center" alignItems="center" gap="5px">
@@ -30,7 +40,7 @@ export const EditLeftBarTableHeader = ({
 					tableId={table.id}
 					isExpanded={table.isExpanded}
 				/>
-				<EditLeftBarTableAddColumnIcon tableId={table?.id} />
+				<EditLeftBarTableAddColumnIcon table={table} />
 				<EditLeftBarToggleEditIcon table={table} />
 			</Box>
 		</Box>

@@ -3,7 +3,6 @@ import { TablesStateProps } from './TableProps';
 import { ColumnsStateProps } from './ColumnProps';
 import React from 'react';
 import {
-	AddTableResponse,
 	FetchNotifyInvitedUserResponse,
 	FetchUserProjectsResponse,
 	NotifyWithDetail,
@@ -32,10 +31,8 @@ export interface ContextProviderProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
-	selectedTable: AddTableResponse | null;
-	setSelectedTable: React.Dispatch<
-		React.SetStateAction<AddTableResponse | null>
-	>;
+	selectedTableId: string | null;
+	setSelectedTableId: React.Dispatch<React.SetStateAction<string | null>>;
 	lastSelectedTableId: string | null;
 	setLastSelectedTableId: React.Dispatch<React.SetStateAction<string | null>>;
 	isEditLeftBar: boolean;

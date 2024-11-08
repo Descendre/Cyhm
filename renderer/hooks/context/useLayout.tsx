@@ -31,8 +31,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
-		selectedTable,
-		setSelectedTable,
+		selectedTableId,
+		setSelectedTableId,
 		lastSelectedTableId,
 		setLastSelectedTableId,
 		isEditLeftBar,
@@ -69,10 +69,17 @@ export const useLayout = (): UseLayoutProps => {
 	};
 
 	const handleSelectTable = (table: AddTableResponse | null): void => {
-		setSelectedTable(table);
 		if (table) {
+			setSelectedTableId(table.id);
 			setLastSelectedTableId(table.id);
+		} else {
+			setSelectedTableId(null);
 		}
+	};
+
+	const handleSetAddColumnIndex = (table: AddTableResponse): void => {
+		if (!table.isEditing) return;
+		setAddColumnIndex(table.id);
 	};
 
 	const handleGetNodesFromTables = (): Node[] => {
@@ -119,8 +126,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
-		selectedTable,
-		setSelectedTable,
+		selectedTableId,
+		setSelectedTableId,
 		lastSelectedTableId,
 		setLastSelectedTableId,
 		isEditLeftBar,
@@ -135,6 +142,7 @@ export const useLayout = (): UseLayoutProps => {
 		handleGithubExternalShellOpen,
 		handleAllTableExpansion,
 		handleSelectTable,
+		handleSetAddColumnIndex,
 		handleGetNodesFromTables,
 		handleSwitchUserPopperViewMode,
 	};

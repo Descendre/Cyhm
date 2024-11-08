@@ -1,7 +1,6 @@
 'use client';
 import { ReactNode, createContext, useRef, useState } from 'react';
 import {
-	AddTableResponse,
 	ColumnsStateProps,
 	ContextProviderProps,
 	FetchNotifyInvitedUserResponse,
@@ -29,9 +28,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [columns, setColumns] = useState<ColumnsStateProps>({});
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
-	const [selectedTable, setSelectedTable] = useState<AddTableResponse | null>(
-		null
-	);
+	const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
 	const [lastSelectedTableId, setLastSelectedTableId] = useState<string | null>(
 		null
 	);
@@ -82,8 +79,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setIsTableAddMode,
 		addColumnIndex,
 		setAddColumnIndex,
-		selectedTable,
-		setSelectedTable,
+		selectedTableId,
+		setSelectedTableId,
 		lastSelectedTableId,
 		setLastSelectedTableId,
 		isEditLeftBar,

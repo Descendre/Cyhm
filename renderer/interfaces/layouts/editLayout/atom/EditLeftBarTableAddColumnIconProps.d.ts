@@ -1,3 +1,5 @@
+import { AddTableResponse } from '../../../api';
+
 export interface EditLeftBarTableAddColumnIconProps {
-	tableId: string;
+	table: AddTableResponse;
 }
