@@ -6,6 +6,7 @@ import {
 } from '../api';
 import { ColumnsStateProps, TablesStateProps } from '../provider';
 import { ColumnType } from '@prisma/client';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface UseProjectProps {
 	userProjects: FetchUserProjectsResponse[] | null;
@@ -16,12 +17,12 @@ export interface UseProjectProps {
 	setCurrentProject: React.Dispatch<
 		React.SetStateAction<FetchUserProjectsResponse | null>
 	>;
-	isSubscribed: boolean;
-	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 	tableEditInfo: TablesStateProps;
 	setTableEditInfo: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columnEditInfo: ColumnsStateProps;
 	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
+	channel: RealtimeChannel | null;
+	setChannel: React.Dispatch<React.SetStateAction<RealtimeChannel | null>>;
 
 	handleCreateProject: ({ userId }: handleCreateProjectProps) => Promise<void>;
 	handleFetchUserProjects: ({

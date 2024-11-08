@@ -60,8 +60,6 @@ export const useProject = (): UseProjectProps => {
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
-		isSubscribed,
-		setIsSubscribed,
 		setIsPreparingProject,
 		tableEditInfo,
 		setTableEditInfo,
@@ -76,9 +74,9 @@ export const useProject = (): UseProjectProps => {
 		setIsEditRightPopper,
 		setUserSearchResults,
 		setUserPopperViewMode,
+		channel,
+		setChannel,
 	} = context;
-
-	const SUPABASE_PROJECT_CHANNEL_NAME = `project_${currentProject?.id}`;
 
 	const handleCreateProject = async ({
 		userId,
@@ -210,6 +208,7 @@ export const useProject = (): UseProjectProps => {
 		});
 		setUserPopperViewMode('member');
 		setInvitedUsers(null);
+		setChannel(null);
 		setWindowMode('top');
 		if (typeof window !== 'undefined' && window.ipc) {
 			window.ipc.send('project-end');
@@ -222,8 +221,8 @@ export const useProject = (): UseProjectProps => {
 		projectId,
 		tableName,
 	}: handleAddTableProps): Promise<void> => {
+		if (!session.user || !channel) return;
 		setIsTableAddMode(false);
-		if (!session.user) return;
 
 		const tempCUID = generateCUID();
 
@@ -294,7 +293,6 @@ export const useProject = (): UseProjectProps => {
 			};
 		});
 
-		const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
 		channel.send({
 			type: 'broadcast',
 			event: 'table_add',
@@ -310,7 +308,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleAddColumnProps): Promise<void> => {
 		try {
-			if (!session.user) return;
+			if (!session.user || !channel) return;
 			setAddColumnIndex(null);
 
 			const tempCUID = generateCUID();
@@ -386,7 +384,6 @@ export const useProject = (): UseProjectProps => {
 				),
 			}));
 
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
 			channel.send({
 				type: 'broadcast',
 				event: 'column_add',
@@ -419,7 +416,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleOpenTableExpansionProps): Promise<void> => {
 		try {
-			if (!tables || !tables[tableId]) return;
+			if (!tables || !tables[tableId] || !channel) return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
 				return {
@@ -437,7 +434,7 @@ export const useProject = (): UseProjectProps => {
 					isExpand: !tables[tableId].isExpanded,
 				} as UpdateTableExpandRequest
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'table_update',
@@ -455,7 +452,7 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleTableEditProps): Promise<void> => {
 		try {
-			if (!tables || !tables[tableId] || !session.user) return;
+			if (!tables || !tables[tableId] || !session.user || !channel) return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
 				return {
@@ -473,7 +470,7 @@ export const useProject = (): UseProjectProps => {
 					isEdit: !tables[tableId].isEditing,
 				} as UpdateTableLockRequest
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'table_update',
@@ -505,7 +502,11 @@ export const useProject = (): UseProjectProps => {
 		name,
 	}: handleTableNameUpdateProps): Promise<void> => {
 		try {
-			if (!session.user || tables[tableId].name === tableEditInfo[tableId].name)
+			if (
+				!session.user ||
+				tables[tableId].name === tableEditInfo[tableId].name ||
+				!channel
+			)
 				return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
@@ -524,7 +525,7 @@ export const useProject = (): UseProjectProps => {
 					name: name,
 				} as UpdateTableNameRequest
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'table_update',
@@ -558,7 +559,8 @@ export const useProject = (): UseProjectProps => {
 		try {
 			if (
 				!session.user ||
-				tables[tableId].color === tableEditInfo[tableId].color
+				tables[tableId].color === tableEditInfo[tableId].color ||
+				!channel
 			)
 				return;
 			setTables((prevTables) => {
@@ -578,7 +580,7 @@ export const useProject = (): UseProjectProps => {
 					color: color,
 				} as UpdateTableColorRequest
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'table_update',
@@ -616,7 +618,7 @@ export const useProject = (): UseProjectProps => {
 		name,
 	}: handleColumnNameUpdateProps): Promise<void> => {
 		try {
-			if (!session.user) return;
+			if (!session.user || !channel) return;
 
 			const currentColumn = columns[tableId]?.find(
 				(column) => column.id === columnId
@@ -641,7 +643,7 @@ export const useProject = (): UseProjectProps => {
 					name: name,
 				} as UpdateColumnNameRequest
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'column_update',
@@ -661,7 +663,7 @@ export const useProject = (): UseProjectProps => {
 		type,
 	}: handleUpdateColumnTypeProps): Promise<void> => {
 		try {
-			if (!session.user) return;
+			if (!session.user || !channel) return;
 
 			const currentColumn = columns[tableId]?.find(
 				(column) => column.id === columnId
@@ -688,7 +690,7 @@ export const useProject = (): UseProjectProps => {
 					type: type,
 				} as UpdateColumnTypeRequest
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'column_update',
@@ -704,6 +706,7 @@ export const useProject = (): UseProjectProps => {
 
 	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
 		try {
+			if (!channel) return;
 			const { id, position } = node;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[id]) return prevTables;
@@ -722,7 +725,7 @@ export const useProject = (): UseProjectProps => {
 					position: position,
 				}
 			);
-			const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+
 			channel.send({
 				type: 'broadcast',
 				event: 'table_update',
@@ -737,9 +740,9 @@ export const useProject = (): UseProjectProps => {
 	};
 
 	useEffect(() => {
-		if (!currentProject || isSubscribed || !session.user) return;
-		setIsSubscribed(true);
-		const channel = supabase.channel(SUPABASE_PROJECT_CHANNEL_NAME);
+		if (!currentProject || channel) return;
+		const newChannel = supabase.channel(`project_${currentProject.id}`);
+		setChannel(newChannel);
 
 		const handleTableAdd = (payload: { payload: TableChannelPayloadProps }) => {
 			const { newTable, userId } = payload.payload;
@@ -824,29 +827,30 @@ export const useProject = (): UseProjectProps => {
 				),
 			}));
 		};
-		channel
+		newChannel
 			.on('broadcast', { event: 'table_add' }, handleTableAdd)
 			.on('broadcast', { event: 'table_update' }, handleTableUpdate)
 			.on('broadcast', { event: 'column_add' }, handleColumnAdd)
 			.on('broadcast', { event: 'column_update' }, handleColumnUpdate)
 			.subscribe();
+
 		return () => {
-			channel.unsubscribe();
-			setIsSubscribed(false);
+			newChannel.unsubscribe();
+			setChannel(null);
 		};
-	}, [currentProject, session.user]); // eslint-disable-line
+	}, [currentProject]); // eslint-disable-line
 
 	return {
 		userProjects,
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
-		isSubscribed,
-		setIsSubscribed,
 		tableEditInfo,
 		setTableEditInfo,
 		columnEditInfo,
 		setColumnEditInfo,
+		channel,
+		setChannel,
 
 		handleCreateProject,
 		handleFetchUserProjects,

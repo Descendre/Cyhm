@@ -10,6 +10,7 @@ import {
 } from '../api';
 import { UserSearchResultsProps } from './UserSearchResultsProps';
 import { UserPopperViewModeProps } from './UserPopperVoewModeProps';
+import { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -49,8 +50,6 @@ export interface ContextProviderProps {
 	setCurrentProject: React.Dispatch<
 		React.SetStateAction<FetchUserProjectsResponse | null>
 	>;
-	isSubscribed: boolean;
-	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
 	isPreparingProject: string | null;
 	setIsPreparingProject: React.Dispatch<React.SetStateAction<string | null>>;
 	tableEditInfo: TablesStateProps;
@@ -71,4 +70,6 @@ export interface ContextProviderProps {
 	>;
 	notifies: NotifyWithDetail[];
 	setNotifies: React.Dispatch<React.SetStateAction<NotifyWithDetail[]>>;
+	channel: RealtimeChannel | null;
+	setChannel: React.Dispatch<React.SetStateAction<RealtimeChannel | null>>;
 }
