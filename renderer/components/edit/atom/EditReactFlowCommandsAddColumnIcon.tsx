@@ -7,13 +7,14 @@ export const EditReactFlowCommandsAddColumnIcon = ({
 	table,
 }: EditReactFlowCommandsAddColumnIconProps) => {
 	const palette = usePalette();
-	const { setAddColumnIndex, setSelectedTable, setIsEditLeftBar } = useLayout();
+	const { setSelectedTableId, setIsEditLeftBar, handleSetAddColumnIndex } =
+		useLayout();
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
 		event.stopPropagation();
 		setIsEditLeftBar(true);
-		setSelectedTable(table);
-		setAddColumnIndex(table.id);
+		setSelectedTableId(table.id);
+		handleSetAddColumnIndex(table);
 	};
 
 	return (

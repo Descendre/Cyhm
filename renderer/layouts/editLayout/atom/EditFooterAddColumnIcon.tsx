@@ -5,15 +5,17 @@ import { Box } from '@mui/material';
 export const EditFooterAddColumnIcon = () => {
 	const palette = usePalette();
 	const {
+		tables,
 		EditFooterAddColumnIconRef,
-		setAddColumnIndex,
-		selectedTable,
+		selectedTableId,
 		setIsEditLeftBar,
+		handleSetAddColumnIndex,
 	} = useLayout();
 
 	const handleClick = (): void => {
+		if (!tables[selectedTableId]) return;
 		setIsEditLeftBar(true);
-		setAddColumnIndex(selectedTable.id);
+		handleSetAddColumnIndex(tables[selectedTableId]);
 	};
 
 	return (
@@ -24,7 +26,7 @@ export const EditFooterAddColumnIcon = () => {
 				alignItems="center"
 				ref={EditFooterAddColumnIconRef}
 			>
-				{selectedTable ? (
+				{tables[selectedTableId]?.isEditing ? (
 					<TableRows
 						titleAccess="カラムを追加"
 						fontSize="small"

@@ -15,8 +15,8 @@ export const EditReactFlowCustomNode = ({
 	const { tableData }: EditReactFlowCustomNodeDataProps = data;
 	const { name, color, id } = tableData;
 	const palette = usePalette();
-	const { columns, selectedTable } = useLayout();
-	const isTableSelected: boolean = id === selectedTable?.id;
+	const { columns, selectedTableId } = useLayout();
+	const isTableSelected: boolean = id === selectedTableId;
 
 	return (
 		<Box

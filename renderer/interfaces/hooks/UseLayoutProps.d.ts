@@ -24,10 +24,8 @@ export interface UseLayoutProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
-	selectedTable: AddTableResponse | null;
-	setSelectedTable: React.Dispatch<
-		React.SetStateAction<AddTableResponse | null>
-	>;
+	selectedTableId: string | null;
+	setSelectedTableId: React.Dispatch<React.SetStateAction<string | null>>;
 	lastSelectedTableId: string | null;
 	setLastSelectedTableId: React.Dispatch<React.SetStateAction<string | null>>;
 	isEditLeftBar: boolean;
@@ -44,6 +42,7 @@ export interface UseLayoutProps {
 	handleGithubExternalShellOpen: () => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleSelectTable: (table: AddTableResponse) => void;
+	handleSetAddColumnIndex: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];
 	handleSwitchUserPopperViewMode: () => void;
 }
