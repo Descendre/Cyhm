@@ -11,7 +11,6 @@ export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 		<Box
 			width="100%"
 			padding="0 10px"
-			bgcolor={palette.layout.editLayout.leftBar.column.bg}
 			borderBottom={`solid 1px ${palette.layout.editLayout.leftBar.column.line}`}
 		>
 			<Box

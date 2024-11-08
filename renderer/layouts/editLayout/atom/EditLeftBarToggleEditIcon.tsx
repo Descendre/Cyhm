@@ -11,6 +11,7 @@ export const EditLeftBarToggleEditIcon = ({
 
 	return (
 		<Box
+			zIndex={100}
 			title={table.isEditing ? '編集中のテーブル' : '編集ロック中'}
 			onClick={() => handleTableEditMode({ tableId: table.id })}
 			sx={{
