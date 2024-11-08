@@ -1,4 +1,6 @@
+import { AddTableResponse } from '../../../api';
+
 export interface EditLeftBarTableExpandIconProps {
-	tableId: string;
+	table: AddTableResponse;
 	isExpanded: boolean;
 }

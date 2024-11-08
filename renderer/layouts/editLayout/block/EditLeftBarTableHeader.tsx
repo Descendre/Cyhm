@@ -37,7 +37,7 @@ export const EditLeftBarTableHeader = ({
 			</Typography>
 			<Box display="flex" justifyContent="center" alignItems="center" gap="5px">
 				<EditLeftBarTableExpandIcon
-					tableId={table.id}
+					table={table}
 					isExpanded={table.isExpanded}
 				/>
 				<EditLeftBarTableAddColumnIcon table={table} />

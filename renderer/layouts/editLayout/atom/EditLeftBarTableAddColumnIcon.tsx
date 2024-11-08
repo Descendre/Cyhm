@@ -15,7 +15,7 @@ export const EditLeftBarTableAddColumnIcon = ({
 			onClick={() => handleSetAddColumnIndex(table)}
 			sx={{
 				cursor: 'pointer',
-				color: palette.text.secondary,
+				color: table.isEditing ? palette.text.secondary : palette.text.disabled,
 			}}
 		/>
 	);
