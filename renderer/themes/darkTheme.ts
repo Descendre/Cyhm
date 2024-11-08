@@ -44,8 +44,8 @@ export const darkTheme = createTheme({
 				leftBar: {
 					bg: '#101014',
 					line: '#26262a',
+					lockBg: '#000000',
 					column: {
-						bg: '#0a0a0a',
 						line: '#161616',
 					},
 					constraint: {
@@ -124,6 +124,7 @@ export const darkTheme = createTheme({
 							bg: '#000000',
 						},
 					},
+					lockBg: '#000000',
 				},
 			},
 		},

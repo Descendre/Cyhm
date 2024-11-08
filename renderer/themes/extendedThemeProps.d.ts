@@ -24,8 +24,8 @@ declare module '@mui/material/styles' {
 				leftBar: {
 					bg: string;
 					line: string;
+					lockBg: string;
 					column: {
-						bg: string;
 						line: string;
 					};
 					constraint: {
@@ -104,6 +104,7 @@ declare module '@mui/material/styles' {
 							bg: string;
 						};
 					};
+					lockBg: string;
 				};
 			};
 		};
@@ -134,8 +135,8 @@ declare module '@mui/material/styles' {
 				leftBar: {
 					bg: string;
 					line: string;
+					lockBg: string;
 					column: {
-						bg: string;
 						line: string;
 					};
 					constraint: {
@@ -214,6 +215,7 @@ declare module '@mui/material/styles' {
 							bg: string;
 						};
 					};
+					lockBg: string;
 				};
 			};
 		};

@@ -13,7 +13,7 @@ export const EditReactFlowCustomNode = ({
 	data,
 }: EditReactFlowCustomNodeProps) => {
 	const { tableData }: EditReactFlowCustomNodeDataProps = data;
-	const { name, color, id } = tableData;
+	const { name, color, id, isEditing } = tableData;
 	const palette = usePalette();
 	const { columns, selectedTableId } = useLayout();
 	const isTableSelected: boolean = id === selectedTableId;
@@ -61,6 +61,22 @@ export const EditReactFlowCustomNode = ({
 					border={`solid 2px ${palette.primary.main}`}
 					borderRadius={columns?.[id]?.length > 0 ? '10px' : '10px 10px 0 0'}
 					sx={{
+						pointerEvents: 'none',
+					}}
+				/>
+
+				<Box
+					zIndex={50}
+					position="absolute"
+					display={!isEditing ? 'block' : 'none'}
+					top={0}
+					left={0}
+					width="100%"
+					height="100%"
+					bgcolor={palette.components.edit.reactFlow.lockBg}
+					borderRadius={columns?.[id]?.length > 0 ? '10px' : '10px 10px 0 0'}
+					sx={{
+						opacity: 0.5,
 						pointerEvents: 'none',
 					}}
 				/>
