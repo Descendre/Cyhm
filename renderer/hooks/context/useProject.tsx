@@ -412,7 +412,8 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleOpenTableExpansionProps): Promise<void> => {
 		try {
-			if (!tables || !tables[tableId] || !channel) return;
+			if (!tables || !tables[tableId] || !tables[tableId].isEditing || !channel)
+				return;
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
 				return {

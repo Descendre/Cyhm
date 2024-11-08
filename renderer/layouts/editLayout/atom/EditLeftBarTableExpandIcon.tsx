@@ -4,7 +4,7 @@ import { EditLeftBarTableExpandIconProps } from '../../../interfaces';
 import { Box } from '@mui/material';
 
 export const EditLeftBarTableExpandIcon = ({
-	tableId,
+	table,
 	isExpanded,
 }: EditLeftBarTableExpandIconProps) => {
 	const palette = usePalette();
@@ -17,7 +17,7 @@ export const EditLeftBarTableExpandIcon = ({
 			alignItems="center"
 			height="100%"
 			title={isExpanded ? 'カラムを非表示' : 'カラムを展開'}
-			onClick={() => handleTableExpansion({ tableId: tableId })}
+			onClick={() => handleTableExpansion({ tableId: table.id })}
 			sx={{
 				cursor: 'pointer',
 				color: palette.text.secondary,
@@ -27,7 +27,9 @@ export const EditLeftBarTableExpandIcon = ({
 				<ExpandMore
 					fontSize="small"
 					sx={{
-						color: palette.text.secondary,
+						color: table.isEditing
+							? palette.text.secondary
+							: palette.text.disabled,
 						pointerEvents: 'none',
 					}}
 				/>
@@ -35,7 +37,9 @@ export const EditLeftBarTableExpandIcon = ({
 				<ExpandLess
 					fontSize="small"
 					sx={{
-						color: palette.text.secondary,
+						color: table.isEditing
+							? palette.text.secondary
+							: palette.text.disabled,
 						pointerEvents: 'none',
 					}}
 				/>
