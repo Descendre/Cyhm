@@ -10,4 +10,7 @@ export * from './EditHeaderUserPopperProps';
 export * from './EditHeaderUserPopperHeaderProps';
 export * from './EditHeaderDownloadPopperProps';
 export * from './EditColumnConstraintLeftBarProps';
+export * from './EditColumnConstraintSettingAreaProps';
 export * from './EditColumnConstraintMainProps';
+export * from './EditColumnConstraintCurrentConstraintsProps';
+export * from './EditColumnConstraintColumnProps';

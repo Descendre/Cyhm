@@ -25,3 +25,5 @@ export * from './EditHeaderUserPopperInvitedList';
 export * from './EditHeaderDownloadPopper';
 export * from './EditColumnConstraintLeftBar';
 export * from './EditColumnConstraintMain';
+export * from './EditColumnConstraintCurrentConstraints';
+export * from './EditColumnConstraintColumn';

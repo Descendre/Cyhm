@@ -1,13 +1,15 @@
 'use client';
 import { Box, Typography } from '@mui/material';
 import { EditReactFlowCustomNodeColumnProps } from '../../../interfaces';
-import { ColumnTypeTexts } from '../../common';
+import { useLayout } from '../../../hooks';
 
 export const EditReactFlowCustomNodeColumn = ({
 	color,
 	name,
 	type,
 }: EditReactFlowCustomNodeColumnProps) => {
+	const { handleGetColumnTypeText } = useLayout();
+
 	return (
 		<Box
 			display="flex"
@@ -27,7 +29,7 @@ export const EditReactFlowCustomNodeColumn = ({
 			>
 				{name}
 			</Typography>
-			<ColumnTypeTexts type={type} />
+			{handleGetColumnTypeText(type, true, '1rem', '0.6rem')}
 		</Box>
 	);
 };

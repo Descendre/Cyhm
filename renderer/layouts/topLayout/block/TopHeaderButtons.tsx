@@ -1,5 +1,5 @@
 import { Badge, Box } from '@mui/material';
-import { TopHeaderAvatar, TopHeaderButton } from '../atom';
+import { TopHeaderAvatar } from '../atom';
 import {
 	Build,
 	GitHub,
@@ -7,13 +7,14 @@ import {
 	Notifications,
 	Settings,
 } from '@mui/icons-material';
-import { useLayout, useModal, useNotify } from '../../../hooks';
+import { useLayout, useModal, useNotify, usePalette } from '../../../hooks';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import { AppModal } from '../../../components';
+import { AppIconButton, AppModal } from '../../../components';
 import { TopNotifyModalInner } from './TopNotifyModalInner';
 
 export const TopHeaderButtons = () => {
+	const palette = usePalette();
 	const { data: session } = useSession();
 	const { handleGithubExternalShellOpen } = useLayout();
 	const { isOpen, openModal, closeModal } = useModal();
@@ -39,23 +40,31 @@ export const TopHeaderButtons = () => {
 				gap="10px"
 				height="50px"
 			>
-				<TopHeaderButton
+				<AppIconButton
 					icon={<GitHub />}
+					borderColor={palette.line.disabled}
+					borderHoverColor={palette.primary.main}
 					text="github"
 					onClick={() => handleGithubExternalShellOpen()}
 				/>
-				<TopHeaderButton
+				<AppIconButton
 					icon={<NotificationsIcon />}
+					borderColor={palette.line.disabled}
+					borderHoverColor={palette.primary.main}
 					text="通知"
 					onClick={() => openModal('topNotifyModal')}
 				/>
-				<TopHeaderButton
+				<AppIconButton
 					icon={<Settings />}
+					borderColor={palette.line.disabled}
+					borderHoverColor={palette.primary.main}
 					text="設定"
 					onClick={() => openModal('topSettingModal')}
 				/>
-				<TopHeaderButton
+				<AppIconButton
 					icon={<Info />}
+					borderColor={palette.line.disabled}
+					borderHoverColor={palette.primary.main}
 					text="クレジット"
 					onClick={() => console.log()}
 				/>

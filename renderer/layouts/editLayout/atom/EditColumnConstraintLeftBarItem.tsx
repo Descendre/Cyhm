@@ -20,7 +20,7 @@ export const EditColumnConstraintLeftBarItem = ({
 				cursor: 'pointer',
 			}}
 		>
-			<>{handleGetConstraintIcon(constraintType, false)}</>
+			{handleGetConstraintIcon(constraintType, false, '0.9rem', '0.6rem')}
 		</Box>
 	);
 };

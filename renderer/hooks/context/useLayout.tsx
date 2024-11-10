@@ -1,5 +1,5 @@
 'use client';
-import { useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { Context } from '../../provider';
 import {
 	AddTableResponse,
@@ -10,16 +10,24 @@ import {
 } from '../../interfaces';
 import { Node, XYPosition } from '@xyflow/react';
 import {
+	BarChart,
 	BlockOutlined,
+	CalendarToday,
 	Check,
+	Description,
 	DescriptionOutlined,
+	DoNotDisturb,
+	HelpOutline,
 	Key,
 	Link,
+	Numbers,
+	StackedBarChart,
 	StarOutline,
+	TextFields,
 } from '@mui/icons-material';
 import { usePalette } from '../common';
 import { Box, Typography } from '@mui/material';
-import { ColumnConstraintType } from '@prisma/client';
+import { ColumnConstraintType, ColumnType } from '@prisma/client';
 
 export const useLayout = (): UseLayoutProps => {
 	const context = useContext(Context);
@@ -69,10 +77,158 @@ export const useLayout = (): UseLayoutProps => {
 		}
 	};
 
+	const handleGetColumnTypeText = (
+		type: ColumnType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	): ReactNode => {
+		return type === 'INT' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				height="100%"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.int}
+			>
+				<Numbers
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'INT'}
+			</Typography>
+		) : type === 'VARCHAR' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.varchar}
+			>
+				<TextFields
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'VARCHAR'}
+			</Typography>
+		) : type === 'BOOLEAN' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.boolean}
+			>
+				<DoNotDisturb
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'BOOLEAN'}
+			</Typography>
+		) : type === 'DATE' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.date}
+			>
+				<CalendarToday
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'DATE'}
+			</Typography>
+		) : type === 'TEXT' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.text}
+			>
+				<Description
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'TEXT'}
+			</Typography>
+		) : type === 'FLOAT' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.float}
+			>
+				<BarChart
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'FLOAT'}
+			</Typography>
+		) : type === 'DOUBLE' ? (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.double}
+			>
+				<StackedBarChart
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'DOUBLE'}
+			</Typography>
+		) : (
+			<Typography
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.undefined}
+			>
+				<HelpOutline
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'UNDEFINED'}
+			</Typography>
+		);
+	};
+
 	const handleGetConstraintIcon = (
 		constraintName: ColumnConstraintType,
-		withText: boolean
-	) => {
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	): ReactNode => {
 		switch (constraintName) {
 			case 'PRIMARY_KEY':
 				return (
@@ -85,14 +241,14 @@ export const useLayout = (): UseLayoutProps => {
 						<Key
 							fontSize="small"
 							sx={{
-								fontSize: '0.9rem',
+								fontSize: iconSize,
 								color: palette.layout.editLayout.leftBar.constraint.primaryKey,
 							}}
 						/>
 						{withText && (
 							<Typography
 								variant="body2"
-								fontSize="0.6rem"
+								fontSize={fontSize}
 								color={palette.layout.editLayout.leftBar.constraint.primaryKey}
 							>
 								PRIMARY KEY
@@ -111,14 +267,14 @@ export const useLayout = (): UseLayoutProps => {
 						<BlockOutlined
 							fontSize="small"
 							sx={{
-								fontSize: '0.9rem',
+								fontSize: iconSize,
 								color: palette.layout.editLayout.leftBar.constraint.notNull,
 							}}
 						/>
 						{withText && (
 							<Typography
 								variant="body2"
-								fontSize="0.6rem"
+								fontSize={fontSize}
 								color={palette.layout.editLayout.leftBar.constraint.notNull}
 							>
 								NOT NULL
@@ -137,14 +293,14 @@ export const useLayout = (): UseLayoutProps => {
 						<StarOutline
 							fontSize="small"
 							sx={{
-								fontSize: '0.9rem',
+								fontSize: iconSize,
 								color: palette.layout.editLayout.leftBar.constraint.unique,
 							}}
 						/>
 						{withText && (
 							<Typography
 								variant="body2"
-								fontSize="0.6rem"
+								fontSize={fontSize}
 								color={palette.layout.editLayout.leftBar.constraint.unique}
 							>
 								UNIQUE
@@ -163,14 +319,14 @@ export const useLayout = (): UseLayoutProps => {
 						<Link
 							fontSize="small"
 							sx={{
-								fontSize: '0.9rem',
+								fontSize: iconSize,
 								color: palette.layout.editLayout.leftBar.constraint.foreignKey,
 							}}
 						/>
 						{withText && (
 							<Typography
 								variant="body2"
-								fontSize="0.6rem"
+								fontSize={fontSize}
 								color={palette.layout.editLayout.leftBar.constraint.foreignKey}
 							>
 								FOREIGN KEY
@@ -189,14 +345,14 @@ export const useLayout = (): UseLayoutProps => {
 						<Check
 							fontSize="small"
 							sx={{
-								fontSize: '0.9rem',
+								fontSize: iconSize,
 								color: palette.layout.editLayout.leftBar.constraint.check,
 							}}
 						/>
 						{withText && (
 							<Typography
 								variant="body2"
-								fontSize="0.6rem"
+								fontSize={fontSize}
 								color={palette.layout.editLayout.leftBar.constraint.check}
 							>
 								CHECK
@@ -215,14 +371,14 @@ export const useLayout = (): UseLayoutProps => {
 						<DescriptionOutlined
 							fontSize="small"
 							sx={{
-								fontSize: '0.9rem',
+								fontSize: iconSize,
 								color: palette.layout.editLayout.leftBar.constraint.default,
 							}}
 						/>
 						{withText && (
 							<Typography
 								variant="body2"
-								fontSize="0.6rem"
+								fontSize={fontSize}
 								color={palette.layout.editLayout.leftBar.constraint.default}
 							>
 								DEFAULT
@@ -340,6 +496,7 @@ export const useLayout = (): UseLayoutProps => {
 		setIsPreparingProject,
 
 		handleGithubExternalShellOpen,
+		handleGetColumnTypeText,
 		handleGetConstraintIcon,
 		handleToggleColumnConstraintExpansion,
 		handleAllTableExpansion,

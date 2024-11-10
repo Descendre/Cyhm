@@ -1,15 +1,14 @@
 'use client';
 import { IconButton } from '@mui/material';
-import { TopHeaderButtonProps } from '../../../interfaces';
-import { usePalette } from '../../../hooks';
+import { AppIconButtonProps } from '../../interfaces';
 
-export const TopHeaderButton = ({
+export const AppIconButton = ({
 	icon,
+	borderColor,
+	borderHoverColor,
 	text,
 	onClick,
-}: TopHeaderButtonProps) => {
-	const palette = usePalette();
-
+}: AppIconButtonProps) => {
 	return (
 		<IconButton
 			size="small"
@@ -18,9 +17,9 @@ export const TopHeaderButton = ({
 			disableTouchRipple
 			sx={{
 				borderRadius: '10px',
-				border: `solid 1px ${palette.line.disabled}`,
+				border: `solid 1px ${borderColor}`,
 				'&:hover': {
-					border: `solid 1px ${palette.primary.main}`,
+					border: `solid 1px ${borderHoverColor}`,
 					backgroundColor: 'transparent',
 				},
 			}}

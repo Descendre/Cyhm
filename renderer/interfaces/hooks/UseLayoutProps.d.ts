@@ -5,7 +5,9 @@ import {
 	UserPopperViewModeProps,
 	windowModeProps,
 } from '../provider';
-import { AddTableResponse, ColumnConstraintNameProps } from '../api';
+import { AddTableResponse } from '../api';
+import { ColumnConstraintType, ColumnType } from '@prisma/client';
+import { ReactNode } from 'react';
 
 export interface UseLayoutProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -47,10 +49,18 @@ export interface UseLayoutProps {
 		tableId,
 		columnId,
 	}: handleToggleColumnConstraintExpansionProps) => void;
+	handleGetColumnTypeText: (
+		type: ColumnType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	) => ReactNode;
 	handleGetConstraintIcon: (
-		constraintName: ColumnConstraintNameProps,
-		withText: boolean
-	) => void;
+		constraintName: ColumnConstraintType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	) => ReactNode;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleSelectTable: (table: AddTableResponse) => void;
 	handleSetAddColumnIndex: (table: AddTableResponse) => void;
