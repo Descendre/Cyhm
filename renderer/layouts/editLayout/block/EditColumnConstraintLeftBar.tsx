@@ -9,7 +9,7 @@ import { useLayout, usePalette } from '../../../hooks';
 export const EditColumnConstraintLeftBar = ({
 	table,
 }: EditColumnConstraintLeftBarProps) => {
-	const { columns } = useLayout();
+	const { columns, selectedConstraintColumnId } = useLayout();
 	const palette = usePalette();
 
 	return (
@@ -31,7 +31,7 @@ export const EditColumnConstraintLeftBar = ({
 			}}
 		>
 			{columns[table.id]?.map((column) => (
-				<Box key={column.id} width="100%">
+				<Box key={column.id} position="relative" width="100%">
 					<EditColumnConstraintColumnHeader table={table} column={column} />
 					{column.columnConstraints.map((constraint, index) => (
 						<EditColumnConstraintLeftBarItem
@@ -39,6 +39,21 @@ export const EditColumnConstraintLeftBar = ({
 							constraintType={constraint.type}
 						/>
 					))}
+
+					<Box
+						position="absolute"
+						top={0}
+						left={0}
+						display={
+							selectedConstraintColumnId === column.id ? 'block' : 'none'
+						}
+						width="100%"
+						height="100%"
+						border={`solid 1px ${palette.primary.main}`}
+						sx={{
+							pointerEvents: 'none',
+						}}
+					></Box>
 				</Box>
 			))}
 		</Box>

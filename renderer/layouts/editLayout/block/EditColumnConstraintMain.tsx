@@ -1,12 +1,18 @@
 import { Box } from '@mui/material';
-import { EditColumnConstraintColumnSection } from '../atom/EditColumnConstraintColumnSection';
-import { EditColumnConstraintMainProps } from '../../../interfaces';
+import { EditColumnConstraintSettingArea } from './EditColumnConstraintSettingArea';
 import { useLayout } from '../../../hooks';
+import {
+	ColumnStatePropsExtended,
+	EditColumnConstraintMainProps,
+} from '../../../interfaces';
 
 export const EditColumnConstraintMain = ({
 	table,
 }: EditColumnConstraintMainProps) => {
-	const { columns } = useLayout();
+	const { columns, selectedConstraintColumnId } = useLayout();
+	const selectedColumn: ColumnStatePropsExtended = columns[table.id].find(
+		(col) => col.id === selectedConstraintColumnId
+	);
 
 	return (
 		<Box
@@ -33,15 +39,9 @@ export const EditColumnConstraintMain = ({
 				flexDirection="column"
 				width="90%"
 			>
-				{columns[table.id]?.map((column) => (
-					<EditColumnConstraintColumnSection
-						key={column.id}
-						table={table}
-						column={column}
-					>
-						<></>
-					</EditColumnConstraintColumnSection>
-				))}
+				{selectedColumn && (
+					<EditColumnConstraintSettingArea column={selectedColumn} />
+				)}
 			</Box>
 		</Box>
 	);

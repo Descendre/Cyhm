@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
-import { usePalette } from '../../../hooks';
-import { ColumnTypeTexts } from '../../../components';
+import { useLayout, usePalette } from '../../../hooks';
 import { AddColumnResponse } from '../../../interfaces';
 import { EditLeftBarConstraintsArea } from './EditLeftBarConstraintsArea';
 
 export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 	const palette = usePalette();
+	const { handleGetColumnTypeText } = useLayout();
 
 	return (
 		<Box
@@ -37,7 +37,7 @@ export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 				height="25px"
 			>
 				<EditLeftBarConstraintsArea {...props} />
-				<ColumnTypeTexts type={props.type} />
+				{handleGetColumnTypeText(props.type, true, '1rem', '0.6rem')}
 			</Box>
 		</Box>
 	);

@@ -1,7 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { EditRightPopperColumnTypeSelectProps } from '../../../interfaces';
 import { useLayout, usePalette, useProject } from '../../../hooks';
-import { ColumnTypeTexts } from '../../../components';
 import { ColumnType } from '@prisma/client';
 
 export const EditRightPopperColumnTypeSelect = ({
@@ -9,7 +8,7 @@ export const EditRightPopperColumnTypeSelect = ({
 	table,
 }: EditRightPopperColumnTypeSelectProps) => {
 	const palette = usePalette();
-	const { tables } = useLayout();
+	const { tables, handleGetColumnTypeText } = useLayout();
 	const { handleUpdateColumnType } = useProject();
 	const types: ColumnType[] = [
 		'INT',
@@ -69,7 +68,7 @@ export const EditRightPopperColumnTypeSelect = ({
 		>
 			{types.map((type) => (
 				<MenuItem key={type} value={type}>
-					<ColumnTypeTexts type={type} />
+					{handleGetColumnTypeText(type, true, '1rem', '0.6rem')}
 				</MenuItem>
 			))}
 		</Select>

@@ -8,7 +8,11 @@ export const EditColumnConstraintColumnHeader = ({
 	column,
 }: EditColumnConstraintColumnHeaderProps) => {
 	const palette = usePalette();
-	const { handleToggleColumnConstraintExpansion } = useLayout();
+	const {
+		handleToggleColumnConstraintExpansion,
+		handleGetColumnTypeText,
+		setSelectedConstraintColumnId,
+	} = useLayout();
 
 	return (
 		<Box
@@ -19,11 +23,18 @@ export const EditColumnConstraintColumnHeader = ({
 			height="25px"
 			padding="0 5px"
 			fontWeight="bold"
+			sx={{
+				cursor: 'pointer',
+			}}
+			onClick={() => setSelectedConstraintColumnId(column.id)}
 		>
+			{handleGetColumnTypeText(column.type, false, '', '')}
 			<Typography
+				flexGrow={1}
 				variant="body2"
 				fontSize="0.7rem"
 				noWrap
+				marginLeft="5px"
 				sx={{
 					userSelect: 'none',
 				}}
