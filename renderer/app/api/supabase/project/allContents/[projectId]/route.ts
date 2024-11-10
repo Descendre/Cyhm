@@ -77,10 +77,7 @@ export const GET = async (
 				tableId: column.tableId,
 				createdAt: column.createdAt,
 				updatedAt: column.updatedAt,
-				constraints: column.columnConstraints.map((constraint) => ({
-					type: constraint.type,
-					value: constraint.constraintValue || null,
-				})),
+				columnConstraints: column.columnConstraints,
 			}));
 		});
 		return NextResponse.json(response);

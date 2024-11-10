@@ -15,24 +15,17 @@ export const AppModalHeader = ({
 			display="flex"
 			justifyContent="space-between"
 			alignItems="center"
+			gap="5px"
 			width="100%"
 			height="40px"
 			padding="0 10px"
+			color={palette.text.secondary}
 			bgcolor={palette.components.common.appModal.header.bg}
 		>
-			<Box
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				gap="5px"
-				height="100%"
-				color={palette.text.secondary}
-			>
-				{icon}
-				<Typography variant="body2" fontSize="0.8rem">
-					{title}
-				</Typography>
-			</Box>
+			{icon}
+			<Typography variant="body2" fontSize="0.8rem" noWrap flexGrow={1}>
+				{title}
+			</Typography>
 			<Close
 				titleAccess="閉じる"
 				color="error"

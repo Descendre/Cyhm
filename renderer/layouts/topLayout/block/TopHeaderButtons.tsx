@@ -65,6 +65,7 @@ export const TopHeaderButtons = () => {
 			<AppModal
 				isOpen={isOpen('topNotifyModal')}
 				closeModal={() => closeModal('topNotifyModal')}
+				outerClose
 				width="400px"
 				height="80vh"
 				maxHeight="520px"
@@ -77,6 +78,7 @@ export const TopHeaderButtons = () => {
 			<AppModal
 				isOpen={isOpen('topSettingModal')}
 				closeModal={() => closeModal('topSettingModal')}
+				outerClose
 				width="60vw"
 				height="80vh"
 				maxWidth="650px"

@@ -1,3 +1,7 @@
 import { AddColumnResponse } from '../api';
 
-export type ColumnsStateProps = { [key: string]: AddColumnResponse[] };
+export interface ColumnStatePropsExtended extends AddColumnResponse {
+	isConstraintExpand: boolean;
+}
+
+export type ColumnsStateProps = { [key: string]: ColumnStatePropsExtended[] };

@@ -5,7 +5,7 @@ import {
 	UserPopperViewModeProps,
 	windowModeProps,
 } from '../provider';
-import { AddTableResponse } from '../api';
+import { AddTableResponse, ColumnConstraintNameProps } from '../api';
 
 export interface UseLayoutProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -19,6 +19,10 @@ export interface UseLayoutProps {
 	setTables: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columns: ColumnsStateProps;
 	setColumns: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
+	selectedConstraintColumnId: string | null;
+	setSelectedConstraintColumnId: React.Dispatch<
+		React.SetStateAction<string | null>
+	>;
 	isTableAddMode: boolean;
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
@@ -39,11 +43,24 @@ export interface UseLayoutProps {
 	>;
 
 	handleGithubExternalShellOpen: () => void;
+	handleToggleColumnConstraintExpansion: ({
+		tableId,
+		columnId,
+	}: handleToggleColumnConstraintExpansionProps) => void;
+	handleGetConstraintIcon: (
+		constraintName: ColumnConstraintNameProps,
+		withText: boolean
+	) => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleSelectTable: (table: AddTableResponse) => void;
 	handleSetAddColumnIndex: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];
 	handleSwitchUserPopperViewMode: () => void;
+}
+
+export interface handleToggleColumnConstraintExpansionProps {
+	tableId: string;
+	columnId: string;
 }
 
 export interface EditReactFlowCustomNodeDataProps {

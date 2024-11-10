@@ -52,6 +52,7 @@ export const EditReactFlowCustomNode = ({
 					))}
 
 				<Box
+					zIndex={100}
 					position="absolute"
 					display={isTableSelected ? 'block' : 'none'}
 					top={0}

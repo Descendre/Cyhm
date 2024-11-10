@@ -26,6 +26,9 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isAudio, setIsAudio] = useState<boolean>(false);
 	const [tables, setTables] = useState<TablesStateProps>({});
 	const [columns, setColumns] = useState<ColumnsStateProps>({});
+	const [selectedConstraintColumnId, setSelectedConstraintColumnId] = useState<
+		string | null
+	>(null);
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
 	const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
@@ -75,6 +78,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setTables,
 		columns,
 		setColumns,
+		selectedConstraintColumnId,
+		setSelectedConstraintColumnId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,

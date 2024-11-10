@@ -14,6 +14,9 @@ export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 			data: {
 				name: name,
 			},
+			include: {
+				columnConstraints: true,
+			},
 		});
 		return NextResponse.json(updatedColumn);
 	} catch (error) {

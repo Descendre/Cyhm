@@ -7,6 +7,7 @@ import { AppModalHeader } from './section';
 
 export const AppModal = ({
 	isOpen,
+	outerClose,
 	closeModal,
 	width,
 	height,
@@ -20,10 +21,16 @@ export const AppModal = ({
 }: AppModalProps) => {
 	const palette = usePalette();
 
+	const handleOnClose = (): void => {
+		if (outerClose) {
+			closeModal();
+		}
+	};
+
 	return (
 		<Modal
 			open={isOpen}
-			onClose={() => closeModal()}
+			onClose={() => handleOnClose()}
 			sx={{
 				display: 'flex',
 				justifyContent: 'center',
