@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react';
 
 export interface AppModalProps {
 	isOpen: boolean;
+	outerClose?: boolean;
 	closeModal: () => void;
 	width: string;
 	height: string;

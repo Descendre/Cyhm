@@ -34,6 +34,7 @@ export const TopHeaderAvatar = () => {
 			<AppModal
 				isOpen={isOpen('topAvatarModal')}
 				closeModal={() => closeModal('topAvatarModal')}
+				outerClose
 				width="60vw"
 				height="80vh"
 				maxWidth="650px"

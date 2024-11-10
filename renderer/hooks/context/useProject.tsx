@@ -7,6 +7,8 @@ import {
 	AddColumnResponse,
 	AddTableResponse,
 	ColumnChannelPayloadProps,
+	ColumnsStateProps,
+	ColumnStatePropsExtended,
 	CreateProjectResponse,
 	FetchAllContentsResponse,
 	FetchProjectResponse,
@@ -131,7 +133,21 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/project/allContents/${project.id}`
 			);
 			setTables(allProjectContents.tables);
-			setColumns(allProjectContents.columns);
+
+			const extendedColumns = Object.keys(allProjectContents.columns).reduce(
+				(acc, tableId) => {
+					acc[tableId] = allProjectContents.columns[tableId].map((column) => ({
+						...column,
+
+						// 以下相手と共有しないフィールドを拡張追加
+						isConstraintExpand: true,
+					}));
+					return acc;
+				},
+				{} as ColumnsStateProps
+			);
+			setColumns(extendedColumns);
+
 			setInvitedUsers(allProjectContents.invitedUsers);
 			setCurrentProject(project);
 			setWindowMode('edit');
@@ -169,6 +185,10 @@ export const useProject = (): UseProjectProps => {
 						type: column.type,
 						createdAt: column.createdAt,
 						updatedAt: column.updatedAt,
+						columnConstraints: column.columnConstraints,
+
+						// 以下拡張分。相手と共有しない、保存しないフィールド
+						isConstraintExpand: true,
 					}));
 				});
 				return updatedColumnInfo;
@@ -310,11 +330,15 @@ export const useProject = (): UseProjectProps => {
 
 			const tempCUID = generateCUID();
 			setColumns((prevColumns) => {
-				const newColumn: AddColumnResponse = {
+				const newColumn: ColumnStatePropsExtended = {
 					id: tempCUID,
 					name: name,
 					tableId: tableId,
 					type: 'INT',
+					columnConstraints: [],
+
+					// 以下拡張分。
+					isConstraintExpand: true,
 				};
 				if (!prevColumns) {
 					return {
@@ -329,11 +353,15 @@ export const useProject = (): UseProjectProps => {
 				};
 			});
 			setColumnEditInfo((prevInfo) => {
-				const newInfo: AddColumnResponse = {
+				const newInfo: ColumnStatePropsExtended = {
 					id: tempCUID,
 					name: name,
 					tableId: tableId,
 					type: 'INT',
+					columnConstraints: [],
+
+					// 以下拡張分。
+					isConstraintExpand: true,
 				};
 				if (!prevInfo) {
 					return {
@@ -357,12 +385,18 @@ export const useProject = (): UseProjectProps => {
 				}
 			);
 
+			// state用に型拡張
+			const extendedNewColumn: ColumnStatePropsExtended = {
+				...newColumn,
+				isConstraintExpand: true,
+			};
+
 			handleOpenTableExpansion({ tableId: tableId });
 
 			setColumns((prevColumns) => ({
 				...prevColumns,
 				[tableId]: prevColumns[tableId].map((col) =>
-					col.id === tempCUID ? newColumn : col
+					col.id === tempCUID ? extendedNewColumn : col
 				),
 			}));
 			setColumnEditInfo((prevInfo) => ({
@@ -370,12 +404,7 @@ export const useProject = (): UseProjectProps => {
 				[tableId]: prevInfo[tableId].map((col) =>
 					col.id === tempCUID
 						? {
-								id: newColumn.id,
-								name: newColumn.name,
-								tableId: newColumn.tableId,
-								type: newColumn.type,
-								createdAt: newColumn.createdAt,
-								updatedAt: newColumn.updatedAt,
+								...extendedNewColumn,
 							}
 						: col
 				),
@@ -741,7 +770,6 @@ export const useProject = (): UseProjectProps => {
 		const handleTableUpdate = (payload: {
 			payload: TableChannelPayloadProps;
 		}) => {
-			console.log(1234);
 			const { newTable } = payload.payload;
 			setTables((prevTables) => ({
 				...prevTables,
@@ -757,11 +785,18 @@ export const useProject = (): UseProjectProps => {
 			payload: ColumnChannelPayloadProps;
 		}) => {
 			const { newColumn } = payload.payload;
+
+			// 実際のstateは拡張された型(相手と共有しないフィールドを含む)を持つため、共有しないフィールドについては初期値を設定して拡張
+			const extendedColumn = {
+				...newColumn,
+				isConstraintExpand: true,
+			};
+
 			setColumns((prevColumns) => ({
 				...prevColumns,
-				[newColumn.tableId]: [
-					...(prevColumns[newColumn.tableId] || []),
-					newColumn,
+				[extendedColumn.tableId]: [
+					...(prevColumns[extendedColumn.tableId] || []),
+					extendedColumn,
 				],
 			}));
 			setColumnEditInfo((prevColumns) => ({
@@ -769,12 +804,17 @@ export const useProject = (): UseProjectProps => {
 				[newColumn.tableId]: [
 					...(prevColumns[newColumn.tableId] || []),
 					{
+						// 編集中情報とカラム情報の内容が同期しないように(JSのオブジェクト参照性のため)こちらはnewColumnをそのまま渡してはいません。
 						id: newColumn.id,
 						tableId: newColumn.tableId,
 						name: newColumn.name,
 						type: newColumn.type,
 						createdAt: newColumn.createdAt,
 						updatedAt: newColumn.updatedAt,
+						columnConstraints: newColumn.columnConstraints,
+
+						// 以下相手と共有しないフィールド。初期値を手動で追加。
+						isConstraintExpand: true,
 					},
 				],
 			}));
@@ -787,7 +827,7 @@ export const useProject = (): UseProjectProps => {
 			setColumns((prevColumns) => ({
 				...prevColumns,
 				[newColumn.tableId]: prevColumns[newColumn.tableId].map((column) =>
-					column.id === newColumn.id ? { ...newColumn } : column
+					column.id === newColumn.id ? { ...column, ...newColumn } : column
 				),
 			}));
 			setColumnEditInfo((prevColumns) => ({
@@ -795,6 +835,7 @@ export const useProject = (): UseProjectProps => {
 				[newColumn.tableId]: prevColumns[newColumn.tableId].map((column) =>
 					column.id === newColumn.id
 						? {
+								...column, // isConstraintExpandなど拡張分の相手と共有しない分のフィールドに関しては元々の値を参照
 								id: newColumn.id,
 								tableId: newColumn.tableId,
 								name: newColumn.name,

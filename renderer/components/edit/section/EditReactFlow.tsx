@@ -41,6 +41,7 @@ export const EditReactFlow = () => {
 				event: React.MouseEvent,
 				node: Node<EditReactFlowCustomNodeDataProps>
 			) => handleSelectTable(node.data.tableData)}
+			deleteKeyCode={null}
 			onPaneClick={() => handleSelectTable(null)}
 			nodeTypes={{ editRectFlowCustomNode: EditReactFlowCustomNode }}
 			fitView

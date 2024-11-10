@@ -32,22 +32,22 @@ export const EditLeftBarTableArea = ({ table }: EditLeftBarTableAreaProps) => {
 					<EditLeftBarColumnArea key={column.id} {...column} />
 				))}
 
-			{!table.isEditing && (
-				<Box
-					zIndex={50}
-					position="absolute"
-					top={0}
-					left={0}
-					width="100%"
-					height="100%"
-					bgcolor={palette.layout.editLayout.leftBar.lockBg}
-					sx={{
-						opacity: 0.5,
-					}}
-				/>
-			)}
+			<Box
+				zIndex={50}
+				position="absolute"
+				top={0}
+				left={0}
+				display={!table.isEditing ? 'block' : 'none'}
+				width="100%"
+				height="100%"
+				bgcolor={palette.layout.editLayout.leftBar.lockBg}
+				sx={{
+					opacity: 0.5,
+				}}
+			/>
 
 			<Box
+				zIndex={100}
 				position="absolute"
 				display={isTableSelected ? 'block' : 'none'}
 				top={0}

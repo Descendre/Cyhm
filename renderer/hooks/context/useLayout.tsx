@@ -4,16 +4,30 @@ import { Context } from '../../provider';
 import {
 	AddTableResponse,
 	EditReactFlowCustomNodeDataProps,
+	handleToggleColumnConstraintExpansionProps,
 	TablesStateProps,
 	UseLayoutProps,
 } from '../../interfaces';
 import { Node, XYPosition } from '@xyflow/react';
+import {
+	BlockOutlined,
+	Check,
+	DescriptionOutlined,
+	Key,
+	Link,
+	StarOutline,
+} from '@mui/icons-material';
+import { usePalette } from '../common';
+import { Box, Typography } from '@mui/material';
+import { ColumnConstraintType } from '@prisma/client';
 
 export const useLayout = (): UseLayoutProps => {
 	const context = useContext(Context);
 	if (!context) {
 		throw new Error('Context is not provided');
 	}
+
+	const palette = usePalette();
 
 	const {
 		EditLeftBarTableAreaRef,
@@ -27,6 +41,8 @@ export const useLayout = (): UseLayoutProps => {
 		setTables,
 		columns,
 		setColumns,
+		selectedConstraintColumnId,
+		setSelectedConstraintColumnId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,
@@ -51,6 +67,188 @@ export const useLayout = (): UseLayoutProps => {
 		} else {
 			console.error('IPC is not available');
 		}
+	};
+
+	const handleGetConstraintIcon = (
+		constraintName: ColumnConstraintType,
+		withText: boolean
+	) => {
+		switch (constraintName) {
+			case 'PRIMARY_KEY':
+				return (
+					<Box
+						display="flex"
+						justifyContent="center"
+						alignItems="center"
+						gap="5px"
+					>
+						<Key
+							fontSize="small"
+							sx={{
+								fontSize: '0.9rem',
+								color: palette.layout.editLayout.leftBar.constraint.primaryKey,
+							}}
+						/>
+						{withText && (
+							<Typography
+								variant="body2"
+								fontSize="0.6rem"
+								color={palette.layout.editLayout.leftBar.constraint.primaryKey}
+							>
+								PRIMARY KEY
+							</Typography>
+						)}
+					</Box>
+				);
+			case 'NOT_NULL':
+				return (
+					<Box
+						display="flex"
+						justifyContent="center"
+						alignItems="center"
+						gap="5px"
+					>
+						<BlockOutlined
+							fontSize="small"
+							sx={{
+								fontSize: '0.9rem',
+								color: palette.layout.editLayout.leftBar.constraint.notNull,
+							}}
+						/>
+						{withText && (
+							<Typography
+								variant="body2"
+								fontSize="0.6rem"
+								color={palette.layout.editLayout.leftBar.constraint.notNull}
+							>
+								NOT NULL
+							</Typography>
+						)}
+					</Box>
+				);
+			case 'UNIQUE':
+				return (
+					<Box
+						display="flex"
+						justifyContent="center"
+						alignItems="center"
+						gap="5px"
+					>
+						<StarOutline
+							fontSize="small"
+							sx={{
+								fontSize: '0.9rem',
+								color: palette.layout.editLayout.leftBar.constraint.unique,
+							}}
+						/>
+						{withText && (
+							<Typography
+								variant="body2"
+								fontSize="0.6rem"
+								color={palette.layout.editLayout.leftBar.constraint.unique}
+							>
+								UNIQUE
+							</Typography>
+						)}
+					</Box>
+				);
+			case 'FOREIGN_KEY':
+				return (
+					<Box
+						display="flex"
+						justifyContent="center"
+						alignItems="center"
+						gap="5px"
+					>
+						<Link
+							fontSize="small"
+							sx={{
+								fontSize: '0.9rem',
+								color: palette.layout.editLayout.leftBar.constraint.foreignKey,
+							}}
+						/>
+						{withText && (
+							<Typography
+								variant="body2"
+								fontSize="0.6rem"
+								color={palette.layout.editLayout.leftBar.constraint.foreignKey}
+							>
+								FOREIGN KEY
+							</Typography>
+						)}
+					</Box>
+				);
+			case 'CHECK':
+				return (
+					<Box
+						display="flex"
+						justifyContent="center"
+						alignItems="center"
+						gap="5px"
+					>
+						<Check
+							fontSize="small"
+							sx={{
+								fontSize: '0.9rem',
+								color: palette.layout.editLayout.leftBar.constraint.check,
+							}}
+						/>
+						{withText && (
+							<Typography
+								variant="body2"
+								fontSize="0.6rem"
+								color={palette.layout.editLayout.leftBar.constraint.check}
+							>
+								CHECK
+							</Typography>
+						)}
+					</Box>
+				);
+			case 'DEFAULT':
+				return (
+					<Box
+						display="flex"
+						justifyContent="center"
+						alignItems="center"
+						gap="5px"
+					>
+						<DescriptionOutlined
+							fontSize="small"
+							sx={{
+								fontSize: '0.9rem',
+								color: palette.layout.editLayout.leftBar.constraint.default,
+							}}
+						/>
+						{withText && (
+							<Typography
+								variant="body2"
+								fontSize="0.6rem"
+								color={palette.layout.editLayout.leftBar.constraint.default}
+							>
+								DEFAULT
+							</Typography>
+						)}
+					</Box>
+				);
+			default:
+				return null;
+		}
+	};
+
+	const handleToggleColumnConstraintExpansion = ({
+		tableId,
+		columnId,
+	}: handleToggleColumnConstraintExpansionProps): void => {
+		setColumns((prevColumns) => {
+			return {
+				...prevColumns,
+				[tableId]: prevColumns[tableId].map((column) =>
+					column.id === columnId
+						? { ...column, isConstraintExpand: !column.isConstraintExpand }
+						: column
+				),
+			};
+		});
 	};
 
 	const handleAllTableExpansion = (expand: boolean): void => {
@@ -122,6 +320,8 @@ export const useLayout = (): UseLayoutProps => {
 		setTables,
 		columns,
 		setColumns,
+		selectedConstraintColumnId,
+		setSelectedConstraintColumnId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,
@@ -140,6 +340,8 @@ export const useLayout = (): UseLayoutProps => {
 		setIsPreparingProject,
 
 		handleGithubExternalShellOpen,
+		handleGetConstraintIcon,
+		handleToggleColumnConstraintExpansion,
 		handleAllTableExpansion,
 		handleSelectTable,
 		handleSetAddColumnIndex,

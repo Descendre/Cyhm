@@ -34,6 +34,7 @@ declare module '@mui/material/styles' {
 						unique: string;
 						foreignKey: string;
 						check: string;
+						default: string;
 					};
 				};
 				rightPopper: {
@@ -145,6 +146,7 @@ declare module '@mui/material/styles' {
 						unique: string;
 						foreignKey: string;
 						check: string;
+						default: string;
 					};
 				};
 				rightPopper: {

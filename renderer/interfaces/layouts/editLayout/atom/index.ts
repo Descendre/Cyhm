@@ -15,3 +15,8 @@ export * from './EditHeaderUserPopperMemberListItemProps';
 export * from './EditHeaderUserPopperInviteListItemProps';
 export * from './EditHeaderUserPopperInvitedListItemProps';
 export * from './EditHeaderDownloadPopperListItemProps';
+export * from './EditRightPopperColumnHeaderProps';
+export * from './EditRightPopperAddColumnConstraintButtonProps';
+export * from './EditColumnConstraintLeftBarItemProps';
+export * from './EditColumnConstraintColumnHeaderProps';
+export * from './EditColumnConstraintColumnSectionProps';

@@ -54,6 +54,7 @@ export const darkTheme = createTheme({
 						unique: lightBlue[500],
 						foreignKey: teal[500],
 						check: deepPurple[400],
+						default: grey[500],
 					},
 				},
 				rightPopper: {
