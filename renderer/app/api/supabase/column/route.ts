@@ -5,17 +5,20 @@ import { AddColumnRequest, AddColumnResponse } from '../../../../interfaces';
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: AddColumnRequest = await req.json();
-		const { name, type, tableId } = body;
+		const { name, dbType, type, tableId } = body;
+
+		const updateData = dbType === 'SQLITE' ? { sqliteType: type } : {};
+
 		const newColumn = await prisma.column.create({
 			data: {
 				name: name,
-				type: type,
+				...updateData,
 				tableId: tableId,
 			},
 		});
 		const formattedNewColumn: AddColumnResponse = {
 			name: newColumn.name,
-			type: newColumn.type,
+			sqliteType: newColumn.sqliteType,
 			tableId: newColumn.tableId,
 			id: newColumn.id,
 			createdAt: newColumn.createdAt,

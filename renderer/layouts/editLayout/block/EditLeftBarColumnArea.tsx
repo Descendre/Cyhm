@@ -5,7 +5,7 @@ import { EditLeftBarConstraintsArea } from './EditLeftBarConstraintsArea';
 
 export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 	const palette = usePalette();
-	const { handleGetColumnTypeText } = useLayout();
+	const { handleGetColumnTypeTextWithSQlite } = useLayout();
 
 	return (
 		<Box
@@ -37,7 +37,12 @@ export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 				height="25px"
 			>
 				<EditLeftBarConstraintsArea {...props} />
-				{handleGetColumnTypeText(props.type, true, '1rem', '0.6rem')}
+				{handleGetColumnTypeTextWithSQlite(
+					props.sqliteType,
+					true,
+					'1rem',
+					'0.6rem'
+				)}
 			</Box>
 		</Box>
 	);

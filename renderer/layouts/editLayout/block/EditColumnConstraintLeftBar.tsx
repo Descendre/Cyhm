@@ -4,12 +4,13 @@ import {
 	EditColumnConstraintLeftBarItem,
 } from '../atom';
 import { EditColumnConstraintLeftBarProps } from '../../../interfaces';
-import { useLayout, usePalette } from '../../../hooks';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 
 export const EditColumnConstraintLeftBar = ({
 	table,
 }: EditColumnConstraintLeftBarProps) => {
-	const { columns, selectedConstraintColumnId } = useLayout();
+	const { columns } = useLayout();
+	const { addConstraintColumnId, setAddConstraintColumnId } = useProject();
 	const palette = usePalette();
 
 	return (
@@ -31,22 +32,26 @@ export const EditColumnConstraintLeftBar = ({
 			}}
 		>
 			{columns[table.id]?.map((column) => (
-				<Box key={column.id} position="relative" width="100%">
+				<Box
+					key={column.id}
+					position="relative"
+					width="100%"
+					onClick={() => setAddConstraintColumnId(column.id)}
+				>
 					<EditColumnConstraintColumnHeader table={table} column={column} />
-					{column.columnConstraints.map((constraint, index) => (
-						<EditColumnConstraintLeftBarItem
-							key={index}
-							constraintType={constraint.type}
-						/>
-					))}
+					{column.isConstraintExpand &&
+						column.columnConstraints.map((constraint, index) => (
+							<EditColumnConstraintLeftBarItem
+								key={index}
+								constraintType={constraint.type}
+							/>
+						))}
 
 					<Box
 						position="absolute"
 						top={0}
 						left={0}
-						display={
-							selectedConstraintColumnId === column.id ? 'block' : 'none'
-						}
+						display={addConstraintColumnId === column.id ? 'block' : 'none'}
 						width="100%"
 						height="100%"
 						border={`solid 1px ${palette.primary.main}`}

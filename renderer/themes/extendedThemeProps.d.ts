@@ -47,6 +47,13 @@ declare module '@mui/material/styles' {
 						line: string;
 					};
 				};
+				columnConstraint: {
+					clauses: {
+						sqlite: {
+							autoIncrement: string;
+						};
+					};
+				};
 			};
 		};
 		components: {
@@ -90,14 +97,13 @@ declare module '@mui/material/styles' {
 					};
 					column: {
 						color: {
-							int: string;
-							varchar: string;
-							boolean: string;
-							date: string;
-							text: string;
-							float: string;
-							double: string;
-							undefined: string;
+							sqlite: {
+								integer: string;
+								text: string;
+								real: string;
+								blob: string;
+								null: string;
+							};
 						};
 					};
 					commands: {
@@ -159,6 +165,13 @@ declare module '@mui/material/styles' {
 						line: string;
 					};
 				};
+				columnConstraint: {
+					clauses: {
+						sqlite: {
+							autoIncrement: string;
+						};
+					};
+				};
 			};
 		};
 		components: {
@@ -202,14 +215,13 @@ declare module '@mui/material/styles' {
 					};
 					column: {
 						color: {
-							int: string;
-							varchar: string;
-							boolean: string;
-							date: string;
-							text: string;
-							float: string;
-							double: string;
-							undefined: string;
+							sqlite: {
+								integer: string;
+								text: string;
+								real: string;
+								blob: string;
+								null: string;
+							};
 						};
 					};
 					commands: {

@@ -4,16 +4,21 @@ import { Context } from '../../provider';
 import { axiosFetch, supabase } from '../../libs';
 import { generateCUID } from '../../utils';
 import {
+	AddColumnConstraintRequest,
+	AddColumnRequest,
 	AddColumnResponse,
 	AddTableResponse,
 	ColumnChannelPayloadProps,
+	ColumnConstraintResponse,
 	ColumnsStateProps,
 	ColumnStatePropsExtended,
+	CreateProjectRequest,
 	CreateProjectResponse,
 	FetchAllContentsResponse,
 	FetchProjectResponse,
 	FetchUserProjectsResponse,
 	handleAddColumnProps,
+	handleAddConstraintProps,
 	handleAddTableProps,
 	handleColumnNameChangeProps,
 	handleColumnNameUpdateProps,
@@ -39,7 +44,7 @@ import {
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
-import { ColumnType } from '@prisma/client';
+import { SQliteColumnType } from '@prisma/client';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
@@ -53,6 +58,10 @@ export const useProject = (): UseProjectProps => {
 		setTables,
 		columns,
 		setColumns,
+		columnConstraintEditInfo,
+		setColumnConstraintEditInfo,
+		addConstraintColumnId,
+		setAddConstraintColumnId,
 		setIsTableAddMode,
 		setAddColumnIndex,
 		setWindowMode,
@@ -80,6 +89,7 @@ export const useProject = (): UseProjectProps => {
 
 	const handleCreateProject = async ({
 		userId,
+		dbType,
 	}: handleCreateProjectProps): Promise<void> => {
 		try {
 			setIsPreparingProject('プロジェクトの作成中...');
@@ -87,7 +97,8 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/project`,
 				{
 					name: `プロジェクト_${generateCUID()}`,
-				}
+					dbType: dbType,
+				} as CreateProjectRequest
 			);
 			await axiosFetch.post(`/api/supabase/member`, {
 				userId: userId,
@@ -182,7 +193,7 @@ export const useProject = (): UseProjectProps => {
 						id: column.id,
 						name: column.name,
 						tableId: column.tableId,
-						type: column.type,
+						sqliteType: column.sqliteType,
 						createdAt: column.createdAt,
 						updatedAt: column.updatedAt,
 						columnConstraints: column.columnConstraints,
@@ -323,6 +334,7 @@ export const useProject = (): UseProjectProps => {
 	const handleAddColumn = async ({
 		name,
 		tableId,
+		dbType,
 	}: handleAddColumnProps): Promise<void> => {
 		try {
 			if (!channel || !tables[tableId]?.isEditing) return;
@@ -334,7 +346,7 @@ export const useProject = (): UseProjectProps => {
 					id: tempCUID,
 					name: name,
 					tableId: tableId,
-					type: 'INT',
+					sqliteType: 'INTEGER',
 					columnConstraints: [],
 
 					// 以下拡張分。
@@ -357,7 +369,7 @@ export const useProject = (): UseProjectProps => {
 					id: tempCUID,
 					name: name,
 					tableId: tableId,
-					type: 'INT',
+					sqliteType: 'INTEGER',
 					columnConstraints: [],
 
 					// 以下拡張分。
@@ -380,9 +392,10 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/column`,
 				{
 					name: name,
-					type: 'INT' as ColumnType,
+					type: 'INTEGER' as SQliteColumnType,
 					tableId: tableId,
-				}
+					dbType: dbType,
+				} as AddColumnRequest
 			);
 
 			// state用に型拡張
@@ -673,6 +686,7 @@ export const useProject = (): UseProjectProps => {
 	const handleUpdateColumnType = async ({
 		tableId,
 		columnId,
+		dbType,
 		type,
 	}: handleUpdateColumnTypeProps): Promise<void> => {
 		try {
@@ -681,7 +695,7 @@ export const useProject = (): UseProjectProps => {
 			const currentColumn = columns[tableId]?.find(
 				(column) => column.id === columnId
 			);
-			if (!currentColumn || currentColumn.type === type) {
+			if (!currentColumn || currentColumn.sqliteType === type) {
 				return;
 			}
 
@@ -691,7 +705,7 @@ export const useProject = (): UseProjectProps => {
 					(col) => col.id === columnId
 				);
 				if (columnIndex !== -1) {
-					updatedState[tableId][columnIndex].type = type;
+					updatedState[tableId][columnIndex].sqliteType = type;
 				}
 				return updatedState;
 			});
@@ -700,9 +714,61 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/column/type`,
 				{
 					columnId: columnId,
+					dbType: dbType,
 					type: type,
 				} as UpdateColumnTypeRequest
 			);
+
+			channel.send({
+				type: 'broadcast',
+				event: 'column_update',
+				payload: {
+					newColumn: updatedColumn,
+				} as ColumnChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleAddConstraint = async ({
+		columnId,
+		dbType,
+		type,
+		sqliteClauseType,
+	}: handleAddConstraintProps): Promise<void> => {
+		try {
+			if (!channel) return;
+
+			setColumnConstraintEditInfo({
+				columnId: null,
+				columnConstraintType: null,
+				clauseType: null,
+			});
+
+			const newConstraint = await axiosFetch.post<ColumnConstraintResponse>(
+				`/api/supabase/constraint`,
+				{
+					columnId: columnId,
+					dbType: dbType,
+					type: type,
+					sqliteClauseType: sqliteClauseType,
+				} as AddColumnConstraintRequest
+			);
+
+			const updatedColumn = await axiosFetch.get<AddColumnResponse>(
+				`/api/supabase/column/${newConstraint.columnId}`
+			);
+
+			setColumns((prevColumns) => ({
+				...prevColumns,
+				[updatedColumn.tableId]: prevColumns[updatedColumn.tableId].map(
+					(column) =>
+						column.id === updatedColumn.id
+							? { ...column, ...updatedColumn }
+							: column
+				),
+			}));
 
 			channel.send({
 				type: 'broadcast',
@@ -808,7 +874,7 @@ export const useProject = (): UseProjectProps => {
 						id: newColumn.id,
 						tableId: newColumn.tableId,
 						name: newColumn.name,
-						type: newColumn.type,
+						sqliteType: newColumn.sqliteType,
 						createdAt: newColumn.createdAt,
 						updatedAt: newColumn.updatedAt,
 						columnConstraints: newColumn.columnConstraints,
@@ -839,7 +905,7 @@ export const useProject = (): UseProjectProps => {
 								id: newColumn.id,
 								tableId: newColumn.tableId,
 								name: newColumn.name,
-								type: newColumn.type,
+								sqliteType: newColumn.sqliteType,
 								createdAt: newColumn.createdAt,
 								updatedAt: newColumn.updatedAt,
 							}
@@ -865,10 +931,14 @@ export const useProject = (): UseProjectProps => {
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
+		addConstraintColumnId,
+		setAddConstraintColumnId,
 		tableEditInfo,
 		setTableEditInfo,
 		columnEditInfo,
 		setColumnEditInfo,
+		columnConstraintEditInfo,
+		setColumnConstraintEditInfo,
 		channel,
 		setChannel,
 
@@ -888,6 +958,7 @@ export const useProject = (): UseProjectProps => {
 		handleColumnNameChange,
 		handleColumnNameUpdate,
 		handleUpdateColumnType,
+		handleAddConstraint,
 		handleNodeDragStop,
 	};
 };

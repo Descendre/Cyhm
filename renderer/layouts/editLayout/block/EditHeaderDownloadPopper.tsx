@@ -46,22 +46,22 @@ export const EditHeaderDownloadPopper = ({
 					}}
 				>
 					<EditHeaderDownloadPopperListItem
-						primary="DB"
-						secondary="DB形式でダウンロード"
-						icon={<Storage fontSize="small" sx={{ fontSize: '1rem' }} />}
-						onClick={async () => await handleDownloadToDB()}
-					/>
-					<EditHeaderDownloadPopperListItem
 						primary="CSV"
-						secondary="CSV形式でダウンロード"
+						secondary="CSVファイル エクスポート"
 						icon={<Description fontSize="small" sx={{ fontSize: '1rem' }} />}
 						onClick={async () => await handleDownloadToCSV()}
 					/>
 					<EditHeaderDownloadPopperListItem
 						primary="JSON"
-						secondary="JSON形式でダウンロード"
+						secondary="JSONファイル エクスポート"
 						icon={<DataObject fontSize="small" sx={{ fontSize: '1rem' }} />}
 						onClick={async () => await handleDownloadToJSON()}
+					/>
+					<EditHeaderDownloadPopperListItem
+						primary="DB"
+						secondary="DBファイル (sqlite) エクスポート"
+						icon={<Storage fontSize="small" sx={{ fontSize: '1rem' }} />}
+						onClick={async () => await handleDownloadToDB()}
 					/>
 				</List>
 			</Box>

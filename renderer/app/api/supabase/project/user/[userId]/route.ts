@@ -49,6 +49,7 @@ export const GET = async (
 				isActive: project.isActive,
 				createdAt: project.createdAt,
 				updatedAt: project.updatedAt,
+				dbType: project.dbType,
 				members: project.members.map((member) => ({
 					userId: member.user.id,
 					userName: member.user.name,

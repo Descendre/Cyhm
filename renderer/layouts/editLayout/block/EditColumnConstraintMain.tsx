@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { EditColumnConstraintSettingArea } from './EditColumnConstraintSettingArea';
-import { useLayout } from '../../../hooks';
+import { useLayout, useProject } from '../../../hooks';
 import {
 	ColumnStatePropsExtended,
 	EditColumnConstraintMainProps,
@@ -9,9 +9,10 @@ import {
 export const EditColumnConstraintMain = ({
 	table,
 }: EditColumnConstraintMainProps) => {
-	const { columns, selectedConstraintColumnId } = useLayout();
+	const { columns } = useLayout();
+	const { addConstraintColumnId } = useProject();
 	const selectedColumn: ColumnStatePropsExtended = columns[table.id].find(
-		(col) => col.id === selectedConstraintColumnId
+		(col) => col.id === addConstraintColumnId
 	);
 
 	return (

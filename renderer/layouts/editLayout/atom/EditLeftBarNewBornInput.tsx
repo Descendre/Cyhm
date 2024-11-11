@@ -31,6 +31,7 @@ export const EditLeftBarNewBornInput = (
 				handleAddColumn({
 					tableId: props.tableId,
 					name: focusRef.current.value,
+					dbType: currentProject.dbType,
 				});
 			}
 		}
@@ -52,6 +53,7 @@ export const EditLeftBarNewBornInput = (
 				handleAddColumn({
 					tableId: props.tableId,
 					name: focusRef.current.value,
+					dbType: currentProject.dbType,
 				});
 			}
 		}

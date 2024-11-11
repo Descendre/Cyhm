@@ -5,10 +5,11 @@ import { CreateProjectRequest } from '../../../../interfaces';
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: CreateProjectRequest = await req.json();
-		const { name } = body;
+		const { name, dbType } = body;
 		const project = await prisma.project.create({
 			data: {
 				name: name,
+				dbType: dbType,
 			},
 		});
 		return NextResponse.json(project);

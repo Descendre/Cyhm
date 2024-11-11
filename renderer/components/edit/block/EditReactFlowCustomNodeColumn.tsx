@@ -8,7 +8,7 @@ export const EditReactFlowCustomNodeColumn = ({
 	name,
 	type,
 }: EditReactFlowCustomNodeColumnProps) => {
-	const { handleGetColumnTypeText } = useLayout();
+	const { handleGetColumnTypeTextWithSQlite } = useLayout();
 
 	return (
 		<Box
@@ -29,7 +29,7 @@ export const EditReactFlowCustomNodeColumn = ({
 			>
 				{name}
 			</Typography>
-			{handleGetColumnTypeText(type, true, '1rem', '0.6rem')}
+			{handleGetColumnTypeTextWithSQlite(type, true, '1rem', '0.6rem')}
 		</Box>
 	);
 };

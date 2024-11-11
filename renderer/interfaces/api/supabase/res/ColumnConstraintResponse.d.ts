@@ -1,10 +1,10 @@
 import { ColumnConstraintType } from '@prisma/client';
 
 export interface ColumnConstraintResponse {
-	id: string;
-	type: ColumnConstraintType;
-	constraintValue: string | null;
 	columnId: string;
+	type: ColumnConstraintType;
+	sqliteClause: $Enums.SqliteClauseType | null;
+	id: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

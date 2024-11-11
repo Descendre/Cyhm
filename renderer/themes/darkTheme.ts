@@ -5,9 +5,8 @@ import {
 	deepPurple,
 	grey,
 	lightBlue,
-	lime,
+	orange,
 	pink,
-	purple,
 	red,
 	teal,
 	yellow,
@@ -67,6 +66,13 @@ export const darkTheme = createTheme({
 						line: '#363640',
 					},
 				},
+				columnConstraint: {
+					clauses: {
+						sqlite: {
+							autoIncrement: '#747bff',
+						},
+					},
+				},
 			},
 		},
 		components: {
@@ -110,14 +116,21 @@ export const darkTheme = createTheme({
 					},
 					column: {
 						color: {
-							int: blue[700],
-							varchar: red[700],
-							boolean: purple[700],
-							date: lightBlue[700],
-							text: lime[700],
-							float: teal[700],
-							double: pink[700],
-							undefined: grey[700],
+							sqlite: {
+								integer: blue[700],
+								text: red[700],
+								real: pink[700],
+								blob: orange[700],
+								null: grey[700],
+							},
+							// int: blue[700],
+							// varchar: red[700],
+							// boolean: purple[700],
+							// date: lightBlue[700],
+							// text: lime[700],
+							// float: teal[700],
+							// double: pink[700],
+							// undefined: grey[700],
 						},
 					},
 					commands: {

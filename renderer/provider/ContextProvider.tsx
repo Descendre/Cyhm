@@ -1,6 +1,7 @@
 'use client';
 import { ReactNode, createContext, useRef, useState } from 'react';
 import {
+	ColumnConstraintEditInfoProps,
 	ColumnsStateProps,
 	ContextProviderProps,
 	FetchNotifyInvitedUserResponse,
@@ -26,7 +27,9 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [isAudio, setIsAudio] = useState<boolean>(false);
 	const [tables, setTables] = useState<TablesStateProps>({});
 	const [columns, setColumns] = useState<ColumnsStateProps>({});
-	const [selectedConstraintColumnId, setSelectedConstraintColumnId] = useState<
+	const [columnConstraintEditInfo, setColumnConstraintEditInfo] =
+		useState<ColumnConstraintEditInfoProps | null>(null);
+	const [addConstraintColumnId, setAddConstraintColumnId] = useState<
 		string | null
 	>(null);
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
@@ -78,8 +81,10 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setTables,
 		columns,
 		setColumns,
-		selectedConstraintColumnId,
-		setSelectedConstraintColumnId,
+		columnConstraintEditInfo,
+		setColumnConstraintEditInfo,
+		addConstraintColumnId,
+		setAddConstraintColumnId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,

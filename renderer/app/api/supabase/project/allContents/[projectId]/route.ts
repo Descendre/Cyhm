@@ -15,8 +15,14 @@ export const GET = async (
 			where: {
 				projectId: projectId,
 			},
+			orderBy: {
+				createdAt: 'asc',
+			},
 			include: {
 				columns: {
+					orderBy: {
+						createdAt: 'asc',
+					},
 					include: {
 						columnConstraints: true,
 					},
@@ -73,7 +79,7 @@ export const GET = async (
 			response.columns[table.id] = table.columns.map((column) => ({
 				id: column.id,
 				name: column.name,
-				type: column.type,
+				sqliteType: column.sqliteType,
 				tableId: column.tableId,
 				createdAt: column.createdAt,
 				updatedAt: column.updatedAt,

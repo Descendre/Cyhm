@@ -6,7 +6,11 @@ import {
 	windowModeProps,
 } from '../provider';
 import { AddTableResponse } from '../api';
-import { ColumnConstraintType, ColumnType } from '@prisma/client';
+import {
+	ColumnConstraintType,
+	SqliteClauseType,
+	SQliteColumnType,
+} from '@prisma/client';
 import { ReactNode } from 'react';
 
 export interface UseLayoutProps {
@@ -21,10 +25,6 @@ export interface UseLayoutProps {
 	setTables: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columns: ColumnsStateProps;
 	setColumns: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
-	selectedConstraintColumnId: string | null;
-	setSelectedConstraintColumnId: React.Dispatch<
-		React.SetStateAction<string | null>
-	>;
 	isTableAddMode: boolean;
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
@@ -49,8 +49,8 @@ export interface UseLayoutProps {
 		tableId,
 		columnId,
 	}: handleToggleColumnConstraintExpansionProps) => void;
-	handleGetColumnTypeText: (
-		type: ColumnType,
+	handleGetColumnTypeTextWithSQlite: (
+		type: SQliteColumnType,
 		withText: boolean,
 		iconSize: string,
 		fontSize: string
@@ -61,11 +61,23 @@ export interface UseLayoutProps {
 		iconSize: string,
 		fontSize: string
 	) => ReactNode;
+	handleGetClauseTextWithSQlite: (
+		type: SqliteClauseType,
+		fontSize: string
+	) => ReactNode;
+	handleGetNoOptionText: (fontSize: string) => ReactNode;
+	handleSelectColumnConstraintItem: ({
+		columnId,
+	}: handleSelectColumnConstraintItemProps) => void;
 	handleAllTableExpansion: (expand: boolean) => void;
 	handleSelectTable: (table: AddTableResponse) => void;
 	handleSetAddColumnIndex: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];
 	handleSwitchUserPopperViewMode: () => void;
+}
+
+export interface handleSelectColumnConstraintItemProps {
+	columnId: string;
 }
 
 export interface handleToggleColumnConstraintExpansionProps {
