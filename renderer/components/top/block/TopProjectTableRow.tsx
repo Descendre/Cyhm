@@ -20,6 +20,7 @@ export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 		<TableRow
 			onClick={() => handleStartProject({ project: project })}
 			sx={{
+				position: 'relative',
 				cursor: 'pointer',
 				border: `solid 1px transparent`,
 				'&:hover': {
@@ -34,6 +35,7 @@ export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 				size="small"
 				sx={{
 					width: '40%',
+					overflow: 'visible',
 				}}
 			>
 				<Typography color={palette.text.secondary} noWrap fontSize="0.8rem">
@@ -94,6 +96,23 @@ export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 						/>
 					</IconButton>
 				</Typography>
+
+				{project.dbType === 'SQLITE' ? (
+					<Avatar
+						title="SQlite"
+						variant="square"
+						src="/sqlite.png"
+						sx={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '25px',
+							height: '25px',
+						}}
+					/>
+				) : (
+					<></>
+				)}
 			</TableCell>
 		</TableRow>
 	);

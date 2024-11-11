@@ -1,5 +1,8 @@
+import { DBType, SQliteColumnType } from '@prisma/client';
+
 export interface AddColumnRequest {
 	name: string;
-	type: ColumnType;
+	dbType: DBType;
+	type: SQliteColumnType;
 	tableId: string;
 }

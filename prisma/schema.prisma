@@ -30,6 +30,7 @@ model Project {
   id          String   @id @default(cuid())
   name        String
   isActive    Boolean  @default(true)
+  dbType      DBType
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   members     Member[]
@@ -65,7 +66,7 @@ model Table {
 model Column {
   id            String             @id @default(cuid())
   name          String
-  type          ColumnType
+  sqliteType    SQliteColumnType?
   tableId       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -76,11 +77,13 @@ model Column {
 model ColumnConstraint {
   id        String @id @default(cuid())
   type      ColumnConstraintType
-  constraintValue String?
+  sqliteClause SqliteClauseType?
   columnId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   column    Column @relation(fields: [columnId], references: [id])
+
+  @@unique([columnId, type])
 }
 
 model Notify {
@@ -108,6 +111,10 @@ enum Provider {
   github
 }
 
+enum DBType {
+  SQLITE
+}
+
 enum Role {
   owner
   admin
@@ -115,14 +122,11 @@ enum Role {
   member
 }
 
-enum ColumnType {
-  INT
-  VARCHAR
-  BOOLEAN
-  DATE
+enum SQliteColumnType {
+  INTEGER
   TEXT
-  FLOAT
-  DOUBLE
+  REAL
+  BLOB
 }
 
 enum ColumnConstraintType {
@@ -132,6 +136,10 @@ enum ColumnConstraintType {
   FOREIGN_KEY
   CHECK
   DEFAULT
+}
+
+enum SqliteClauseType {
+  AUTO_INCREMENT
 }
 
 enum NotifyType {

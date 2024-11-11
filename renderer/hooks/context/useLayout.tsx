@@ -4,19 +4,17 @@ import { Context } from '../../provider';
 import {
 	AddTableResponse,
 	EditReactFlowCustomNodeDataProps,
+	handleSelectColumnConstraintItemProps,
 	handleToggleColumnConstraintExpansionProps,
 	TablesStateProps,
 	UseLayoutProps,
 } from '../../interfaces';
 import { Node, XYPosition } from '@xyflow/react';
 import {
-	BarChart,
 	BlockOutlined,
-	CalendarToday,
 	Check,
-	Description,
+	DataObject,
 	DescriptionOutlined,
-	DoNotDisturb,
 	HelpOutline,
 	Key,
 	Link,
@@ -27,7 +25,11 @@ import {
 } from '@mui/icons-material';
 import { usePalette } from '../common';
 import { Box, Typography } from '@mui/material';
-import { ColumnConstraintType, ColumnType } from '@prisma/client';
+import {
+	ColumnConstraintType,
+	SqliteClauseType,
+	SQliteColumnType,
+} from '@prisma/client';
 
 export const useLayout = (): UseLayoutProps => {
 	const context = useContext(Context);
@@ -49,8 +51,8 @@ export const useLayout = (): UseLayoutProps => {
 		setTables,
 		columns,
 		setColumns,
-		selectedConstraintColumnId,
-		setSelectedConstraintColumnId,
+		columnConstraintEditInfo,
+		setColumnConstraintEditInfo,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,
@@ -77,14 +79,15 @@ export const useLayout = (): UseLayoutProps => {
 		}
 	};
 
-	const handleGetColumnTypeText = (
-		type: ColumnType,
+	const handleGetColumnTypeTextWithSQlite = (
+		type: SQliteColumnType,
 		withText: boolean,
 		iconSize: string,
 		fontSize: string
 	): ReactNode => {
-		return type === 'INT' ? (
+		return type === 'INTEGER' ? (
 			<Typography
+				title="INTEGER"
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
@@ -92,133 +95,101 @@ export const useLayout = (): UseLayoutProps => {
 				height="100%"
 				variant="body2"
 				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.int}
+				color={palette.components.edit.reactFlow.column.color.sqlite.integer}
+				sx={{
+					cursor: 'pointer',
+				}}
 			>
 				<Numbers
 					sx={{
 						fontSize: iconSize,
 					}}
 				/>
-				{withText && 'INT'}
+				{withText && 'INTEGER'}
 			</Typography>
-		) : type === 'VARCHAR' ? (
+		) : type === 'TEXT' ? (
 			<Typography
+				title="TEXT"
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
 				gap="2px"
 				variant="body2"
 				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.varchar}
+				color={palette.components.edit.reactFlow.column.color.sqlite.text}
+				sx={{
+					cursor: 'pointer',
+				}}
 			>
 				<TextFields
 					sx={{
 						fontSize: iconSize,
 					}}
 				/>
-				{withText && 'VARCHAR'}
-			</Typography>
-		) : type === 'BOOLEAN' ? (
-			<Typography
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				gap="2px"
-				variant="body2"
-				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.boolean}
-			>
-				<DoNotDisturb
-					sx={{
-						fontSize: iconSize,
-					}}
-				/>
-				{withText && 'BOOLEAN'}
-			</Typography>
-		) : type === 'DATE' ? (
-			<Typography
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				gap="2px"
-				variant="body2"
-				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.date}
-			>
-				<CalendarToday
-					sx={{
-						fontSize: iconSize,
-					}}
-				/>
-				{withText && 'DATE'}
-			</Typography>
-		) : type === 'TEXT' ? (
-			<Typography
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				gap="2px"
-				variant="body2"
-				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.text}
-			>
-				<Description
-					sx={{
-						fontSize: iconSize,
-					}}
-				/>
 				{withText && 'TEXT'}
 			</Typography>
-		) : type === 'FLOAT' ? (
+		) : type === 'REAL' ? (
 			<Typography
+				title="REAL"
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
 				gap="2px"
 				variant="body2"
 				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.float}
-			>
-				<BarChart
-					sx={{
-						fontSize: iconSize,
-					}}
-				/>
-				{withText && 'FLOAT'}
-			</Typography>
-		) : type === 'DOUBLE' ? (
-			<Typography
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				gap="2px"
-				variant="body2"
-				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.double}
+				color={palette.components.edit.reactFlow.column.color.sqlite.real}
+				sx={{
+					cursor: 'pointer',
+				}}
 			>
 				<StackedBarChart
 					sx={{
 						fontSize: iconSize,
 					}}
 				/>
-				{withText && 'DOUBLE'}
+				{withText && 'REAL'}
 			</Typography>
-		) : (
+		) : type === 'BLOB' ? (
 			<Typography
+				title="BLOB"
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
 				gap="2px"
 				variant="body2"
 				fontSize={fontSize}
-				color={palette.components.edit.reactFlow.column.color.undefined}
+				color={palette.components.edit.reactFlow.column.color.sqlite.blob}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<DataObject
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'BLOB'}
+			</Typography>
+		) : (
+			<Typography
+				title="NULL"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.sqlite.null}
+				sx={{
+					cursor: 'pointer',
+				}}
 			>
 				<HelpOutline
 					sx={{
 						fontSize: iconSize,
 					}}
 				/>
-				{withText && 'UNDEFINED'}
+				{withText && 'NULL'}
 			</Typography>
 		);
 	};
@@ -233,10 +204,14 @@ export const useLayout = (): UseLayoutProps => {
 			case 'PRIMARY_KEY':
 				return (
 					<Box
+						title="PRIMARY KEY"
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
 						gap="5px"
+						sx={{
+							cursor: 'pointer',
+						}}
 					>
 						<Key
 							fontSize="small"
@@ -259,10 +234,14 @@ export const useLayout = (): UseLayoutProps => {
 			case 'NOT_NULL':
 				return (
 					<Box
+						title="NOT NULL"
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
 						gap="5px"
+						sx={{
+							cursor: 'pointer',
+						}}
 					>
 						<BlockOutlined
 							fontSize="small"
@@ -285,10 +264,14 @@ export const useLayout = (): UseLayoutProps => {
 			case 'UNIQUE':
 				return (
 					<Box
+						title="UNIQUE"
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
 						gap="5px"
+						sx={{
+							cursor: 'pointer',
+						}}
 					>
 						<StarOutline
 							fontSize="small"
@@ -311,10 +294,14 @@ export const useLayout = (): UseLayoutProps => {
 			case 'FOREIGN_KEY':
 				return (
 					<Box
+						title="FOREIGN KEY"
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
 						gap="5px"
+						sx={{
+							cursor: 'pointer',
+						}}
 					>
 						<Link
 							fontSize="small"
@@ -337,10 +324,14 @@ export const useLayout = (): UseLayoutProps => {
 			case 'CHECK':
 				return (
 					<Box
+						title="CHECK"
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
 						gap="5px"
+						sx={{
+							cursor: 'pointer',
+						}}
 					>
 						<Check
 							fontSize="small"
@@ -363,10 +354,14 @@ export const useLayout = (): UseLayoutProps => {
 			case 'DEFAULT':
 				return (
 					<Box
+						title="DEFAULT"
 						display="flex"
 						justifyContent="center"
 						alignItems="center"
 						gap="5px"
+						sx={{
+							cursor: 'pointer',
+						}}
 					>
 						<DescriptionOutlined
 							fontSize="small"
@@ -389,6 +384,61 @@ export const useLayout = (): UseLayoutProps => {
 			default:
 				return null;
 		}
+	};
+
+	const handleGetClauseTextWithSQlite = (
+		type: SqliteClauseType,
+		fontSize: string
+	): ReactNode => {
+		return type === 'AUTO_INCREMENT' ? (
+			<Typography
+				title="AUTO INCREMENT"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				height="100%"
+				variant="body2"
+				fontSize={fontSize}
+				color={
+					palette.layout.editLayout.columnConstraint.clauses.sqlite
+						.autoIncrement
+				}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				AUTO INCREMENT
+			</Typography>
+		) : (
+			<></>
+		);
+	};
+
+	const handleGetNoOptionText = (fontSize: string): ReactNode => {
+		return (
+			<Typography title="選択を外す" variant="body2" fontSize={fontSize} noWrap>
+				選択を外す
+			</Typography>
+		);
+	};
+
+	const handleSelectColumnConstraintItem = ({
+		columnId,
+	}: handleSelectColumnConstraintItemProps): void => {
+		if (columnConstraintEditInfo?.columnId === columnId) {
+			setColumnConstraintEditInfo({
+				columnId: null,
+				columnConstraintType: null,
+				clauseType: null,
+			});
+			return;
+		}
+		setColumnConstraintEditInfo({
+			columnId: columnId,
+			columnConstraintType: null,
+			clauseType: null,
+		});
 	};
 
 	const handleToggleColumnConstraintExpansion = ({
@@ -476,8 +526,6 @@ export const useLayout = (): UseLayoutProps => {
 		setTables,
 		columns,
 		setColumns,
-		selectedConstraintColumnId,
-		setSelectedConstraintColumnId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,
@@ -496,8 +544,11 @@ export const useLayout = (): UseLayoutProps => {
 		setIsPreparingProject,
 
 		handleGithubExternalShellOpen,
-		handleGetColumnTypeText,
+		handleGetColumnTypeTextWithSQlite,
 		handleGetConstraintIcon,
+		handleGetClauseTextWithSQlite,
+		handleGetNoOptionText,
+		handleSelectColumnConstraintItem,
 		handleToggleColumnConstraintExpansion,
 		handleAllTableExpansion,
 		handleSelectTable,

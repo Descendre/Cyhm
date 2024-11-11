@@ -1,31 +1,25 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { EditRightPopperColumnTypeSelectProps } from '../../../interfaces';
 import { useLayout, usePalette, useProject } from '../../../hooks';
-import { ColumnType } from '@prisma/client';
+import { SQliteColumnType } from '@prisma/client';
 
 export const EditRightPopperColumnTypeSelect = ({
 	column,
 	table,
 }: EditRightPopperColumnTypeSelectProps) => {
 	const palette = usePalette();
-	const { tables, handleGetColumnTypeText } = useLayout();
-	const { handleUpdateColumnType } = useProject();
-	const types: ColumnType[] = [
-		'INT',
-		'VARCHAR',
-		'BOOLEAN',
-		'DATE',
-		'TEXT',
-		'FLOAT',
-		'DOUBLE',
-	];
+	const { tables, handleGetColumnTypeTextWithSQlite } = useLayout();
+	const { currentProject, handleUpdateColumnType } = useProject();
+	const sqliteTypes: SQliteColumnType[] = ['INTEGER', 'TEXT', 'REAL', 'BLOB'];
 	const isEditable: boolean = tables[table?.id]?.isEditing;
 
 	const handleTypeChange = async (event: SelectChangeEvent) => {
-		const newType = event.target.value as ColumnType;
+		if (!currentProject) return;
+		const newType = event.target.value as SQliteColumnType;
 		await handleUpdateColumnType({
 			tableId: column.tableId,
 			columnId: column.id,
+			dbType: currentProject.dbType,
 			type: newType,
 		});
 	};
@@ -35,7 +29,7 @@ export const EditRightPopperColumnTypeSelect = ({
 			variant="outlined"
 			size="small"
 			disabled={!isEditable}
-			value={column.type}
+			value={column.sqliteType}
 			onChange={handleTypeChange}
 			sx={{
 				width: '50%',
@@ -66,9 +60,9 @@ export const EditRightPopperColumnTypeSelect = ({
 				},
 			}}
 		>
-			{types.map((type) => (
+			{sqliteTypes.map((type) => (
 				<MenuItem key={type} value={type}>
-					{handleGetColumnTypeText(type, true, '1rem', '0.6rem')}
+					{handleGetColumnTypeTextWithSQlite(type, true, '1rem', '0.6rem')}
 				</MenuItem>
 			))}
 		</Select>

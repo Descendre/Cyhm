@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { EditColumnConstraintColumnHeaderProps } from '../../../interfaces';
-import { Add, ExpandLess, ExpandMore } from '@mui/icons-material';
-import { useLayout, usePalette } from '../../../hooks';
+import { Add, ExpandLess, ExpandMore, Remove } from '@mui/icons-material';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 
 export const EditColumnConstraintColumnHeader = ({
 	table,
@@ -10,9 +10,10 @@ export const EditColumnConstraintColumnHeader = ({
 	const palette = usePalette();
 	const {
 		handleToggleColumnConstraintExpansion,
-		handleGetColumnTypeText,
-		setSelectedConstraintColumnId,
+		handleGetColumnTypeTextWithSQlite,
+		handleSelectColumnConstraintItem,
 	} = useLayout();
+	const { columnConstraintEditInfo } = useProject();
 
 	return (
 		<Box
@@ -26,9 +27,8 @@ export const EditColumnConstraintColumnHeader = ({
 			sx={{
 				cursor: 'pointer',
 			}}
-			onClick={() => setSelectedConstraintColumnId(column.id)}
 		>
-			{handleGetColumnTypeText(column.type, false, '', '')}
+			{handleGetColumnTypeTextWithSQlite(column.sqliteType, false, '', '')}
 			<Typography
 				flexGrow={1}
 				variant="body2"
@@ -81,15 +81,33 @@ export const EditColumnConstraintColumnHeader = ({
 						}}
 					/>
 				)}
-				<Add
-					titleAccess="制約を追加"
-					fontSize="small"
-					sx={{
-						fontSize: '1.1rem',
-						color: palette.text.secondary,
-						cursor: 'pointer',
-					}}
-				/>
+				{columnConstraintEditInfo?.columnId === column.id ? (
+					<Remove
+						onClick={() =>
+							handleSelectColumnConstraintItem({ columnId: column.id })
+						}
+						titleAccess="追加モードを離脱"
+						fontSize="small"
+						sx={{
+							fontSize: '1.1rem',
+							color: palette.text.secondary,
+							cursor: 'pointer',
+						}}
+					/>
+				) : (
+					<Add
+						onClick={() =>
+							handleSelectColumnConstraintItem({ columnId: column.id })
+						}
+						titleAccess="制約を追加"
+						fontSize="small"
+						sx={{
+							fontSize: '1.1rem',
+							color: palette.text.secondary,
+							cursor: 'pointer',
+						}}
+					/>
+				)}
 			</Box>
 		</Box>
 	);

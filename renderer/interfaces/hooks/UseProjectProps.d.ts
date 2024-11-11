@@ -4,8 +4,17 @@ import {
 	AddTableResponse,
 	FetchUserProjectsResponse,
 } from '../api';
-import { ColumnsStateProps, TablesStateProps } from '../provider';
-import { ColumnType } from '@prisma/client';
+import {
+	ColumnConstraintEditInfoProps,
+	ColumnsStateProps,
+	TablesStateProps,
+} from '../provider';
+import {
+	ColumnConstraintType,
+	DBType,
+	SqliteClauseType,
+	SQliteColumnType,
+} from '@prisma/client';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface UseProjectProps {
@@ -17,10 +26,16 @@ export interface UseProjectProps {
 	setCurrentProject: React.Dispatch<
 		React.SetStateAction<FetchUserProjectsResponse | null>
 	>;
+	addConstraintColumnId: string | null;
+	setAddConstraintColumnId: React.Dispatch<React.SetStateAction<string | null>>;
 	tableEditInfo: TablesStateProps;
 	setTableEditInfo: React.Dispatch<React.SetStateAction<TablesStateProps>>;
 	columnEditInfo: ColumnsStateProps;
 	setColumnEditInfo: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
+	columnConstraintEditInfo: ColumnConstraintEditInfoProps;
+	setColumnConstraintEditInfo: React.Dispatch<
+		React.SetStateAction<ColumnConstraintEditInfoProps>
+	>;
 	channel: RealtimeChannel | null;
 	setChannel: React.Dispatch<React.SetStateAction<RealtimeChannel | null>>;
 
@@ -77,11 +92,19 @@ export interface UseProjectProps {
 		columnId,
 		type,
 	}: handleUpdateColumnTypeProps) => Promose<void>;
+	handleAddConstraint: ({
+		columnId,
+		type,
+		dbType,
+		sqliteClauseType,
+	}: handleAddConstraintProps) => Promise<void>;
+	// handleAddColumnClause: ({ columnId, dbType, clause }: handleAddColumnClauseProps) => Promise<void>;
 	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
 export interface handleCreateProjectProps {
 	userId: string;
+	dbType: DBType;
 }
 
 export interface handleFetchUserProjectsProps {
@@ -100,6 +123,7 @@ export interface handleAddTableProps {
 export interface handleAddColumnProps {
 	name: string;
 	tableId: string;
+	dbType: DBType;
 }
 
 export interface handleOpenTableExpansionProps {
@@ -149,7 +173,8 @@ export interface handleColumnNameUpdateProps {
 export interface handleUpdateColumnTypeProps {
 	tableId: string;
 	columnId: string;
-	type: ColumnType;
+	dbType: DBType;
+	type: SQliteColumnType;
 }
 
 export interface handleNodeDragStopProps {
@@ -158,6 +183,13 @@ export interface handleNodeDragStopProps {
 
 export interface TableChannelPayloadProps {
 	newTable: AddTableResponse;
+}
+
+export interface handleAddConstraintProps {
+	columnId: string;
+	dbType: DBType;
+	type: ColumnConstraintType;
+	sqliteClauseType?: SqliteClauseType;
 }
 
 export interface ColumnChannelPayloadProps {

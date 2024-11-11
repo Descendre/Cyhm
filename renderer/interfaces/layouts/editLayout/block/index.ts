@@ -13,4 +13,5 @@ export * from './EditColumnConstraintLeftBarProps';
 export * from './EditColumnConstraintSettingAreaProps';
 export * from './EditColumnConstraintMainProps';
 export * from './EditColumnConstraintCurrentConstraintsProps';
-export * from './EditColumnConstraintColumnProps';
+export * from './EditColumnConstraintColumnSqliteProps';
+export * from './EditColumnConstraintSqliteAddingAreaProps';

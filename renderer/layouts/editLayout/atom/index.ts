@@ -31,4 +31,6 @@ export * from './EditRightPopperAddColumnConstraintButton';
 export * from './EditColumnConstraintLeftBarItem';
 export * from './EditColumnConstraintColumnHeader';
 export * from './EditColumnConstraintSettingHeader';
-export * from './EditColumnConstraintPrimaryKeySelect';
+export * from './EditColumnConstraintSqlitePrimaryKeySelect';
+export * from './EditColumnConstraintSqliteAddingTypeSelect';
+export * from './EditColumnConstraintSqliteAddingClauseSelect';

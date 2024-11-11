@@ -12,3 +12,5 @@ export * from './UpdateColumnTypeRequest';
 export * from './AddInviteNotifyRequest';
 export * from './DeleteInviteNotifyRequest';
 export * from './AcceptOrRejectInviteNotifyRequest';
+export * from './AddColumnClauseRequest';
+export * from './AddColumnConstraintRequest';

@@ -1,12 +1,14 @@
 import { Box } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { useLayout } from '../../../hooks';
-import { EditColumnConstraintPrimaryKeySelect } from '../atom';
-import { EditColumnConstraintColumnProps } from '../../../interfaces';
+import { EditColumnConstraintSqlitePrimaryKeySelect } from '../atom';
+import { EditColumnConstraintColumnSqliteProps } from '../../../interfaces';
 
-export const EditColumnConstraintColumn = ({
+export const EditColumnConstraintColumnSqlite = ({
 	type,
-}: EditColumnConstraintColumnProps) => {
+	column,
+	constraint,
+}: EditColumnConstraintColumnSqliteProps) => {
 	const { handleGetConstraintIcon } = useLayout();
 
 	return (
@@ -16,6 +18,11 @@ export const EditColumnConstraintColumn = ({
 			alignItems="center"
 			width="100%"
 			height="40px"
+			sx={{
+				'&:hover .deleteIcon': {
+					display: 'block',
+				},
+			}}
 		>
 			<Box
 				display="flex"
@@ -34,7 +41,10 @@ export const EditColumnConstraintColumn = ({
 				height="100%"
 			>
 				{type === 'PRIMARY_KEY' ? (
-					<EditColumnConstraintPrimaryKeySelect />
+					<EditColumnConstraintSqlitePrimaryKeySelect
+						column={column}
+						constraint={constraint}
+					/>
 				) : (
 					<></>
 				)}
@@ -47,10 +57,12 @@ export const EditColumnConstraintColumn = ({
 				height="100%"
 			>
 				<Delete
+					className="deleteIcon"
 					titleAccess="制約を削除"
 					fontSize="small"
 					color="error"
 					sx={{
+						display: 'none',
 						cursor: 'pointer',
 					}}
 				/>

@@ -58,7 +58,7 @@ export const EditHeaderDownloadPopperListItem = ({
 						},
 					}}
 					secondaryTypographyProps={{
-						fontSize: '0.8rem',
+						fontSize: '0.7rem',
 						color: palette.text.disabled,
 						textOverflow: 'ellipsis',
 						overflow: 'hidden',

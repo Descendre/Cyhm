@@ -8,8 +8,9 @@ import {
 	NotifyWithDetail,
 } from '../api';
 import { UserSearchResultsProps } from './UserSearchResultsProps';
-import { UserPopperViewModeProps } from './UserPopperVoewModeProps';
+import { UserPopperViewModeProps } from './UserPopperViewModeProps';
 import { RealtimeChannel } from '@supabase/supabase-js';
+import { ColumnConstraintEditInfoProps } from './ColumnConstraintEditInfoProps';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -27,10 +28,12 @@ export interface ContextProviderProps {
 	setTables: React.Dispatch<React.SetStateAction<TablesStateProps | null>>;
 	columns: ColumnsStateProps;
 	setColumns: React.Dispatch<React.SetStateAction<ColumnsStateProps>>;
-	selectedConstraintColumnId: string | null;
-	setSelectedConstraintColumnId: React.Dispatch<
-		React.SetStateAction<string | null>
+	columnConstraintEditInfo: ColumnConstraintEditInfoProps | null;
+	setColumnConstraintEditInfo: React.Dispatch<
+		React.SetStateAction<ColumnConstraintEditInfoProps | null>
 	>;
+	addConstraintColumnId: string | null;
+	setAddConstraintColumnId: React.Dispatch<React.SetStateAction<string | null>>;
 	isTableAddMode: boolean;
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;

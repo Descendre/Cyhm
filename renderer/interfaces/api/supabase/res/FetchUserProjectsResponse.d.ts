@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { DBType, Role } from '@prisma/client';
 
 export interface FetchUserProjectsResponse {
 	id: string;
@@ -6,6 +6,7 @@ export interface FetchUserProjectsResponse {
 	isActive: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	dbType: DBType;
 	members: ProjectMemberProps[];
 }
 

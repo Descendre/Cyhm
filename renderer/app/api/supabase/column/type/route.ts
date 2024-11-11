@@ -8,12 +8,13 @@ import {
 export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: UpdateColumnTypeRequest = await req.json();
-		const { columnId, type } = body;
+		const { columnId, dbType, type } = body;
+
+		const updateData = dbType === 'SQLITE' ? { sqliteType: type } : {};
+
 		const updatedColumn: AddColumnResponse = await prisma.column.update({
 			where: { id: columnId },
-			data: {
-				type: type,
-			},
+			data: updateData,
 			include: {
 				columnConstraints: true,
 			},

@@ -6,7 +6,6 @@ import {
 	ColumnsStateProps,
 	TablesStateProps,
 } from '../../renderer/interfaces';
-import { getSQLiteType } from './getSQLiteType';
 
 export const createDBSchema = async (
 	filePath: string,
@@ -24,11 +23,11 @@ export const createDBSchema = async (
 
 		const columnDefinitions = columns
 			.map((column) => {
-				return `${column.name} ${getSQLiteType(column.type)}`;
+				return `${column.name} ${column.sqliteType}`;
 			})
 			.join(', ');
 
-		const createTableQuery = `CREATE TABLE IF NOT EXISTS ${table.name} (id TEXT PRIMARY KEY, ${columnDefinitions})`;
+		const createTableQuery = `CREATE TABLE IF NOT EXISTS ${table.name} (${columnDefinitions})`;
 		await db.exec(createTableQuery);
 	}
 
