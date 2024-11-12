@@ -11,11 +11,14 @@ export const EditColumnConstraintSettingArea = ({
 			display="flex"
 			justifyContent="center"
 			alignItems="center"
+			gap="30px"
 			flexDirection="column"
 			width="100%"
 		>
 			<EditColumnConstraintSettingHeader column={column} />
-			<EditColumnConstraintCurrentConstraints column={column} />
+			{column.columnConstraints.length > 0 && (
+				<EditColumnConstraintCurrentConstraints column={column} />
+			)}
 		</Box>
 	);
 };

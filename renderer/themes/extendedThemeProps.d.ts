@@ -53,6 +53,9 @@ declare module '@mui/material/styles' {
 							autoIncrement: string;
 						};
 					};
+					constRaintArea: {
+						bg: string;
+					};
 				};
 			};
 		};
@@ -116,7 +119,8 @@ declare module '@mui/material/styles' {
 			};
 		};
 		line: {
-			disabled: string;
+			appIconButton: string;
+			constraintAreaBorder: string;
 		};
 	}
 	interface PaletteOptions {
@@ -171,6 +175,9 @@ declare module '@mui/material/styles' {
 							autoIncrement: string;
 						};
 					};
+					constRaintArea: {
+						bg: string;
+					};
 				};
 			};
 		};
@@ -234,7 +241,8 @@ declare module '@mui/material/styles' {
 			};
 		};
 		line: {
-			disabled: string;
+			appIconButton: string;
+			constraintAreaBorder: string;
 		};
 	}
 }

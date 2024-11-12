@@ -42,28 +42,28 @@ export const TopHeaderButtons = () => {
 			>
 				<AppIconButton
 					icon={<GitHub />}
-					borderColor={palette.line.disabled}
+					borderColor={palette.line.appIconButton}
 					borderHoverColor={palette.primary.main}
 					text="github"
 					onClick={() => handleGithubExternalShellOpen()}
 				/>
 				<AppIconButton
 					icon={<NotificationsIcon />}
-					borderColor={palette.line.disabled}
+					borderColor={palette.line.appIconButton}
 					borderHoverColor={palette.primary.main}
 					text="通知"
 					onClick={() => openModal('topNotifyModal')}
 				/>
 				<AppIconButton
 					icon={<Settings />}
-					borderColor={palette.line.disabled}
+					borderColor={palette.line.appIconButton}
 					borderHoverColor={palette.primary.main}
 					text="設定"
 					onClick={() => openModal('topSettingModal')}
 				/>
 				<AppIconButton
 					icon={<Info />}
-					borderColor={palette.line.disabled}
+					borderColor={palette.line.appIconButton}
 					borderHoverColor={palette.primary.main}
 					text="クレジット"
 					onClick={() => console.log()}

@@ -17,7 +17,7 @@ export const EditColumnConstraintColumnSqlite = ({
 			justifyContent="center"
 			alignItems="center"
 			width="100%"
-			height="40px"
+			height="60px"
 			sx={{
 				'&:hover .deleteIcon': {
 					display: 'block',

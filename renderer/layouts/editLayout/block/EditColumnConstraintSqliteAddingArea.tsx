@@ -29,6 +29,10 @@ export const EditColumnConstraintSqliteAddingArea = ({
 				alignItems="center"
 				width="100%"
 				height="100px"
+				padding="0 15px"
+				bgcolor={palette.layout.editLayout.columnConstraint.constRaintArea.bg}
+				border={`solid 1px ${palette.primary.main}`}
+				borderRadius="10px"
 			>
 				<Box
 					display="flex"
@@ -77,18 +81,6 @@ export const EditColumnConstraintSqliteAddingArea = ({
 						}}
 					/>
 				</Box>
-
-				<Box
-					position="absolute"
-					top={0}
-					left={0}
-					width="100%"
-					height="100%"
-					border={`solid 1px ${palette.primary.main}`}
-					sx={{
-						pointerEvents: 'none',
-					}}
-				/>
 			</Box>
 		</>
 	);

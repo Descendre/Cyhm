@@ -20,8 +20,6 @@ export const EditColumnConstraintSqliteAddingTypeSelect = ({
 		'DEFAULT',
 	];
 
-	console.log(columnConstraintEditInfo);
-
 	const handleChange = (event: SelectChangeEvent): void => {
 		setColumnConstraintEditInfo({
 			columnId: column.id,
