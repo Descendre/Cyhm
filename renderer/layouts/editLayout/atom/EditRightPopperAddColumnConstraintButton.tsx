@@ -1,11 +1,14 @@
-import { Add } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { EditRightPopperAddColumnConstraintButtonProps } from '../../../interfaces';
+import { useProject } from '../../../hooks';
 
 export const EditRightPopperAddColumnConstraintButton = ({
 	table,
+	column,
 	openModal,
 }: EditRightPopperAddColumnConstraintButtonProps) => {
+	const { setAddConstraintColumnId } = useProject();
+
 	return (
 		<>
 			<Button
@@ -16,13 +19,13 @@ export const EditRightPopperAddColumnConstraintButton = ({
 					width: '50%',
 					height: '30px',
 				}}
-				endIcon={<Add />}
 				onClick={() => {
+					setAddConstraintColumnId(column.id);
 					openModal('columnConstraintModal');
 				}}
 			>
 				<Typography variant="body2" fontSize="0.7rem">
-					制約を追加
+					{`制約の設定 (${column.columnConstraints.length}件)`}
 				</Typography>
 			</Button>
 		</>

@@ -95,7 +95,7 @@ export const EditRightPopperColumnSettingArea = ({
 								width="100%"
 							>
 								<Rule
-									titleAccess="制約を追加"
+									titleAccess="カラム制約"
 									fontSize="small"
 									sx={{
 										color: palette.text.disabled,
@@ -103,14 +103,11 @@ export const EditRightPopperColumnSettingArea = ({
 										cursor: 'pointer',
 									}}
 								/>
-								{column.columnConstraints.length === 0 ? (
-									<EditRightPopperAddColumnConstraintButton
-										openModal={openModal}
-										table={table}
-									/>
-								) : (
-									<></>
-								)}
+								<EditRightPopperAddColumnConstraintButton
+									openModal={openModal}
+									table={table}
+									column={column}
+								/>
 							</Box>
 						</Box>
 						<Divider
