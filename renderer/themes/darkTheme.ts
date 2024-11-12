@@ -72,6 +72,9 @@ export const darkTheme = createTheme({
 							autoIncrement: '#747bff',
 						},
 					},
+					constRaintArea: {
+						bg: '#161719',
+					},
 				},
 			},
 		},
@@ -123,14 +126,6 @@ export const darkTheme = createTheme({
 								blob: orange[700],
 								null: grey[700],
 							},
-							// int: blue[700],
-							// varchar: red[700],
-							// boolean: purple[700],
-							// date: lightBlue[700],
-							// text: lime[700],
-							// float: teal[700],
-							// double: pink[700],
-							// undefined: grey[700],
 						},
 					},
 					commands: {
@@ -143,7 +138,8 @@ export const darkTheme = createTheme({
 			},
 		},
 		line: {
-			disabled: '#555555',
+			appIconButton: '#555555',
+			constraintAreaBorder: '#222222',
 		},
 		background: {
 			default: '#1b1b1f',

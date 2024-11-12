@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { EditColumnConstraintColumnHeaderProps } from '../../../interfaces';
 import { Add, ExpandLess, ExpandMore, Remove } from '@mui/icons-material';
 import { useLayout, usePalette, useProject } from '../../../hooks';
@@ -16,99 +16,108 @@ export const EditColumnConstraintColumnHeader = ({
 	const { columnConstraintEditInfo } = useProject();
 
 	return (
-		<Box
-			display="flex"
-			justifyContent="space-between"
-			alignItems="center"
-			width="100%"
-			height="25px"
-			padding="0 5px"
-			fontWeight="bold"
-			sx={{
-				cursor: 'pointer',
-			}}
-		>
-			{handleGetColumnTypeTextWithSQlite(column.sqliteType, false, '', '')}
-			<Typography
-				flexGrow={1}
-				variant="body2"
-				fontSize="0.7rem"
-				noWrap
-				marginLeft="5px"
-				sx={{
-					userSelect: 'none',
-				}}
-			>
-				{column.name}
-			</Typography>
+		<>
 			<Box
 				display="flex"
-				justifyContent="center"
+				justifyContent="space-between"
 				alignItems="center"
-				gap="2px"
-				height="100%"
+				width="100%"
+				height="25px"
+				padding="0 5px"
+				fontWeight="bold"
+				bgcolor={palette.secondary.main}
+				sx={{
+					cursor: 'pointer',
+				}}
 			>
-				{column.isConstraintExpand ? (
-					<ExpandMore
-						onClick={() =>
-							handleToggleColumnConstraintExpansion({
-								tableId: table.id,
-								columnId: column.id,
-							})
-						}
-						titleAccess="制約を非表示"
-						fontSize="small"
-						sx={{
-							fontSize: '1.1rem',
-							color: palette.text.secondary,
-							cursor: 'pointer',
-						}}
-					/>
-				) : (
-					<ExpandLess
-						onClick={() =>
-							handleToggleColumnConstraintExpansion({
-								tableId: table.id,
-								columnId: column.id,
-							})
-						}
-						titleAccess="制約を表示"
-						fontSize="small"
-						sx={{
-							fontSize: '1.1rem',
-							color: palette.text.secondary,
-							cursor: 'pointer',
-						}}
-					/>
-				)}
-				{columnConstraintEditInfo?.columnId === column.id ? (
-					<Remove
-						onClick={() =>
-							handleSelectColumnConstraintItem({ columnId: column.id })
-						}
-						titleAccess="追加モードを離脱"
-						fontSize="small"
-						sx={{
-							fontSize: '1.1rem',
-							color: palette.text.secondary,
-							cursor: 'pointer',
-						}}
-					/>
-				) : (
-					<Add
-						onClick={() =>
-							handleSelectColumnConstraintItem({ columnId: column.id })
-						}
-						titleAccess="制約を追加"
-						fontSize="small"
-						sx={{
-							fontSize: '1.1rem',
-							color: palette.text.secondary,
-							cursor: 'pointer',
-						}}
-					/>
-				)}
+				{handleGetColumnTypeTextWithSQlite(column.sqliteType, false, '', '')}
+				<Typography
+					flexGrow={1}
+					variant="body2"
+					fontSize="0.7rem"
+					noWrap
+					marginLeft="5px"
+					sx={{
+						userSelect: 'none',
+					}}
+				>
+					{column.name}
+				</Typography>
+				<Box
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					gap="2px"
+					height="100%"
+				>
+					{column.isConstraintExpand ? (
+						<ExpandMore
+							onClick={() =>
+								handleToggleColumnConstraintExpansion({
+									tableId: table.id,
+									columnId: column.id,
+								})
+							}
+							titleAccess="制約を非表示"
+							fontSize="small"
+							sx={{
+								fontSize: '1.1rem',
+								color: palette.text.secondary,
+								cursor: 'pointer',
+							}}
+						/>
+					) : (
+						<ExpandLess
+							onClick={() =>
+								handleToggleColumnConstraintExpansion({
+									tableId: table.id,
+									columnId: column.id,
+								})
+							}
+							titleAccess="制約を表示"
+							fontSize="small"
+							sx={{
+								fontSize: '1.1rem',
+								color: palette.text.secondary,
+								cursor: 'pointer',
+							}}
+						/>
+					)}
+					{columnConstraintEditInfo?.columnId === column.id ? (
+						<Remove
+							onClick={() =>
+								handleSelectColumnConstraintItem({ columnId: column.id })
+							}
+							titleAccess="追加モードを離脱"
+							fontSize="small"
+							sx={{
+								fontSize: '1.1rem',
+								color: palette.text.secondary,
+								cursor: 'pointer',
+							}}
+						/>
+					) : (
+						<Add
+							onClick={() =>
+								handleSelectColumnConstraintItem({ columnId: column.id })
+							}
+							titleAccess="制約を追加"
+							fontSize="small"
+							sx={{
+								fontSize: '1.1rem',
+								color: palette.text.secondary,
+								cursor: 'pointer',
+							}}
+						/>
+					)}
+				</Box>
 			</Box>
-		</Box>
+
+			<Divider
+				sx={{
+					width: '100%',
+				}}
+			/>
+		</>
 	);
 };
