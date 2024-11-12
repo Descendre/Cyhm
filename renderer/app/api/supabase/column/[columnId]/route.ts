@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../../../libs';
 import { AddColumnResponse } from '../../../../../interfaces';
+import { ColumnConstraintType } from '@prisma/client';
 
 export const GET = async (
 	req: NextRequest,
@@ -8,7 +9,16 @@ export const GET = async (
 ): Promise<NextResponse> => {
 	try {
 		const columnId = params.columnId;
-		const columns: AddColumnResponse = await prisma.column.findUnique({
+		const constraintOrder: ColumnConstraintType[] = [
+			'PRIMARY_KEY',
+			'NOT_NULL',
+			'UNIQUE',
+			'FOREIGN_KEY',
+			'CHECK',
+			'DEFAULT',
+		];
+
+		const column: AddColumnResponse = await prisma.column.findUnique({
 			where: {
 				id: columnId,
 			},
@@ -16,7 +26,15 @@ export const GET = async (
 				columnConstraints: true,
 			},
 		});
-		return NextResponse.json(columns);
+
+		if (column) {
+			column.columnConstraints.sort(
+				(a, b) =>
+					constraintOrder.indexOf(a.type) - constraintOrder.indexOf(b.type)
+			);
+		}
+
+		return NextResponse.json(column);
 	} catch (error) {
 		console.error('Error fetching columns:', error);
 		return NextResponse.json(

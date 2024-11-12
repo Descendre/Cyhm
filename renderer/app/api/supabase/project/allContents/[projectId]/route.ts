@@ -4,6 +4,7 @@ import {
 	FetchAllContentsResponse,
 	FetchNotifyInvitedUserResponse,
 } from '../../../../../../interfaces';
+import { ColumnConstraintType } from '@prisma/client';
 
 export const GET = async (
 	req: NextRequest,
@@ -64,6 +65,15 @@ export const GET = async (
 			invitedUsers: invitedUsers,
 		};
 
+		const constraintOrder: ColumnConstraintType[] = [
+			'PRIMARY_KEY',
+			'NOT_NULL',
+			'UNIQUE',
+			'FOREIGN_KEY',
+			'CHECK',
+			'DEFAULT',
+		];
+
 		allContents.forEach((table) => {
 			response.tables[table.id] = {
 				projectId: table.projectId,
@@ -76,17 +86,23 @@ export const GET = async (
 				createdAt: table.createdAt,
 				updatedAt: table.updatedAt,
 			};
-			response.columns[table.id] = table.columns.map((column) => ({
-				id: column.id,
-				name: column.name,
-				sqliteType: column.sqliteType,
-				tableId: column.tableId,
-				createdAt: column.createdAt,
-				updatedAt: column.updatedAt,
-				columnConstraints: column.columnConstraints,
-			}));
+			response.columns[table.id] = table.columns.map((column) => {
+				const sortedConstraints = column.columnConstraints.sort(
+					(a, b) =>
+						constraintOrder.indexOf(a.type) - constraintOrder.indexOf(b.type)
+				);
+				return {
+					id: column.id,
+					name: column.name,
+					sqliteType: column.sqliteType,
+					tableId: column.tableId,
+					createdAt: column.createdAt,
+					updatedAt: column.updatedAt,
+					columnConstraints: sortedConstraints,
+				};
+			});
 		});
-		return NextResponse.json(response);
+		return NextResponse.json(response as FetchAllContentsResponse);
 	} catch (error) {
 		console.error('Error fetching tables and columns:', error);
 		return NextResponse.json(
