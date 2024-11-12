@@ -21,7 +21,7 @@ export const EditColumnConstraintLeftBarItem = ({
 					cursor: 'pointer',
 				}}
 			>
-				{handleGetConstraintIcon(constraintType, false, '0.9rem', '0.6rem')}
+				{handleGetConstraintIcon(constraintType, true, '0.9rem', '0.6rem')}
 			</Box>
 			<Divider
 				sx={{
