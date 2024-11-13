@@ -14,3 +14,4 @@ export * from './DeleteInviteNotifyRequest';
 export * from './AcceptOrRejectInviteNotifyRequest';
 export * from './AddColumnClauseRequest';
 export * from './AddColumnConstraintRequest';
+export * from './DeleteColumnConstraintRequest';

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { Delete } from '@mui/icons-material';
-import { useLayout } from '../../../hooks';
+import { useLayout, useProject } from '../../../hooks';
 import { EditColumnConstraintSqlitePrimaryKeySelect } from '../atom';
 import { EditColumnConstraintColumnSqliteProps } from '../../../interfaces';
 
@@ -10,6 +10,7 @@ export const EditColumnConstraintColumnSqlite = ({
 	constraint,
 }: EditColumnConstraintColumnSqliteProps) => {
 	const { handleGetConstraintIcon } = useLayout();
+	const { handleDeleteConstraint } = useProject();
 
 	return (
 		<Box
@@ -61,6 +62,7 @@ export const EditColumnConstraintColumnSqlite = ({
 					titleAccess="制約を削除"
 					fontSize="small"
 					color="error"
+					onClick={() => handleDeleteConstraint({ id: constraint.id })}
 					sx={{
 						display: 'none',
 						cursor: 'pointer',

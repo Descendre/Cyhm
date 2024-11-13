@@ -3,6 +3,7 @@ import { prisma } from '../../../../libs';
 import {
 	AddColumnConstraintRequest,
 	ColumnConstraintResponse,
+	DeleteColumnConstraintRequest,
 } from '../../../../interfaces';
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
@@ -33,9 +34,30 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 			});
 		return NextResponse.json(updatedColumnConstraint);
 	} catch (error) {
-		console.error('Error creating clause:', error);
+		console.error('Error creating constraint:', error);
 		return NextResponse.json(
-			{ error: 'Failed to create clause' },
+			{ error: 'Failed to create constraint' },
+			{ status: 500 }
+		);
+	}
+};
+
+export const DELETE = async (req: NextRequest): Promise<NextResponse> => {
+	try {
+		const body: DeleteColumnConstraintRequest = await req.json();
+		const { id } = body;
+
+		const deletedColumnConstraint: ColumnConstraintResponse =
+			await prisma.columnConstraint.delete({
+				where: {
+					id: id,
+				},
+			});
+		return NextResponse.json(deletedColumnConstraint);
+	} catch (error) {
+		console.error('Error deleting constraint:', error);
+		return NextResponse.json(
+			{ error: 'Failed to delete constraint' },
 			{ status: 500 }
 		);
 	}

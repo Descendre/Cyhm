@@ -98,7 +98,9 @@ export interface UseProjectProps {
 		dbType,
 		sqliteClauseType,
 	}: handleAddConstraintProps) => Promise<void>;
-	// handleAddColumnClause: ({ columnId, dbType, clause }: handleAddColumnClauseProps) => Promise<void>;
+	handleDeleteConstraint: ({
+		id,
+	}: handleDeleteConstraintProps) => Promise<void>;
 	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
@@ -190,6 +192,10 @@ export interface handleAddConstraintProps {
 	dbType: DBType;
 	type: ColumnConstraintType;
 	sqliteClauseType?: SqliteClauseType;
+}
+
+export interface handleDeleteConstraintProps {
+	id: string;
 }
 
 export interface ColumnChannelPayloadProps {

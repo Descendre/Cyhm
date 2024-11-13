@@ -62,7 +62,7 @@ export const EditColumnConstraintCurrentConstraints = ({
 						fontSize="0.7rem"
 						color="text.secondary"
 					>
-						カラム制約一覧
+						{`カラム制約一覧 (${column.columnConstraints.length}件)`}
 					</Typography>
 					<Box
 						display={column.columnConstraints.length > 0 ? 'flex' : 'none'}
