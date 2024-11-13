@@ -14,6 +14,7 @@ import {
 	ColumnStatePropsExtended,
 	CreateProjectRequest,
 	CreateProjectResponse,
+	DeleteColumnConstraintRequest,
 	FetchAllContentsResponse,
 	FetchProjectResponse,
 	FetchUserProjectsResponse,
@@ -23,6 +24,7 @@ import {
 	handleColumnNameChangeProps,
 	handleColumnNameUpdateProps,
 	handleCreateProjectProps,
+	handleDeleteConstraintProps,
 	handleFetchUserProjectsProps,
 	handleNodeDragStopProps,
 	handleOpenTableExpansionProps,
@@ -782,6 +784,52 @@ export const useProject = (): UseProjectProps => {
 		}
 	};
 
+	const handleDeleteConstraint = async ({
+		id,
+	}: handleDeleteConstraintProps): Promise<void> => {
+		try {
+			if (!channel) return;
+
+			setColumnConstraintEditInfo({
+				columnId: null,
+				columnConstraintType: null,
+				clauseType: null,
+			});
+
+			const deletedColumnConstraint =
+				await axiosFetch.delete<ColumnConstraintResponse>(
+					`/api/supabase/constraint`,
+					{
+						id: id,
+					} as DeleteColumnConstraintRequest
+				);
+
+			const updatedColumn = await axiosFetch.get<AddColumnResponse>(
+				`/api/supabase/column/${deletedColumnConstraint.columnId}`
+			);
+
+			setColumns((prevColumns) => ({
+				...prevColumns,
+				[updatedColumn.tableId]: prevColumns[updatedColumn.tableId].map(
+					(column) =>
+						column.id === updatedColumn.id
+							? { ...column, ...updatedColumn }
+							: column
+				),
+			}));
+
+			channel.send({
+				type: 'broadcast',
+				event: 'column_update',
+				payload: {
+					newColumn: updatedColumn,
+				} as ColumnChannelPayloadProps,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
 		try {
 			if (!channel) return;
@@ -959,6 +1007,7 @@ export const useProject = (): UseProjectProps => {
 		handleColumnNameUpdate,
 		handleUpdateColumnType,
 		handleAddConstraint,
+		handleDeleteConstraint,
 		handleNodeDragStop,
 	};
 };
