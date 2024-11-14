@@ -26,7 +26,7 @@ export const EditFooterAddColumnIcon = () => {
 				alignItems="center"
 				ref={EditFooterAddColumnIconRef}
 			>
-				{tables[selectedTableId]?.isEditing ? (
+				{tables?.[selectedTableId]?.isEditing ? (
 					<TableRows
 						titleAccess="カラムを追加"
 						fontSize="small"

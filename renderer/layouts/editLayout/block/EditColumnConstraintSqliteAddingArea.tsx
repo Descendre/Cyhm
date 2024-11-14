@@ -30,7 +30,7 @@ export const EditColumnConstraintSqliteAddingArea = ({
 				width="100%"
 				height="100px"
 				padding="0 15px"
-				bgcolor={palette.layout.editLayout.columnConstraint.constRaintArea.bg}
+				bgcolor={palette.layout.editLayout.columnConstraint.constraintArea.bg}
 				border={`solid 1px ${palette.primary.main}`}
 				borderRadius="10px"
 			>

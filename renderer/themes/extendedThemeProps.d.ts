@@ -53,7 +53,12 @@ declare module '@mui/material/styles' {
 							autoIncrement: string;
 						};
 					};
-					constRaintArea: {
+					leftBar: {
+						ColumnHeader: {
+							bg: string;
+						};
+					};
+					constraintArea: {
 						bg: string;
 					};
 				};
@@ -175,7 +180,12 @@ declare module '@mui/material/styles' {
 							autoIncrement: string;
 						};
 					};
-					constRaintArea: {
+					leftBar: {
+						ColumnHeader: {
+							bg: string;
+						};
+					};
+					constraintArea: {
 						bg: string;
 					};
 				};

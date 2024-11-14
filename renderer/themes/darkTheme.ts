@@ -72,7 +72,12 @@ export const darkTheme = createTheme({
 							autoIncrement: '#747bff',
 						},
 					},
-					constRaintArea: {
+					leftBar: {
+						ColumnHeader: {
+							bg: '#30303c',
+						},
+					},
+					constraintArea: {
 						bg: '#161719',
 					},
 				},
