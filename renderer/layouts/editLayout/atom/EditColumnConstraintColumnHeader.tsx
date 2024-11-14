@@ -2,6 +2,7 @@ import { Box, Divider, Typography } from '@mui/material';
 import { EditColumnConstraintColumnHeaderProps } from '../../../interfaces';
 import { Add, ExpandLess, ExpandMore, Remove } from '@mui/icons-material';
 import { useLayout, usePalette, useProject } from '../../../hooks';
+import { hexToRgba } from '../../../utils';
 
 export const EditColumnConstraintColumnHeader = ({
 	table,
@@ -25,11 +26,9 @@ export const EditColumnConstraintColumnHeader = ({
 				height="25px"
 				padding="0 5px"
 				fontWeight="bold"
-				bgcolor={
-					palette.layout.editLayout.columnConstraint.leftBar.ColumnHeader.bg
-				}
 				sx={{
 					cursor: 'pointer',
+					background: hexToRgba({ hex: palette.secondary.main, alpha: 0.7 }),
 				}}
 			>
 				{handleGetColumnTypeTextWithSQlite(column.sqliteType, false, '', '')}
