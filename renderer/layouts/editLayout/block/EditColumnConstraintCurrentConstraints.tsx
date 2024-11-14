@@ -72,7 +72,7 @@ export const EditColumnConstraintCurrentConstraints = ({
 						width="100%"
 						padding="0 15px"
 						bgcolor={
-							palette.layout.editLayout.columnConstraint.constRaintArea.bg
+							palette.layout.editLayout.columnConstraint.constraintArea.bg
 						}
 						border={`solid 1px ${palette.line.constraintAreaBorder}`}
 						borderRadius="10px"

@@ -25,7 +25,9 @@ export const EditColumnConstraintColumnHeader = ({
 				height="25px"
 				padding="0 5px"
 				fontWeight="bold"
-				bgcolor={palette.secondary.main}
+				bgcolor={
+					palette.layout.editLayout.columnConstraint.leftBar.ColumnHeader.bg
+				}
 				sx={{
 					cursor: 'pointer',
 				}}
