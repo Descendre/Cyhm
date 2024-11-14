@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import {
 	EditColumnConstraintColumnHeader,
 	EditColumnConstraintLeftBarItem,
@@ -31,13 +31,18 @@ export const EditColumnConstraintLeftBar = ({
 				},
 			}}
 		>
-			{columns[table.id]?.map((column) => (
+			{columns[table.id]?.map((column, index) => (
 				<Box
 					key={column.id}
 					position="relative"
 					width="100%"
 					onClick={() => setAddConstraintColumnId(column.id)}
 				>
+					<Divider
+						sx={{
+							width: '100%',
+						}}
+					/>
 					<EditColumnConstraintColumnHeader table={table} column={column} />
 					{column.isConstraintExpand &&
 						column.columnConstraints.map((constraint, index) => (
@@ -46,6 +51,14 @@ export const EditColumnConstraintLeftBar = ({
 								constraintType={constraint.type}
 							/>
 						))}
+
+					{columns[table.id].length === index + 1 && (
+						<Divider
+							sx={{
+								width: '100%',
+							}}
+						/>
+					)}
 
 					<Box
 						position="absolute"

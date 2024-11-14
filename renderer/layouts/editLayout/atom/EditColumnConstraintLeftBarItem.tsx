@@ -1,4 +1,4 @@
-import { Box, Divider } from '@mui/material';
+import { Box } from '@mui/material';
 import { useLayout } from '../../../hooks';
 import { EditColumnConstraintLeftBarItemProps } from '../../../interfaces';
 
@@ -16,18 +16,13 @@ export const EditColumnConstraintLeftBarItem = ({
 				gap="10px"
 				width="100%"
 				minHeight="25px"
-				padding="0 10px"
+				padding="0 5px 0 20px"
 				sx={{
 					cursor: 'pointer',
 				}}
 			>
 				{handleGetConstraintIcon(constraintType, true, '0.9rem', '0.6rem')}
 			</Box>
-			<Divider
-				sx={{
-					width: '100%',
-				}}
-			/>
 		</>
 	);
 };

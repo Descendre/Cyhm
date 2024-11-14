@@ -53,11 +53,6 @@ declare module '@mui/material/styles' {
 							autoIncrement: string;
 						};
 					};
-					leftBar: {
-						ColumnHeader: {
-							bg: string;
-						};
-					};
 					constraintArea: {
 						bg: string;
 					};
@@ -178,11 +173,6 @@ declare module '@mui/material/styles' {
 					clauses: {
 						sqlite: {
 							autoIncrement: string;
-						};
-					};
-					leftBar: {
-						ColumnHeader: {
-							bg: string;
 						};
 					};
 					constraintArea: {

@@ -1,8 +1,7 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { EditColumnConstraintColumnHeaderProps } from '../../../interfaces';
 import { Add, ExpandLess, ExpandMore, Remove } from '@mui/icons-material';
 import { useLayout, usePalette, useProject } from '../../../hooks';
-import { hexToRgba } from '../../../utils';
 
 export const EditColumnConstraintColumnHeader = ({
 	table,
@@ -28,7 +27,6 @@ export const EditColumnConstraintColumnHeader = ({
 				fontWeight="bold"
 				sx={{
 					cursor: 'pointer',
-					background: hexToRgba({ hex: palette.secondary.main, alpha: 0.7 }),
 				}}
 			>
 				{handleGetColumnTypeTextWithSQlite(column.sqliteType, false, '', '')}
@@ -42,7 +40,7 @@ export const EditColumnConstraintColumnHeader = ({
 						userSelect: 'none',
 					}}
 				>
-					{column.name}
+					{`${column.name} (${column.columnConstraints.length})`}
 				</Typography>
 				<Box
 					display="flex"
@@ -113,12 +111,6 @@ export const EditColumnConstraintColumnHeader = ({
 					)}
 				</Box>
 			</Box>
-
-			<Divider
-				sx={{
-					width: '100%',
-				}}
-			/>
 		</>
 	);
 };
