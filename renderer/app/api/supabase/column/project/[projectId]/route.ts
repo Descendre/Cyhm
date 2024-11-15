@@ -12,6 +12,9 @@ export const GET = async (
 			where: {
 				tableId: tableId,
 			},
+			orderBy: {
+				createdAt: 'asc',
+			},
 			include: {
 				columnConstraints: true,
 			},

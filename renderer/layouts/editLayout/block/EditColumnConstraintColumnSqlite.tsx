@@ -62,7 +62,13 @@ export const EditColumnConstraintColumnSqlite = ({
 					titleAccess="制約を削除"
 					fontSize="small"
 					color="error"
-					onClick={() => handleDeleteConstraint({ id: constraint.id })}
+					onClick={() =>
+						handleDeleteConstraint({
+							id: constraint.id,
+							type: constraint.type,
+							projectId: column.projectId,
+						})
+					}
 					sx={{
 						display: 'none',
 						cursor: 'pointer',

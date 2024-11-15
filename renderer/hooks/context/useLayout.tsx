@@ -431,6 +431,7 @@ export const useLayout = (): UseLayoutProps => {
 				columnId: null,
 				columnConstraintType: null,
 				clauseType: null,
+				primaryKeyIdToForeignKey: null,
 			});
 			return;
 		}
@@ -438,6 +439,7 @@ export const useLayout = (): UseLayoutProps => {
 			columnId: columnId,
 			columnConstraintType: null,
 			clauseType: null,
+			primaryKeyIdToForeignKey: null,
 		});
 	};
 

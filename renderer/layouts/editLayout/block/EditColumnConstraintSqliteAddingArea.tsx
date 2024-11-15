@@ -6,6 +6,7 @@ import {
 } from '../atom';
 import { EditColumnConstraintSqliteAddingAreaProps } from '../../../interfaces';
 import { Add } from '@mui/icons-material';
+import { EditColumnConstraintSqliteForeignKeyAddingClauseSelect } from '../atom/EditColumnConstraintSqliteForeignKeyAddingClauseSelect';
 
 export const EditColumnConstraintSqliteAddingArea = ({
 	column,
@@ -14,11 +15,14 @@ export const EditColumnConstraintSqliteAddingArea = ({
 	const { currentProject, columnConstraintEditInfo, handleAddConstraint } =
 		useProject();
 
-	const isAddIconDisplay: boolean = [
-		'PRIMARY_KEY',
-		'NOT_NULL',
-		'UNIQUE',
-	].includes(columnConstraintEditInfo.columnConstraintType);
+	const isForeignKeyWithPrimaryKey =
+		columnConstraintEditInfo.columnConstraintType === 'FOREIGN_KEY' &&
+		Boolean(columnConstraintEditInfo.primaryKeyIdToForeignKey);
+
+	const isAddIconDisplay: boolean =
+		['PRIMARY_KEY', 'NOT_NULL', 'UNIQUE'].includes(
+			columnConstraintEditInfo.columnConstraintType
+		) || isForeignKeyWithPrimaryKey;
 
 	return (
 		<>
@@ -50,11 +54,19 @@ export const EditColumnConstraintSqliteAddingArea = ({
 					width="45%"
 					height="100%"
 				>
-					{columnConstraintEditInfo?.columnConstraintType === 'PRIMARY_KEY' && (
-						<EditColumnConstraintSqlitePrimaryKeyAddingClauseSelect
-							column={column}
-						/>
-					)}
+					{columnConstraintEditInfo &&
+						(columnConstraintEditInfo.columnConstraintType === 'PRIMARY_KEY' ? (
+							<EditColumnConstraintSqlitePrimaryKeyAddingClauseSelect
+								column={column}
+							/>
+						) : columnConstraintEditInfo.columnConstraintType ===
+						  'FOREIGN_KEY' ? (
+							<EditColumnConstraintSqliteForeignKeyAddingClauseSelect
+								column={column}
+							/>
+						) : (
+							<></>
+						))}
 				</Box>
 				<Box
 					display="flex"
@@ -67,14 +79,16 @@ export const EditColumnConstraintSqliteAddingArea = ({
 						titleAccess="制約を追加"
 						fontSize="small"
 						color="primary"
-						onClick={() =>
+						onClick={() => {
 							handleAddConstraint({
 								columnId: column.id,
 								type: columnConstraintEditInfo.columnConstraintType,
 								dbType: currentProject.dbType,
 								sqliteClauseType: columnConstraintEditInfo.clauseType,
-							})
-						}
+								primaryKeyIdToForeignKeyId:
+									columnConstraintEditInfo.primaryKeyIdToForeignKey,
+							});
+						}}
 						sx={{
 							display: isAddIconDisplay ? 'block' : 'none',
 							cursor: 'pointer',

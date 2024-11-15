@@ -126,6 +126,7 @@ export interface handleAddColumnProps {
 	name: string;
 	tableId: string;
 	dbType: DBType;
+	projectId: string;
 }
 
 export interface handleOpenTableExpansionProps {
@@ -192,12 +193,19 @@ export interface handleAddConstraintProps {
 	dbType: DBType;
 	type: ColumnConstraintType;
 	sqliteClauseType?: SqliteClauseType;
+	primaryKeyIdToForeignKeyId: string | null;
 }
 
 export interface handleDeleteConstraintProps {
 	id: string;
+	type: ColumnConstraintType;
+	projectId: string;
 }
 
 export interface ColumnChannelPayloadProps {
 	newColumn: AddColumnResponse;
+}
+
+export interface ColumnsChannelPayloadProps {
+	newColumns: AddColumnResponse[];
 }

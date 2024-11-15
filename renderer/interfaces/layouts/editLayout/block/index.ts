@@ -15,3 +15,4 @@ export * from './EditColumnConstraintMainProps';
 export * from './EditColumnConstraintCurrentConstraintsProps';
 export * from './EditColumnConstraintColumnSqliteProps';
 export * from './EditColumnConstraintSqliteAddingAreaProps';
+export * from './EditColumnConstraintSqliteForeignKeyAddingClauseSelectProps';

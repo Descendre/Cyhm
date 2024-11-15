@@ -96,6 +96,7 @@ export const GET = async (
 					name: column.name,
 					sqliteType: column.sqliteType,
 					tableId: column.tableId,
+					projectId: column.projectId,
 					createdAt: column.createdAt,
 					updatedAt: column.updatedAt,
 					columnConstraints: sortedConstraints,

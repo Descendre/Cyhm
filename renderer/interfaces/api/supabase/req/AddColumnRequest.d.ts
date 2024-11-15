@@ -5,4 +5,5 @@ export interface AddColumnRequest {
 	dbType: DBType;
 	type: SQliteColumnType;
 	tableId: string;
+	projectId: string;
 }

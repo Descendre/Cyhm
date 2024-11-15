@@ -35,6 +35,7 @@ model Project {
   updatedAt   DateTime @updatedAt
   members     Member[]
   tables      Table[]
+  columns     Column[]
   notifications Notify[]
 }
 
@@ -59,7 +60,7 @@ model Table {
   position   Json
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  columns    Column[]
+  columns    Column[] @relation("ColumnRelationToTable")
   project    Project   @relation(fields: [projectId], references: [id])
 }
 
@@ -68,10 +69,12 @@ model Column {
   name          String
   sqliteType    SQliteColumnType?
   tableId       String
+  projectId     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   columnConstraints   ColumnConstraint[]
-  table         Table   @relation(fields: [tableId], references: [id])
+  table         Table   @relation("ColumnRelationToTable", fields: [tableId], references: [id])
+  project       Project @relation(fields: [projectId], references: [id])
 }
 
 model ColumnConstraint {
@@ -81,9 +84,24 @@ model ColumnConstraint {
   columnId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  column    Column @relation(fields: [columnId], references: [id])
+  column        Column           @relation(fields: [columnId], references: [id])
+  fromReferences    Reference[]        @relation("ColumnReferenceFrom")
+  toReferences    Reference[]        @relation("ColumnReferenceTo")
 
   @@unique([columnId, type])
+}
+
+model Reference {
+  id            String             @id @default(cuid())
+  foreignKeyId  String
+  primaryKeyId    String
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  foreignKeyIds      ColumnConstraint   @relation("ColumnReferenceFrom", fields: [foreignKeyId], references: [id])
+  primaryKeyIds        ColumnConstraint   @relation("ColumnReferenceTo", fields: [primaryKeyId], references: [id])
+
+  @@unique([foreignKeyId, primaryKeyId])
 }
 
 model Notify {
