@@ -32,6 +32,7 @@ export const EditLeftBarNewBornInput = (
 					tableId: props.tableId,
 					name: focusRef.current.value,
 					dbType: currentProject.dbType,
+					projectId: currentProject.id,
 				});
 			}
 		}
@@ -54,6 +55,7 @@ export const EditLeftBarNewBornInput = (
 					tableId: props.tableId,
 					name: focusRef.current.value,
 					dbType: currentProject.dbType,
+					projectId: currentProject.id,
 				});
 			}
 		}

@@ -18,6 +18,7 @@ export const EditColumnConstraintSqlitePrimaryKeyAddingClauseSelect = ({
 			columnId: column.id,
 			columnConstraintType: prev.columnConstraintType,
 			clauseType: event.target.value as SqliteClauseType | null,
+			primaryKeyIdToForeignKey: prev.primaryKeyIdToForeignKey,
 		}));
 	};
 
