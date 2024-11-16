@@ -43,6 +43,8 @@ export interface UseLayoutProps {
 	setUserPopperViewMode: React.Dispatch<
 		React.SetStateAction<UserPopperViewModeProps>
 	>;
+	isConstraintDeleting: boolean;
+	setIsConstraintDeleting: React.Dispatch<React.SetStateAction<boolean>>;
 
 	handleGithubExternalShellOpen: () => void;
 	handleToggleColumnConstraintExpansion: ({

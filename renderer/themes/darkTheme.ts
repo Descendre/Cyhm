@@ -87,6 +87,10 @@ export const darkTheme = createTheme({
 						bg: '#101014',
 					},
 				},
+				appSelectModal: {
+					bg: '#141418',
+					backdrop: 'rgba(50, 50, 60, 0.7)',
+				},
 			},
 			login: {
 				buttonArea: {

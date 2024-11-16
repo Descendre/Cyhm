@@ -104,7 +104,7 @@ export const EditRightPopperColumnSettingArea = ({
 									}}
 								/>
 								<EditRightPopperAddColumnConstraintButton
-									openModal={openModal}
+									openModal={() => openModal('columnConstraintModal')}
 									table={table}
 									column={column}
 								/>

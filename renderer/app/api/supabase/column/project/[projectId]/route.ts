@@ -16,7 +16,12 @@ export const GET = async (
 				createdAt: 'asc',
 			},
 			include: {
-				columnConstraints: true,
+				columnConstraints: {
+					include: {
+						fromReferences: true,
+						toReferences: true,
+					},
+				},
 			},
 		});
 		return NextResponse.json(columns);

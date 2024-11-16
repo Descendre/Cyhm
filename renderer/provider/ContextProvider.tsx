@@ -64,6 +64,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	>([]);
 	const [notifies, setNotifies] = useState<NotifyWithDetail[] | null>(null);
 	const [channel, setChannel] = useState<RealtimeChannel | null>(null);
+	const [isConstraintDeleting, setIsConstraintDeleting] =
+		useState<boolean>(false);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -117,6 +119,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setNotifies,
 		channel,
 		setChannel,
+		isConstraintDeleting,
+		setIsConstraintDeleting,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

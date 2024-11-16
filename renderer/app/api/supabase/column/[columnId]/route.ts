@@ -23,7 +23,12 @@ export const GET = async (
 				id: columnId,
 			},
 			include: {
-				columnConstraints: true,
+				columnConstraints: {
+					include: {
+						fromReferences: true,
+						toReferences: true,
+					},
+				},
 			},
 		});
 

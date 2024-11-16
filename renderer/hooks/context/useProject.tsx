@@ -88,6 +88,7 @@ export const useProject = (): UseProjectProps => {
 		setUserPopperViewMode,
 		channel,
 		setChannel,
+		setIsConstraintDeleting,
 	} = context;
 
 	const handleCreateProject = async ({
@@ -798,6 +799,7 @@ export const useProject = (): UseProjectProps => {
 	}: handleDeleteConstraintProps): Promise<void> => {
 		try {
 			if (!channel) return;
+			setIsConstraintDeleting(true);
 
 			setColumnConstraintEditInfo({
 				columnId: null,
@@ -864,6 +866,8 @@ export const useProject = (): UseProjectProps => {
 			});
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsConstraintDeleting(false);
 		}
 	};
 

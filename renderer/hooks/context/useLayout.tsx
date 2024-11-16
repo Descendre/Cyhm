@@ -69,6 +69,8 @@ export const useLayout = (): UseLayoutProps => {
 		setUserPopperViewMode,
 		isPreparingProject,
 		setIsPreparingProject,
+		isConstraintDeleting,
+		setIsConstraintDeleting,
 	} = context;
 
 	const handleGithubExternalShellOpen = (): void => {
@@ -544,6 +546,8 @@ export const useLayout = (): UseLayoutProps => {
 		setUserPopperViewMode,
 		isPreparingProject,
 		setIsPreparingProject,
+		isConstraintDeleting,
+		setIsConstraintDeleting,
 
 		handleGithubExternalShellOpen,
 		handleGetColumnTypeTextWithSQlite,
