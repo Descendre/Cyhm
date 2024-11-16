@@ -24,3 +24,4 @@ export * from './EditColumnConstraintSqlitePrimaryKeySelectProps';
 export * from './EditColumnConstraintSqliteAddingTypeSelectProps';
 export * from './EditColumnConstraintSqlitePrimaryKeyAddingClauseSelectProps';
 export * from './EditColumnConstraintNoConstraintDisplayProps';
+export * from './EditColumnConstraintSqliteDeleteConstraintModalContentProps';

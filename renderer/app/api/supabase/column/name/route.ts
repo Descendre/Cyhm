@@ -15,7 +15,12 @@ export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 				name: name,
 			},
 			include: {
-				columnConstraints: true,
+				columnConstraints: {
+					include: {
+						fromReferences: true,
+						toReferences: true,
+					},
+				},
 			},
 		});
 		return NextResponse.json(updatedColumn);

@@ -76,4 +76,6 @@ export interface ContextProviderProps {
 	setNotifies: React.Dispatch<React.SetStateAction<NotifyWithDetail[]>>;
 	channel: RealtimeChannel | null;
 	setChannel: React.Dispatch<React.SetStateAction<RealtimeChannel | null>>;
+	isConstraintDeleting: boolean;
+	setIsConstraintDeleting: React.Dispatch<React.SetStateAction<boolean>>;
 }

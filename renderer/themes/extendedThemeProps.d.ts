@@ -68,6 +68,10 @@ declare module '@mui/material/styles' {
 						bg: string;
 					};
 				};
+				appSelectModal: {
+					bg: string;
+					backdrop: string;
+				};
 			};
 			login: {
 				buttonArea: {
@@ -189,6 +193,10 @@ declare module '@mui/material/styles' {
 					header: {
 						bg: string;
 					};
+				};
+				appSelectModal: {
+					bg: string;
+					backdrop: string;
 				};
 			};
 			login: {

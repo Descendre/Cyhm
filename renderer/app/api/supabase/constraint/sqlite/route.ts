@@ -12,25 +12,30 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 		const { columnId, type, sqliteClauseType, primaryKeyIdToForeignKeyId } =
 			body;
 
-		let updatedColumnConstraint: ColumnConstraintResponse;
+		let updatedColumnConstraint;
 		if (type === 'FOREIGN_KEY') {
-			updatedColumnConstraint = await prisma.columnConstraint.upsert({
-				where: {
-					columnId_type: {
-						columnId,
-						type,
+			const updatedColumnConstraint: ColumnConstraintResponse =
+				await prisma.columnConstraint.upsert({
+					where: {
+						columnId_type: {
+							columnId,
+							type,
+						},
 					},
-				},
-				update: {
-					type: type,
-					sqliteClause: sqliteClauseType,
-				},
-				create: {
-					type: type,
-					columnId: columnId,
-					sqliteClause: sqliteClauseType,
-				},
-			});
+					update: {
+						type: type,
+						sqliteClause: sqliteClauseType,
+					},
+					create: {
+						type: type,
+						columnId: columnId,
+						sqliteClause: sqliteClauseType,
+					},
+					include: {
+						fromReferences: true,
+						toReferences: true,
+					},
+				});
 
 			// 主キー参照情報を追加
 			await prisma.reference.create({
@@ -150,7 +155,12 @@ export const DELETE = async (req: NextRequest): Promise<NextResponse> => {
 					where: {
 						id: id,
 					},
+					include: {
+						fromReferences: true,
+						toReferences: true,
+					},
 				});
+
 			return NextResponse.json(deletedColumnConstraint);
 		}
 	} catch (error) {

@@ -7,4 +7,18 @@ export interface ColumnConstraintResponse {
 	sqliteClause: SqliteClauseType | null;
 	createdAt: Date;
 	updatedAt: Date;
+	fromReferences: {
+		id: string;
+		createdAt: Date;
+		updatedAt: Date;
+		foreignKeyId: string;
+		primaryKeyId: string;
+	}[];
+	toReferences: {
+		id: string;
+		createdAt: Date;
+		updatedAt: Date;
+		foreignKeyId: string;
+		primaryKeyId: string;
+	}[];
 }
