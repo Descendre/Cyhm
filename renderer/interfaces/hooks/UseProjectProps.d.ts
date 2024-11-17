@@ -191,6 +191,7 @@ export interface TableChannelPayloadProps {
 export interface handleAddConstraintProps {
 	columnId: string;
 	dbType: DBType;
+	projectId: string;
 	type: ColumnConstraintType;
 	sqliteClauseType?: SqliteClauseType;
 	primaryKeyIdToForeignKeyId: string | null;

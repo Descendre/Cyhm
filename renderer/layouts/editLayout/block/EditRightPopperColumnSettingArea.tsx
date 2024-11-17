@@ -135,7 +135,7 @@ export const EditRightPopperColumnSettingArea = ({
 				}
 				title={`カラム制約の詳細設定 (${table.name})`}
 			>
-				<EditColumnConstraint table={table} />
+				<EditColumnConstraint />
 			</AppModal>
 		</>
 	);

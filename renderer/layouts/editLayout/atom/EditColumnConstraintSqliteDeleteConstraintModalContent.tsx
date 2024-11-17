@@ -8,41 +8,13 @@ export const EditColumnConstraintSqliteDeleteConstraintModalContent = ({
 	constraint,
 }: EditColumnConstraintSqliteDeleteConstraintModalContentProps) => {
 	const palette = usePalette();
-	const { tables, columns, handleGetColumnTypeTextWithSQlite } = useLayout();
+	const {
+		handleGetColumnTypeTextWithSQlite,
+		handleGetReferencingForeignKeyInfosSqlite,
+	} = useLayout();
 
-	// 渡された制約が主キーの場合その主キーを参照中の外部キー制約のIDを配列取得
-	const referencingForeignKeyIds: string[] =
-		constraint.type === 'PRIMARY_KEY'
-			? constraint.toReferences.map((reference) => reference.foreignKeyId)
-			: [];
-
-	// 外部キーIDに関連するカラムとテーブル情報を取得
-	const referencingInfos = Object.values(columns).flatMap((columnArray) =>
-		columnArray
-			.filter((column) =>
-				column.columnConstraints.some((constraint) =>
-					constraint.fromReferences.some(
-						(reference) =>
-							referencingForeignKeyIds.includes(reference.foreignKeyId) // 外部キーIDが参照リストに含まれているかをチェック
-					)
-				)
-			)
-			.map((column) => {
-				const tableId = column.tableId;
-				const tableName = tables[tableId]?.name;
-				const tableColor = tables[tableId]?.color;
-				return {
-					tableColor: tableColor,
-					tableName: tableName,
-					sqliteType: column.sqliteType,
-					columnName: column.name,
-				};
-			})
-	);
-
-	const sortedReferencingInfos = referencingInfos.sort((a, b) =>
-		a.columnName.localeCompare(b.columnName)
-	);
+	const referencingInfos =
+		handleGetReferencingForeignKeyInfosSqlite(constraint);
 
 	return (
 		<Box
@@ -52,6 +24,7 @@ export const EditColumnConstraintSqliteDeleteConstraintModalContent = ({
 			flexDirection="column"
 			gap="30px"
 			width="100%"
+			minHeight="100%"
 		>
 			<Typography
 				width="100%"
@@ -77,9 +50,9 @@ export const EditColumnConstraintSqliteDeleteConstraintModalContent = ({
 								marginBottom: '10px',
 							}}
 						>
-							{`※関連する外部キー制約(${sortedReferencingInfos.length}件)が削除されます。`}
+							{`※関連する外部キー制約(${referencingInfos.length}件)が削除されます。`}
 						</Typography>
-						{sortedReferencingInfos.map((reference, index) => (
+						{referencingInfos.map((reference, index) => (
 							<Box key={index} width="100%">
 								<Box
 									display="flex"
@@ -136,11 +109,14 @@ export const EditColumnConstraintSqliteDeleteConstraintModalContent = ({
 										</Typography>
 									</Box>
 								</Box>
-								<Divider
-									sx={{
-										width: '100%',
-									}}
-								/>
+								{referencingInfos.length >= 2 &&
+									index < referencingInfos.length - 1 && (
+										<Divider
+											sx={{
+												width: '100%',
+											}}
+										/>
+									)}
 							</Box>
 						))}
 					</Box>

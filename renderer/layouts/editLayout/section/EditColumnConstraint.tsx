@@ -3,9 +3,12 @@ import {
 	EditColumnConstraintLeftBar,
 	EditColumnConstraintMain,
 } from '../block';
-import { EditColumnConstraintProps } from '../../../interfaces';
+import { useLayout } from '../../../hooks';
 
-export const EditColumnConstraint = ({ table }: EditColumnConstraintProps) => {
+export const EditColumnConstraint = () => {
+	const { tables, constraintEditingTableId } = useLayout();
+	const selectedTable = tables[constraintEditingTableId];
+
 	return (
 		<Box
 			display="flex"
@@ -14,8 +17,12 @@ export const EditColumnConstraint = ({ table }: EditColumnConstraintProps) => {
 			width="100%"
 			height="100%"
 		>
-			<EditColumnConstraintLeftBar table={table} />
-			<EditColumnConstraintMain table={table} />
+			{selectedTable && (
+				<>
+					<EditColumnConstraintLeftBar table={selectedTable} />
+					<EditColumnConstraintMain table={selectedTable} />
+				</>
+			)}
 		</Box>
 	);
 };

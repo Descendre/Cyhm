@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import { EditRightPopperAddColumnConstraintButtonProps } from '../../../interfaces';
-import { useProject } from '../../../hooks';
+import { useLayout, useProject } from '../../../hooks';
 
 export const EditRightPopperAddColumnConstraintButton = ({
 	table,
@@ -8,6 +8,7 @@ export const EditRightPopperAddColumnConstraintButton = ({
 	openModal,
 }: EditRightPopperAddColumnConstraintButtonProps) => {
 	const { setAddConstraintColumnId } = useProject();
+	const { setConstraintEditingTableId } = useLayout();
 
 	return (
 		<>
@@ -20,6 +21,7 @@ export const EditRightPopperAddColumnConstraintButton = ({
 					height: '30px',
 				}}
 				onClick={() => {
+					setConstraintEditingTableId(table.id);
 					setAddConstraintColumnId(column.id);
 					openModal('columnConstraintModal');
 				}}

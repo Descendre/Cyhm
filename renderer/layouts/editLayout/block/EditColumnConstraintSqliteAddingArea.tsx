@@ -84,6 +84,7 @@ export const EditColumnConstraintSqliteAddingArea = ({
 								columnId: column.id,
 								type: columnConstraintEditInfo.columnConstraintType,
 								dbType: currentProject.dbType,
+								projectId: currentProject.id,
 								sqliteClauseType: columnConstraintEditInfo.clauseType,
 								primaryKeyIdToForeignKeyId:
 									columnConstraintEditInfo.primaryKeyIdToForeignKey,

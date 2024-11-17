@@ -16,7 +16,7 @@ export const EditColumnConstraintSettingArea = ({
 			width="100%"
 		>
 			<EditColumnConstraintSettingHeader column={column} />
-			{<EditColumnConstraintCurrentConstraints column={column} />}
+			<EditColumnConstraintCurrentConstraints column={column} />
 		</Box>
 	);
 };
