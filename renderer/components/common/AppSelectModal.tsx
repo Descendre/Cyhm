@@ -51,8 +51,8 @@ export const AppSelectModal = ({
 					justifyContent="space-between"
 					alignItems="center"
 					flexDirection="column"
-					width="350px"
-					height="250px"
+					width="400px"
+					height="300px"
 					padding="40px 30px"
 					bgcolor={palette.components.common.appSelectModal.bg}
 					borderRadius="5px"
@@ -107,7 +107,7 @@ export const AppSelectModal = ({
 								disableTouchRipple
 								color={acceptColor}
 								onClick={acceptFunc}
-								startIcon={acceptIcon}
+								startIcon={!loading && acceptIcon}
 							>
 								{acceptText}
 							</LoadingButton>

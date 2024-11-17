@@ -3,7 +3,9 @@ import { ReactNode, useContext } from 'react';
 import { Context } from '../../provider';
 import {
 	AddTableResponse,
+	ColumnConstraintResponse,
 	EditReactFlowCustomNodeDataProps,
+	handleGetReferencingForeignKeyInfosReturnSqlite,
 	handleSelectColumnConstraintItemProps,
 	handleToggleColumnConstraintExpansionProps,
 	TablesStateProps,
@@ -53,6 +55,8 @@ export const useLayout = (): UseLayoutProps => {
 		setColumns,
 		columnConstraintEditInfo,
 		setColumnConstraintEditInfo,
+		constraintEditingTableId,
+		setConstraintEditingTableId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,
@@ -425,6 +429,99 @@ export const useLayout = (): UseLayoutProps => {
 		);
 	};
 
+	const handleGetReferencingForeignKeyInfosSqlite = (
+		constraint: ColumnConstraintResponse
+	): handleGetReferencingForeignKeyInfosReturnSqlite[] => {
+		// 渡された制約が主キーの場合その主キーを参照中の外部キー制約のIDを配列取得
+		const referencingForeignKeyIds: string[] =
+			constraint.type === 'PRIMARY_KEY'
+				? constraint.toReferences.map((reference) => reference.foreignKeyId)
+				: [];
+
+		// 外部キーIDに関連するカラムとテーブル情報を取得
+		const referencingInfos = Object.values(columns).flatMap((columnArray) =>
+			columnArray
+				.filter((column) =>
+					column.columnConstraints.some((constraint) =>
+						constraint.fromReferences.some(
+							(reference) =>
+								referencingForeignKeyIds.includes(reference.foreignKeyId) // 外部キーIDが参照リストに含まれているかをチェック
+						)
+					)
+				)
+				.map((column) => {
+					const tableId = column.tableId;
+					const tableName = tables[tableId]?.name;
+					const tableColor = tables[tableId]?.color;
+					return {
+						tableColor: tableColor,
+						tableName: tableName,
+						sqliteType: column.sqliteType,
+						columnName: column.name,
+					};
+				})
+		);
+
+		const sortedReferencingInfos = referencingInfos.sort((a, b) =>
+			a.columnName.localeCompare(b.columnName)
+		);
+		return sortedReferencingInfos;
+	};
+
+	const handleGetReferencingPrimaryKeyInfoSqlite = (
+		constraint: ColumnConstraintResponse
+	) => {
+		// 渡された制約が外部キーの場合その外部キーが参照中の主キー制約のIDを取得
+		const referencingPrimaryKeyId: string | null =
+			constraint.type === 'FOREIGN_KEY'
+				? constraint.fromReferences[0]?.primaryKeyId
+				: null;
+		console.log('参照されてるID ', referencingPrimaryKeyId);
+		if (!referencingPrimaryKeyId) {
+			return null;
+		}
+
+		// すべてのカラムを取得して処理
+		const allColumns = Object.values(columns).flatMap(
+			(columnArray) => columnArray
+		);
+
+		// 主キー制約IDに関連するカラムを探す
+		const referencedColumn = allColumns.find((column) =>
+			column.columnConstraints.some((colConstraint) => {
+				// toReferencesが空の可能性を考慮
+				if (
+					!colConstraint.toReferences ||
+					colConstraint.toReferences.length === 0
+				) {
+					return false;
+				}
+
+				// 比較
+				return colConstraint.toReferences.some(
+					(reference) => reference.primaryKeyId === referencingPrimaryKeyId
+				);
+			})
+		);
+
+		if (!referencedColumn) {
+			return null;
+		}
+
+		const tableId = referencedColumn.tableId;
+		const tableName = tables[tableId]?.name;
+		const tableColor = tables[tableId]?.color;
+
+		return {
+			tableId: tableId,
+			columnId: referencedColumn.id,
+			tableColor: tableColor,
+			tableName: tableName,
+			sqliteType: referencedColumn.sqliteType,
+			columnName: referencedColumn.name,
+		};
+	};
+
 	const handleSelectColumnConstraintItem = ({
 		columnId,
 	}: handleSelectColumnConstraintItemProps): void => {
@@ -530,6 +627,8 @@ export const useLayout = (): UseLayoutProps => {
 		setTables,
 		columns,
 		setColumns,
+		constraintEditingTableId,
+		setConstraintEditingTableId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,
@@ -554,6 +653,8 @@ export const useLayout = (): UseLayoutProps => {
 		handleGetConstraintIcon,
 		handleGetClauseTextWithSQlite,
 		handleGetNoOptionText,
+		handleGetReferencingForeignKeyInfosSqlite,
+		handleGetReferencingPrimaryKeyInfoSqlite,
 		handleSelectColumnConstraintItem,
 		handleToggleColumnConstraintExpansion,
 		handleAllTableExpansion,

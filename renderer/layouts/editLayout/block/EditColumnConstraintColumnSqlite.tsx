@@ -2,8 +2,8 @@ import { Box } from '@mui/material';
 import { Cancel, Delete } from '@mui/icons-material';
 import { useLayout, useModal, usePalette, useProject } from '../../../hooks';
 import {
+	EditColumnConstraintReferencingInfoSqlite,
 	EditColumnConstraintSqliteDeleteConstraintModalContent,
-	EditColumnConstraintSqlitePrimaryKeySelect,
 } from '../atom';
 import { EditColumnConstraintColumnSqliteProps } from '../../../interfaces';
 import { AppSelectModal } from '../../../components';
@@ -13,7 +13,11 @@ export const EditColumnConstraintColumnSqlite = ({
 	column,
 	constraint,
 }: EditColumnConstraintColumnSqliteProps) => {
-	const { isConstraintDeleting, handleGetConstraintIcon } = useLayout();
+	const {
+		isConstraintDeleting,
+		handleGetConstraintIcon,
+		handleGetClauseTextWithSQlite,
+	} = useLayout();
 	const { handleDeleteConstraint } = useProject();
 	const { isOpen, openModal, closeModal } = useModal();
 	const palette = usePalette();
@@ -49,8 +53,9 @@ export const EditColumnConstraintColumnSqlite = ({
 					height="100%"
 				>
 					{type === 'PRIMARY_KEY' ? (
-						<EditColumnConstraintSqlitePrimaryKeySelect
-							column={column}
+						handleGetClauseTextWithSQlite(constraint.sqliteClause, '0.7rem')
+					) : type === 'FOREIGN_KEY' ? (
+						<EditColumnConstraintReferencingInfoSqlite
 							constraint={constraint}
 						/>
 					) : (

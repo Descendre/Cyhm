@@ -32,6 +32,9 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [addConstraintColumnId, setAddConstraintColumnId] = useState<
 		string | null
 	>(null);
+	const [constraintEditingTableId, setConstraintEditingTableId] = useState<
+		string | null
+	>(null);
 	const [isTableAddMode, setIsTableAddMode] = useState<boolean>(false);
 	const [addColumnIndex, setAddColumnIndex] = useState<string | null>(null);
 	const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
@@ -87,6 +90,8 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setColumnConstraintEditInfo,
 		addConstraintColumnId,
 		setAddConstraintColumnId,
+		constraintEditingTableId,
+		setConstraintEditingTableId,
 		isTableAddMode,
 		setIsTableAddMode,
 		addColumnIndex,

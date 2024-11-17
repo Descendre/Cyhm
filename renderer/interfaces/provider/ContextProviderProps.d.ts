@@ -38,6 +38,10 @@ export interface ContextProviderProps {
 	setIsTableAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 	addColumnIndex: string | null;
 	setAddColumnIndex: React.Dispatch<React.SetStateAction<string | null>>;
+	constraintEditingTableId: string | null;
+	setConstraintEditingTableId: React.Dispatch<
+		React.SetStateAction<string | null>
+	>;
 	selectedTableId: string | null;
 	setSelectedTableId: React.Dispatch<React.SetStateAction<string | null>>;
 	lastSelectedTableId: string | null;

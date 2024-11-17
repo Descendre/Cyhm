@@ -78,14 +78,6 @@ export const useProject = (): UseProjectProps => {
 		columnEditInfo,
 		setColumnEditInfo,
 		setInvitedUsers,
-		setIsMic,
-		setIsAudio,
-		setSelectedTableId,
-		setLastSelectedTableId,
-		setIsEditLeftBar,
-		setIsEditRightPopper,
-		setUserSearchResults,
-		setUserPopperViewMode,
 		channel,
 		setChannel,
 		setIsConstraintDeleting,
@@ -223,27 +215,7 @@ export const useProject = (): UseProjectProps => {
 	};
 
 	const handleEndProject = (): void => {
-		setCurrentProject(null);
-		setTables(null);
-		setColumns(null);
-		setIsMic(false);
-		setIsAudio(false);
-		setSelectedTableId(null);
-		setLastSelectedTableId(null);
-		setIsEditLeftBar(true);
-		setIsEditRightPopper(true);
-		setTableEditInfo(null);
-		setColumnEditInfo(null);
-		setUserSearchResults({
-			invite: {
-				result: [],
-				query: '',
-			},
-		});
-		setUserPopperViewMode('member');
-		setInvitedUsers(null);
-		setChannel(null);
-		setWindowMode('top');
+		window.location.reload();
 		if (typeof window !== 'undefined' && window.ipc) {
 			window.ipc.send('project-end');
 		} else {
@@ -743,6 +715,7 @@ export const useProject = (): UseProjectProps => {
 	const handleAddConstraint = async ({
 		columnId,
 		type,
+		projectId,
 		sqliteClauseType,
 		primaryKeyIdToForeignKeyId,
 	}: handleAddConstraintProps): Promise<void> => {
@@ -756,7 +729,7 @@ export const useProject = (): UseProjectProps => {
 				primaryKeyIdToForeignKey: null,
 			});
 
-			const newConstraint = await axiosFetch.post<ColumnConstraintResponse>(
+			await axiosFetch.post<ColumnConstraintResponse>(
 				`/api/supabase/constraint/sqlite`,
 				{
 					columnId: columnId,
@@ -766,26 +739,53 @@ export const useProject = (): UseProjectProps => {
 				} as AddColumnConstraintRequest
 			);
 
-			const updatedColumn = await axiosFetch.get<AddColumnResponse>(
-				`/api/supabase/column/${newConstraint.columnId}`
+			// 制約の追加は複数のカラムの更新を伴うので、全カラムを取得し以下で更新する。
+			const updatedColumns = await axiosFetch.get<AddColumnResponse[]>(
+				`/api/supabase/column/project/${projectId}`
 			);
 
-			setColumns((prevColumns) => ({
-				...prevColumns,
-				[updatedColumn.tableId]: prevColumns[updatedColumn.tableId].map(
-					(column) =>
-						column.id === updatedColumn.id
-							? { ...column, ...updatedColumn }
-							: column
-				),
-			}));
+			setColumns((prevColumns) => {
+				// updatedColumnsをテーブルIDごとにグループ分け
+				const updatedColumnsByTableId = updatedColumns.reduce(
+					(acc, updatedColumn) => {
+						// 該当するテーブルIDがaccに存在しない場合は新しく作成
+						if (!acc[updatedColumn.tableId]) {
+							acc[updatedColumn.tableId] = [];
+						}
+
+						// 該当するカラム情報を更新する
+						const existingColumn = prevColumns[updatedColumn.tableId]?.find(
+							(column) => column.id === updatedColumn.id
+						);
+
+						// 既存のカラムがあれば、拡張分は元の値を保持し、それ以外は新しい値で更新
+						const updatedColumnState: ColumnStatePropsExtended = {
+							...existingColumn, // 既存のカラムの情報をベースにする
+							...updatedColumn, // 新しいカラムの情報を上書き
+							isConstraintExpand: existingColumn?.isConstraintExpand ?? false, // 拡張分は元の値を保持
+						};
+
+						// 該当するテーブルIDにカラムを追加
+						acc[updatedColumn.tableId].push(updatedColumnState);
+
+						return acc;
+					},
+					{} as { [key: string]: ColumnStatePropsExtended[] }
+				);
+
+				// グループ分けされた結果を元にstateを更新
+				return {
+					...prevColumns,
+					...updatedColumnsByTableId, // テーブルIDごとのカラム配列を更新
+				};
+			});
 
 			channel.send({
 				type: 'broadcast',
-				event: 'column_update',
+				event: 'columns_update',
 				payload: {
-					newColumn: updatedColumn,
-				} as ColumnChannelPayloadProps,
+					newColumns: updatedColumns,
+				} as ColumnsChannelPayloadProps,
 			});
 		} catch (error) {
 			console.error(error);

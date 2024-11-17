@@ -5,7 +5,7 @@ import {
 	UserPopperViewModeProps,
 	windowModeProps,
 } from '../provider';
-import { AddTableResponse } from '../api';
+import { AddTableResponse, ColumnConstraintResponse } from '../api';
 import {
 	ColumnConstraintType,
 	SqliteClauseType,
@@ -45,6 +45,10 @@ export interface UseLayoutProps {
 	>;
 	isConstraintDeleting: boolean;
 	setIsConstraintDeleting: React.Dispatch<React.SetStateAction<boolean>>;
+	constraintEditingTableId: string | null;
+	setConstraintEditingTableId: React.Dispatch<
+		React.SetStateAction<string | null>
+	>;
 
 	handleGithubExternalShellOpen: () => void;
 	handleToggleColumnConstraintExpansion: ({
@@ -68,6 +72,12 @@ export interface UseLayoutProps {
 		fontSize: string
 	) => ReactNode;
 	handleGetNoOptionText: (fontSize: string) => ReactNode;
+	handleGetReferencingForeignKeyInfosSqlite: (
+		constraint: ColumnConstraintResponse
+	) => handleGetReferencingForeignKeyInfosReturnSqlite[];
+	handleGetReferencingPrimaryKeyInfoSqlite: (
+		constraint: ColumnConstraintResponse
+	) => handleGetReferencingPrimaryKeyInfoReturnSqlite;
 	handleSelectColumnConstraintItem: ({
 		columnId,
 	}: handleSelectColumnConstraintItemProps) => void;
@@ -90,4 +100,20 @@ export interface handleToggleColumnConstraintExpansionProps {
 export interface EditReactFlowCustomNodeDataProps {
 	tableData: AddTableResponse;
 	[key: string]: unknown;
+}
+
+export interface handleGetReferencingForeignKeyInfosReturnSqlite {
+	tableColor: string;
+	tableName: string;
+	sqliteType: SQliteColumnType;
+	columnName: string;
+}
+
+export interface handleGetReferencingPrimaryKeyInfoReturnSqlite {
+	columnId: string;
+	tableId: string;
+	tableColor: string;
+	tableName: string;
+	sqliteType: SQliteColumnType;
+	columnName: string;
 }
