@@ -4,7 +4,10 @@ import {
 	EditColumnConstraintSqliteAddingTypeSelect,
 	EditColumnConstraintSqlitePrimaryKeyAddingClauseSelect,
 } from '../atom';
-import { EditColumnConstraintSqliteAddingAreaProps } from '../../../interfaces';
+import {
+	EditColumnConstraintSqliteAddingAreaProps,
+	handleAddConstraintProps,
+} from '../../../interfaces';
 import { Add } from '@mui/icons-material';
 import { EditColumnConstraintSqliteForeignKeyAddingClauseSelect } from '../atom/EditColumnConstraintSqliteForeignKeyAddingClauseSelect';
 
@@ -17,7 +20,8 @@ export const EditColumnConstraintSqliteAddingArea = ({
 
 	const isForeignKeyWithPrimaryKey =
 		columnConstraintEditInfo.columnConstraintType === 'FOREIGN_KEY' &&
-		Boolean(columnConstraintEditInfo.primaryKeyIdToForeignKey);
+		Boolean(columnConstraintEditInfo.primaryKeyId);
+	console.log(columnConstraintEditInfo);
 
 	const isAddIconDisplay: boolean =
 		['PRIMARY_KEY', 'NOT_NULL', 'UNIQUE'].includes(
@@ -86,9 +90,8 @@ export const EditColumnConstraintSqliteAddingArea = ({
 								dbType: currentProject.dbType,
 								projectId: currentProject.id,
 								sqliteClauseType: columnConstraintEditInfo.clauseType,
-								primaryKeyIdToForeignKeyId:
-									columnConstraintEditInfo.primaryKeyIdToForeignKey,
-							});
+								primaryKeyId: columnConstraintEditInfo.primaryKeyId,
+							} as handleAddConstraintProps);
 						}}
 						sx={{
 							display: isAddIconDisplay ? 'block' : 'none',

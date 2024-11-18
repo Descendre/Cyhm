@@ -101,6 +101,7 @@ model Reference {
   foreignKeyIds      ColumnConstraint   @relation("ColumnReferenceFrom", fields: [foreignKeyId], references: [id])
   primaryKeyIds        ColumnConstraint   @relation("ColumnReferenceTo", fields: [primaryKeyId], references: [id])
 
+  @@unique([foreignKeyId])
   @@unique([foreignKeyId, primaryKeyId])
 }
 

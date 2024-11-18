@@ -4,5 +4,5 @@ export interface AddColumnConstraintRequest {
 	columnId: string;
 	type: ColumnConstraintType;
 	sqliteClauseType?: SqliteClauseType;
-	primaryKeyIdToForeignKeyId: string | null;
+	primaryKeyId?: string;
 }

@@ -15,8 +15,10 @@ export const EditRightPopperColumnSettingArea = ({
 	table,
 }: EditRightPopperColumnSettingAreaProps) => {
 	const palette = usePalette();
-	const { columns } = useLayout();
+	const { tables, columns, constraintEditingTableId } = useLayout();
 	const { isOpen, openModal, closeModal } = useModal();
+
+	const columnEditingTable = tables[constraintEditingTableId];
 
 	return (
 		<>
@@ -29,7 +31,7 @@ export const EditRightPopperColumnSettingArea = ({
 				width="100%"
 				padding="20px 0"
 			>
-				{columns?.[table?.id]?.map((column) => (
+				{columns?.[table?.id]?.map((column, index) => (
 					<Box
 						display="flex"
 						justifyContent="center"
@@ -110,12 +112,17 @@ export const EditRightPopperColumnSettingArea = ({
 								/>
 							</Box>
 						</Box>
-						<Divider
-							sx={{
-								width: '100%',
-								margin: '0 auto',
-							}}
-						/>
+						{columns &&
+							columns[table.id] &&
+							columns[table.id].length >= 2 &&
+							index < columns[table.id].length - 1 && (
+								<Divider
+									sx={{
+										width: '100%',
+										margin: '0 auto',
+									}}
+								/>
+							)}
 					</Box>
 				))}
 			</Box>
@@ -130,10 +137,10 @@ export const EditRightPopperColumnSettingArea = ({
 				icon={
 					<Circle
 						fontSize="small"
-						sx={{ color: table.color, fontSize: '1.1rem' }}
+						sx={{ color: columnEditingTable?.color, fontSize: '1.1rem' }}
 					/>
 				}
-				title={`カラム制約の詳細設定 (${table.name})`}
+				title={`カラム制約の詳細設定 - ${columnEditingTable?.name}`}
 			>
 				<EditColumnConstraint />
 			</AppModal>

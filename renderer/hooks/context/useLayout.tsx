@@ -476,7 +476,6 @@ export const useLayout = (): UseLayoutProps => {
 			constraint.type === 'FOREIGN_KEY'
 				? constraint.fromReferences[0]?.primaryKeyId
 				: null;
-		console.log('参照されてるID ', referencingPrimaryKeyId);
 		if (!referencingPrimaryKeyId) {
 			return null;
 		}
@@ -530,7 +529,7 @@ export const useLayout = (): UseLayoutProps => {
 				columnId: null,
 				columnConstraintType: null,
 				clauseType: null,
-				primaryKeyIdToForeignKey: null,
+				primaryKeyId: null,
 			});
 			return;
 		}
@@ -538,7 +537,7 @@ export const useLayout = (): UseLayoutProps => {
 			columnId: columnId,
 			columnConstraintType: null,
 			clauseType: null,
-			primaryKeyIdToForeignKey: null,
+			primaryKeyId: null,
 		});
 	};
 

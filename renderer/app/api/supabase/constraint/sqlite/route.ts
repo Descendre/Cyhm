@@ -9,8 +9,7 @@ import {
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: AddColumnConstraintRequest = await req.json();
-		const { columnId, type, sqliteClauseType, primaryKeyIdToForeignKeyId } =
-			body;
+		const { columnId, type, sqliteClauseType, primaryKeyId } = body;
 
 		let updatedColumnConstraint;
 		if (type === 'FOREIGN_KEY') {
@@ -37,10 +36,17 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 					},
 				});
 
-			// 主キー参照情報を追加
-			await prisma.reference.create({
-				data: {
-					primaryKeyId: primaryKeyIdToForeignKeyId,
+			// 主キー参照情報の追加更新処理
+			await prisma.reference.upsert({
+				where: {
+					foreignKeyId: updatedColumnConstraint.id,
+				},
+				update: {
+					primaryKeyId: primaryKeyId,
+					foreignKeyId: updatedColumnConstraint.id,
+				},
+				create: {
+					primaryKeyId: primaryKeyId,
 					foreignKeyId: updatedColumnConstraint.id,
 				},
 			});

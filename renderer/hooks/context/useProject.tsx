@@ -717,7 +717,7 @@ export const useProject = (): UseProjectProps => {
 		type,
 		projectId,
 		sqliteClauseType,
-		primaryKeyIdToForeignKeyId,
+		primaryKeyId,
 	}: handleAddConstraintProps): Promise<void> => {
 		try {
 			if (!channel) return;
@@ -726,7 +726,7 @@ export const useProject = (): UseProjectProps => {
 				columnId: null,
 				columnConstraintType: null,
 				clauseType: null,
-				primaryKeyIdToForeignKey: null,
+				primaryKeyId: null,
 			});
 
 			await axiosFetch.post<ColumnConstraintResponse>(
@@ -735,7 +735,7 @@ export const useProject = (): UseProjectProps => {
 					columnId: columnId,
 					type: type,
 					sqliteClauseType: sqliteClauseType,
-					primaryKeyIdToForeignKeyId: primaryKeyIdToForeignKeyId,
+					primaryKeyId: primaryKeyId,
 				} as AddColumnConstraintRequest
 			);
 
@@ -805,7 +805,7 @@ export const useProject = (): UseProjectProps => {
 				columnId: null,
 				columnConstraintType: null,
 				clauseType: null,
-				primaryKeyIdToForeignKey: null,
+				primaryKeyId: null,
 			});
 
 			await axiosFetch.delete<ColumnConstraintResponse>(
