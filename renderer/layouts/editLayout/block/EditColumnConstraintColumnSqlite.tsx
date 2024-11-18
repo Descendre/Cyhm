@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Cancel, Delete } from '@mui/icons-material';
 import { useLayout, useModal, usePalette, useProject } from '../../../hooks';
 import {
@@ -58,6 +58,19 @@ export const EditColumnConstraintColumnSqlite = ({
 						<EditColumnConstraintReferencingInfoSqlite
 							constraint={constraint}
 						/>
+					) : type === 'DEFAULT' ? (
+						<Typography
+							title="設定済みの値"
+							variant="body2"
+							noWrap
+							fontSize="0.7rem"
+							color="text.secondary"
+							sx={{
+								cursor: 'pointer',
+							}}
+						>
+							{constraint.value}
+						</Typography>
 					) : (
 						<></>
 					)}

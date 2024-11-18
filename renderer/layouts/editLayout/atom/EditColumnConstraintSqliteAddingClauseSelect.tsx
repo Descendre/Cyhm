@@ -15,10 +15,12 @@ export const EditColumnConstraintSqlitePrimaryKeyAddingClauseSelect = ({
 
 	const handleChange = (event: SelectChangeEvent): void => {
 		setColumnConstraintEditInfo((prev) => ({
+			...prev,
 			columnId: column.id,
 			columnConstraintType: prev.columnConstraintType,
 			clauseType: event.target.value as SqliteClauseType | null,
 			primaryKeyId: prev.primaryKeyId,
+			value: prev.value,
 		}));
 	};
 

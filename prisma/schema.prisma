@@ -80,6 +80,7 @@ model Column {
 model ColumnConstraint {
   id        String @id @default(cuid())
   type      ColumnConstraintType
+  value     String?
   sqliteClause SqliteClauseType?
   columnId  String
   createdAt DateTime @default(now())

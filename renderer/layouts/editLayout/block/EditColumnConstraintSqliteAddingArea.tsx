@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { usePalette, useProject } from '../../../hooks';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 import {
 	EditColumnConstraintSqliteAddingTypeSelect,
 	EditColumnConstraintSqlitePrimaryKeyAddingClauseSelect,
@@ -7,26 +7,36 @@ import {
 import {
 	EditColumnConstraintSqliteAddingAreaProps,
 	handleAddConstraintProps,
+	validateDefaultConstraintSqliteReturn,
 } from '../../../interfaces';
 import { Add } from '@mui/icons-material';
 import { EditColumnConstraintSqliteForeignKeyAddingClauseSelect } from '../atom/EditColumnConstraintSqliteForeignKeyAddingClauseSelect';
+import { EditColumnConstraintSqliteDefaultInput } from '../atom/EditColumnConstraintSqliteDefaultInput';
 
 export const EditColumnConstraintSqliteAddingArea = ({
 	column,
 }: EditColumnConstraintSqliteAddingAreaProps) => {
 	const palette = usePalette();
+	const { handleDefaultConstraintValidationIPC } = useLayout();
 	const { currentProject, columnConstraintEditInfo, handleAddConstraint } =
 		useProject();
 
 	const isForeignKeyWithPrimaryKey =
 		columnConstraintEditInfo.columnConstraintType === 'FOREIGN_KEY' &&
 		Boolean(columnConstraintEditInfo.primaryKeyId);
-	console.log(columnConstraintEditInfo);
+
+	const isDefaultKeyAndWithNoError =
+		columnConstraintEditInfo.columnConstraintType === 'DEFAULT' &&
+		Boolean(
+			columnConstraintEditInfo.value && !columnConstraintEditInfo.errorText
+		);
 
 	const isAddIconDisplay: boolean =
 		['PRIMARY_KEY', 'NOT_NULL', 'UNIQUE'].includes(
 			columnConstraintEditInfo.columnConstraintType
-		) || isForeignKeyWithPrimaryKey;
+		) ||
+		isForeignKeyWithPrimaryKey ||
+		isDefaultKeyAndWithNoError;
 
 	return (
 		<>
@@ -68,6 +78,8 @@ export const EditColumnConstraintSqliteAddingArea = ({
 							<EditColumnConstraintSqliteForeignKeyAddingClauseSelect
 								column={column}
 							/>
+						) : columnConstraintEditInfo.columnConstraintType === 'DEFAULT' ? (
+							<EditColumnConstraintSqliteDefaultInput column={column} />
 						) : (
 							<></>
 						))}
@@ -83,12 +95,23 @@ export const EditColumnConstraintSqliteAddingArea = ({
 						titleAccess="制約を追加"
 						fontSize="small"
 						color="primary"
-						onClick={() => {
-							handleAddConstraint({
+						onClick={async () => {
+							if (columnConstraintEditInfo.columnConstraintType === 'DEFAULT') {
+								const validationResult: validateDefaultConstraintSqliteReturn | null =
+									await handleDefaultConstraintValidationIPC({
+										column: column,
+										value: columnConstraintEditInfo.value,
+									});
+								if (validationResult && validationResult.message) {
+									return;
+								}
+							}
+							await handleAddConstraint({
 								columnId: column.id,
 								type: columnConstraintEditInfo.columnConstraintType,
 								dbType: currentProject.dbType,
 								projectId: currentProject.id,
+								value: columnConstraintEditInfo.value,
 								sqliteClauseType: columnConstraintEditInfo.clauseType,
 								primaryKeyId: columnConstraintEditInfo.primaryKeyId,
 							} as handleAddConstraintProps);

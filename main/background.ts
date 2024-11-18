@@ -2,8 +2,16 @@ import path from 'path';
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import serve from 'electron-serve';
 import * as fs from 'node:fs';
-import { convertToCSV, createDBSchema, createWindow } from './helpers';
-import { SaveFileContentProps } from './interfaces';
+import {
+	convertToCSV,
+	createDBSchema,
+	createWindow,
+	validateDefaultConstraintSqlite,
+} from './helpers';
+import {
+	SaveFileContentProps,
+	validateDefaultConstraintSqliteProps,
+} from './interfaces';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -59,6 +67,18 @@ ipcMain.on('project-end', async () => {
 ipcMain.on('github-open', async () => {
 	shell.openExternal('https://github.com/Descendre/Cyhm');
 });
+
+// デフォルト制約(sqlite)の検証
+ipcMain.handle(
+	'default-validate-sqlite',
+	async (event, { column, value }: validateDefaultConstraintSqliteProps) => {
+		const validationResult = await validateDefaultConstraintSqlite({
+			column: column,
+			value: value,
+		});
+		return validationResult;
+	}
+);
 
 // ファイル出力
 ipcMain.handle(

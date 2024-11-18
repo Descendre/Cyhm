@@ -1,6 +1,7 @@
 import { Node } from '@xyflow/react';
 import {
 	ColumnsStateProps,
+	ColumnStatePropsExtended,
 	TablesStateProps,
 	UserPopperViewModeProps,
 	windowModeProps,
@@ -78,6 +79,14 @@ export interface UseLayoutProps {
 	handleGetReferencingPrimaryKeyInfoSqlite: (
 		constraint: ColumnConstraintResponse
 	) => handleGetReferencingPrimaryKeyInfoReturnSqlite;
+	handleDebouncedDefaultConstraintValidationIPC: ({
+		column,
+		value,
+	}: handleDebouncedDefaultConstraintValidationIPCProps) => Promose<validateDefaultConstraintSqliteReturn>;
+	handleDefaultConstraintValidationIPC: ({
+		column,
+		value,
+	}: handleDefaultConstraintValidationIPCProps) => Promose<validateDefaultConstraintSqliteReturn>;
 	handleSelectColumnConstraintItem: ({
 		columnId,
 	}: handleSelectColumnConstraintItemProps) => void;
@@ -86,6 +95,20 @@ export interface UseLayoutProps {
 	handleSetAddColumnIndex: (table: AddTableResponse) => void;
 	handleGetNodesFromTables: () => Node[];
 	handleSwitchUserPopperViewMode: () => void;
+}
+
+export interface handleDebouncedDefaultConstraintValidationIPC {
+	column: ColumnStatePropsExtended;
+	value: string;
+}
+
+export interface handleDefaultConstraintValidationIPCProps {
+	column: ColumnStatePropsExtended;
+	value: string;
+}
+
+export interface validateDefaultConstraintSqliteReturn {
+	message: string;
 }
 
 export interface handleSelectColumnConstraintItemProps {

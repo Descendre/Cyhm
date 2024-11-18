@@ -9,7 +9,7 @@ import {
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: AddColumnConstraintRequest = await req.json();
-		const { columnId, type, sqliteClauseType, primaryKeyId } = body;
+		const { columnId, type, value, sqliteClauseType, primaryKeyId } = body;
 
 		let updatedColumnConstraint;
 		if (type === 'FOREIGN_KEY') {
@@ -68,6 +68,26 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 					type: type,
 					columnId: columnId,
 					sqliteClause: sqliteClauseType,
+				},
+			});
+
+			return NextResponse.json(updatedColumnConstraint);
+		} else if (type === 'DEFAULT') {
+			updatedColumnConstraint = await prisma.columnConstraint.upsert({
+				where: {
+					columnId_type: {
+						columnId,
+						type,
+					},
+				},
+				update: {
+					type: type,
+					value: value,
+				},
+				create: {
+					type: type,
+					columnId: columnId,
+					value: value,
 				},
 			});
 

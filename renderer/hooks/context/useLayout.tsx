@@ -1,15 +1,17 @@
 'use client';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useCallback, useContext } from 'react';
 import { Context } from '../../provider';
 import {
 	AddTableResponse,
 	ColumnConstraintResponse,
 	EditReactFlowCustomNodeDataProps,
+	handleDefaultConstraintValidationIPCProps,
 	handleGetReferencingForeignKeyInfosReturnSqlite,
 	handleSelectColumnConstraintItemProps,
 	handleToggleColumnConstraintExpansionProps,
 	TablesStateProps,
 	UseLayoutProps,
+	validateDefaultConstraintSqliteReturn,
 } from '../../interfaces';
 import { Node, XYPosition } from '@xyflow/react';
 import {
@@ -32,6 +34,7 @@ import {
 	SqliteClauseType,
 	SQliteColumnType,
 } from '@prisma/client';
+import { debounce } from 'lodash';
 
 export const useLayout = (): UseLayoutProps => {
 	const context = useContext(Context);
@@ -521,6 +524,77 @@ export const useLayout = (): UseLayoutProps => {
 		};
 	};
 
+	const handleDebouncedDefaultConstraintValidationIPC = useCallback(
+		debounce(
+			async ({
+				column,
+				value,
+			}: handleDefaultConstraintValidationIPCProps): Promise<validateDefaultConstraintSqliteReturn | null> => {
+				if (!column || !value) return null;
+
+				if (typeof window !== 'undefined' && window.ipc) {
+					try {
+						const validationResult =
+							await window.ipc.invoke<validateDefaultConstraintSqliteReturn>(
+								'default-validate-sqlite',
+								{
+									column,
+									value,
+								}
+							);
+						setColumnConstraintEditInfo((prev) => ({
+							...prev,
+							errorText: validationResult.message,
+						}));
+						return validationResult;
+					} catch (error) {
+						console.error('Validation error:', error);
+						return null;
+					}
+				} else {
+					console.error('IPC is not available');
+					return null;
+				}
+			},
+			500
+		),
+		[]
+	);
+
+	const handleDefaultConstraintValidationIPC = useCallback(
+		async ({
+			column,
+			value,
+		}: handleDefaultConstraintValidationIPCProps): Promise<validateDefaultConstraintSqliteReturn | null> => {
+			if (!column || !value) return null;
+
+			if (typeof window !== 'undefined' && window.ipc) {
+				try {
+					const validationResult =
+						await window.ipc.invoke<validateDefaultConstraintSqliteReturn>(
+							'default-validate-sqlite',
+							{
+								column,
+								value,
+							}
+						);
+					setColumnConstraintEditInfo((prev) => ({
+						...prev,
+						errorText: validationResult.message,
+					}));
+					return validationResult;
+				} catch (error) {
+					console.error('Validation error:', error);
+					return null;
+				}
+			} else {
+				console.error('IPC is not available');
+				return null;
+			}
+		},
+		[]
+	);
+
 	const handleSelectColumnConstraintItem = ({
 		columnId,
 	}: handleSelectColumnConstraintItemProps): void => {
@@ -530,6 +604,8 @@ export const useLayout = (): UseLayoutProps => {
 				columnConstraintType: null,
 				clauseType: null,
 				primaryKeyId: null,
+				value: null,
+				errorText: null,
 			});
 			return;
 		}
@@ -538,6 +614,8 @@ export const useLayout = (): UseLayoutProps => {
 			columnConstraintType: null,
 			clauseType: null,
 			primaryKeyId: null,
+			value: null,
+			errorText: null,
 		});
 	};
 
@@ -654,6 +732,8 @@ export const useLayout = (): UseLayoutProps => {
 		handleGetNoOptionText,
 		handleGetReferencingForeignKeyInfosSqlite,
 		handleGetReferencingPrimaryKeyInfoSqlite,
+		handleDebouncedDefaultConstraintValidationIPC,
+		handleDefaultConstraintValidationIPC,
 		handleSelectColumnConstraintItem,
 		handleToggleColumnConstraintExpansion,
 		handleAllTableExpansion,
