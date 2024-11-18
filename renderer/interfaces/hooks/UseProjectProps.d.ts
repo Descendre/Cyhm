@@ -97,6 +97,8 @@ export interface UseProjectProps {
 		type,
 		dbType,
 		sqliteClauseType,
+		primaryKeyId,
+		projectId,
 	}: handleAddConstraintProps) => Promise<void>;
 	handleDeleteConstraint: ({
 		id,
@@ -194,7 +196,7 @@ export interface handleAddConstraintProps {
 	projectId: string;
 	type: ColumnConstraintType;
 	sqliteClauseType?: SqliteClauseType;
-	primaryKeyIdToForeignKeyId: string | null;
+	primaryKeyId?: string;
 }
 
 export interface handleDeleteConstraintProps {

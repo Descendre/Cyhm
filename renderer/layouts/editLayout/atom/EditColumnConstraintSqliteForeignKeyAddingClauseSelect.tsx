@@ -28,7 +28,7 @@ export const EditColumnConstraintSqliteForeignKeyAddingClauseSelect = ({
 			columnId: column.id,
 			columnConstraintType: prev.columnConstraintType,
 			clauseType: prev.clauseType,
-			primaryKeyIdToForeignKey: event.target.value as string | null,
+			primaryKeyId: event.target.value as string | null,
 		}));
 	};
 
@@ -37,7 +37,7 @@ export const EditColumnConstraintSqliteForeignKeyAddingClauseSelect = ({
 			<Select
 				variant="outlined"
 				size="small"
-				value={columnConstraintEditInfo?.primaryKeyIdToForeignKey || ''}
+				value={columnConstraintEditInfo?.primaryKeyId || ''}
 				onChange={handleChange}
 				sx={{
 					width: '80%',
