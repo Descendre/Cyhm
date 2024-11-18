@@ -25,9 +25,8 @@ export const EditColumnConstraintSqliteForeignKeyAddingClauseSelect = ({
 
 	const handleChange = (event: SelectChangeEvent): void => {
 		setColumnConstraintEditInfo((prev) => ({
+			...prev,
 			columnId: column.id,
-			columnConstraintType: prev.columnConstraintType,
-			clauseType: prev.clauseType,
 			primaryKeyId: event.target.value as string | null,
 		}));
 	};

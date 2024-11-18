@@ -26,6 +26,8 @@ export const EditColumnConstraintSqliteAddingTypeSelect = ({
 			columnConstraintType: event.target.value as ColumnConstraintType,
 			clauseType: null,
 			primaryKeyId: null,
+			value: null,
+			errorText: null,
 		});
 	};
 

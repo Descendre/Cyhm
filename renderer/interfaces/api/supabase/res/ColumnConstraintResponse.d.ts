@@ -4,6 +4,7 @@ export interface ColumnConstraintResponse {
 	columnId: string;
 	type: ColumnConstraintType;
 	id: string;
+	value: string | null;
 	sqliteClause: SqliteClauseType | null;
 	createdAt: Date;
 	updatedAt: Date;

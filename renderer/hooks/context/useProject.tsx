@@ -715,6 +715,7 @@ export const useProject = (): UseProjectProps => {
 	const handleAddConstraint = async ({
 		columnId,
 		type,
+		value,
 		projectId,
 		sqliteClauseType,
 		primaryKeyId,
@@ -727,6 +728,8 @@ export const useProject = (): UseProjectProps => {
 				columnConstraintType: null,
 				clauseType: null,
 				primaryKeyId: null,
+				value: null,
+				errorText: null,
 			});
 
 			await axiosFetch.post<ColumnConstraintResponse>(
@@ -734,6 +737,7 @@ export const useProject = (): UseProjectProps => {
 				{
 					columnId: columnId,
 					type: type,
+					value: value,
 					sqliteClauseType: sqliteClauseType,
 					primaryKeyId: primaryKeyId,
 				} as AddColumnConstraintRequest
@@ -806,6 +810,8 @@ export const useProject = (): UseProjectProps => {
 				columnConstraintType: null,
 				clauseType: null,
 				primaryKeyId: null,
+				value: null,
+				errorText: null,
 			});
 
 			await axiosFetch.delete<ColumnConstraintResponse>(

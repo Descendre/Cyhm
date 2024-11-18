@@ -96,6 +96,7 @@ export interface UseProjectProps {
 		columnId,
 		type,
 		dbType,
+		value,
 		sqliteClauseType,
 		primaryKeyId,
 		projectId,
@@ -194,6 +195,7 @@ export interface handleAddConstraintProps {
 	columnId: string;
 	dbType: DBType;
 	projectId: string;
+	value: string;
 	type: ColumnConstraintType;
 	sqliteClauseType?: SqliteClauseType;
 	primaryKeyId?: string;
