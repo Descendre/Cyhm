@@ -66,7 +66,7 @@ export const TopHeaderButtons = () => {
 					borderColor={palette.line.appIconButton}
 					borderHoverColor={palette.primary.main}
 					text="クレジット"
-					onClick={() => console.log()}
+					onClick={() => {}}
 				/>
 				<TopHeaderAvatar />
 			</Box>
