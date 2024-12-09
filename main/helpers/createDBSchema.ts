@@ -63,6 +63,13 @@ export const createDBSchema = async (
 			const constraints = column.columnConstraints.map((constraint) => {
 				switch (constraint.type) {
 					case 'PRIMARY_KEY':
+						// 主キーの場合、INTEGER型かつAUTO_INCREMENTの処理を追加
+						if (
+							column.sqliteType === 'INTEGER' &&
+							constraint.sqliteClause === 'AUTO_INCREMENT'
+						) {
+							return 'PRIMARY KEY AUTOINCREMENT';
+						}
 						return 'PRIMARY KEY';
 					case 'NOT_NULL':
 						return 'NOT NULL';
