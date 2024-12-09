@@ -11,6 +11,7 @@ import {
 	ColumnConstraintType,
 	SqliteClauseType,
 	SQliteColumnType,
+	SupabaseColumnType,
 } from '@prisma/client';
 import { ReactNode } from 'react';
 
@@ -58,6 +59,12 @@ export interface UseLayoutProps {
 	}: handleToggleColumnConstraintExpansionProps) => void;
 	handleGetColumnTypeTextWithSQlite: (
 		type: SQliteColumnType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	) => ReactNode;
+	handleGetColumnTypeTextWithSupabase: (
+		type: SupabaseColumnType,
 		withText: boolean,
 		iconSize: string,
 		fontSize: string

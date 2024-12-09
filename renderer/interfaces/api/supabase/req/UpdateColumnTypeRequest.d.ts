@@ -1,7 +1,8 @@
-import { DBType, SQliteColumnType } from '@prisma/client';
+import { DBType, SQliteColumnType, SupabaseColumnType } from '@prisma/client';
 
 export interface UpdateColumnTypeRequest {
 	columnId: string;
 	dbType: DBType;
-	type: SQliteColumnType;
+	sqliteType?: SQliteColumnType;
+	supabaseType?: SupabaseColumnType;
 }

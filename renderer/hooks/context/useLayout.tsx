@@ -19,6 +19,8 @@ import {
 	Check,
 	DataObject,
 	DescriptionOutlined,
+	DoDisturb,
+	EventNote,
 	HelpOutline,
 	Key,
 	Link,
@@ -33,6 +35,7 @@ import {
 	ColumnConstraintType,
 	SqliteClauseType,
 	SQliteColumnType,
+	SupabaseColumnType,
 } from '@prisma/client';
 import { debounce } from 'lodash';
 
@@ -189,6 +192,227 @@ export const useLayout = (): UseLayoutProps => {
 				variant="body2"
 				fontSize={fontSize}
 				color={palette.components.edit.reactFlow.column.color.sqlite.null}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<HelpOutline
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'NULL'}
+			</Typography>
+		);
+	};
+
+	const handleGetColumnTypeTextWithSupabase = (
+		type: SupabaseColumnType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	): ReactNode => {
+		return type === 'STRING' ? (
+			<Typography
+				title="STRING"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				height="100%"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.string}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<TextFields
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'STRING'}
+			</Typography>
+		) : type === 'INT' ? (
+			<Typography
+				title="INT"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				height="100%"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.int}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<Numbers
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'INT'}
+			</Typography>
+		) : type === 'BIGINT' ? (
+			<Typography
+				title="BIGINT"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.bigInt}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<Numbers
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'BIGINT'}
+			</Typography>
+		) : type === 'FLOAT' ? (
+			<Typography
+				title="FLOAT"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.float}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<StackedBarChart
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'FLOAT'}
+			</Typography>
+		) : type === 'DECIMAL' ? (
+			<Typography
+				title="DECIMAL"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.decimal}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<StackedBarChart
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'DECIMAL'}
+			</Typography>
+		) : type === 'BOOLEAN' ? (
+			<Typography
+				title="BOOLEAN"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.boolean}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<DoDisturb
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'BOOLEAN'}
+			</Typography>
+		) : type === 'DATETIME' ? (
+			<Typography
+				title="DATETIME"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.dateTime}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<EventNote
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'DATETIME'}
+			</Typography>
+		) : type === 'JSON' ? (
+			<Typography
+				title="JSON"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.json}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<DataObject
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'JSON'}
+			</Typography>
+		) : type === 'BYTES' ? (
+			<Typography
+				title="BYTES"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.bytes}
+				sx={{
+					cursor: 'pointer',
+				}}
+			>
+				<DataObject
+					sx={{
+						fontSize: iconSize,
+					}}
+				/>
+				{withText && 'BYTES'}
+			</Typography>
+		) : (
+			<Typography
+				title="NULL"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="2px"
+				variant="body2"
+				fontSize={fontSize}
+				color={palette.components.edit.reactFlow.column.color.supabase.null}
 				sx={{
 					cursor: 'pointer',
 				}}
@@ -727,6 +951,7 @@ export const useLayout = (): UseLayoutProps => {
 
 		handleGithubExternalShellOpen,
 		handleGetColumnTypeTextWithSQlite,
+		handleGetColumnTypeTextWithSupabase,
 		handleGetConstraintIcon,
 		handleGetClauseTextWithSQlite,
 		handleGetNoOptionText,

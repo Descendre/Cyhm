@@ -1,14 +1,17 @@
 'use client';
 import { Box, Typography } from '@mui/material';
 import { EditReactFlowCustomNodeColumnProps } from '../../../interfaces';
-import { useLayout } from '../../../hooks';
+import { useLayout, useProject } from '../../../hooks';
 
 export const EditReactFlowCustomNodeColumn = ({
 	color,
-	name,
-	type,
+	column,
 }: EditReactFlowCustomNodeColumnProps) => {
-	const { handleGetColumnTypeTextWithSQlite } = useLayout();
+	const { currentProject } = useProject();
+	const {
+		handleGetColumnTypeTextWithSQlite,
+		handleGetColumnTypeTextWithSupabase,
+	} = useLayout();
 
 	return (
 		<Box
@@ -27,9 +30,25 @@ export const EditReactFlowCustomNodeColumn = ({
 				color="text.secondary"
 				noWrap
 			>
-				{name}
+				{column.name}
 			</Typography>
-			{handleGetColumnTypeTextWithSQlite(type, true, '1rem', '0.6rem')}
+			{currentProject.dbType === 'SQLITE' ? (
+				handleGetColumnTypeTextWithSQlite(
+					column.sqliteType,
+					true,
+					'1rem',
+					'0.6rem'
+				)
+			) : currentProject.dbType === 'SUPABASE' ? (
+				handleGetColumnTypeTextWithSupabase(
+					column.supabaseType,
+					true,
+					'1rem',
+					'0.6rem'
+				)
+			) : (
+				<></>
+			)}
 		</Box>
 	);
 };

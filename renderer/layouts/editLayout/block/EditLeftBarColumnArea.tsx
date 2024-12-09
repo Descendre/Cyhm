@@ -1,11 +1,15 @@
 import { Box, Typography } from '@mui/material';
-import { useLayout, usePalette } from '../../../hooks';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 import { AddColumnResponse } from '../../../interfaces';
 import { EditLeftBarConstraintsArea } from './EditLeftBarConstraintsArea';
 
 export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 	const palette = usePalette();
-	const { handleGetColumnTypeTextWithSQlite } = useLayout();
+	const { currentProject } = useProject();
+	const {
+		handleGetColumnTypeTextWithSQlite,
+		handleGetColumnTypeTextWithSupabase,
+	} = useLayout();
 
 	return (
 		<Box
@@ -37,11 +41,22 @@ export const EditLeftBarColumnArea = (props: AddColumnResponse) => {
 				height="25px"
 			>
 				<EditLeftBarConstraintsArea {...props} />
-				{handleGetColumnTypeTextWithSQlite(
-					props.sqliteType,
-					true,
-					'1rem',
-					'0.6rem'
+				{currentProject.dbType === 'SQLITE' ? (
+					handleGetColumnTypeTextWithSQlite(
+						props.sqliteType,
+						true,
+						'1rem',
+						'0.6rem'
+					)
+				) : currentProject.dbType == 'SUPABASE' ? (
+					handleGetColumnTypeTextWithSupabase(
+						props.supabaseType,
+						true,
+						'1rem',
+						'0.6rem'
+					)
+				) : (
+					<></>
 				)}
 			</Box>
 		</Box>

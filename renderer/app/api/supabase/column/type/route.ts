@@ -8,9 +8,27 @@ import {
 export const PUT = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: UpdateColumnTypeRequest = await req.json();
-		const { columnId, dbType, type } = body;
+		const { columnId, dbType, sqliteType, supabaseType } = body;
 
-		const updateData = dbType === 'SQLITE' ? { sqliteType: type } : {};
+		if (
+			(dbType === 'SQLITE' && !sqliteType) ||
+			(dbType === 'SUPABASE' && !supabaseType)
+		) {
+			return NextResponse.json(
+				{
+					error:
+						dbType === 'SQLITE'
+							? 'SQLiteのカラムタイプが指定されていません。'
+							: 'Supabaseのカラムタイプが指定されていません。',
+				},
+				{ status: 400 }
+			);
+		}
+
+		const updateData =
+			dbType === 'SQLITE'
+				? { sqliteType: sqliteType }
+				: { supabaseType: supabaseType };
 
 		const updatedColumn: AddColumnResponse = await prisma.column.update({
 			where: { id: columnId },

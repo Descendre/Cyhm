@@ -5,9 +5,14 @@ import { AddColumnRequest, AddColumnResponse } from '../../../../interfaces';
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
 	try {
 		const body: AddColumnRequest = await req.json();
-		const { name, dbType, type, tableId, projectId } = body;
+		const { name, dbType, tableId, projectId } = body;
 
-		const updateData = dbType === 'SQLITE' ? { sqliteType: type } : {};
+		const updateData: {} =
+			dbType === 'SQLITE'
+				? { sqliteType: 'INTEGER' }
+				: dbType === 'SUPABASE'
+					? { supabaseType: 'INT' }
+					: {};
 
 		const newColumn = await prisma.column.create({
 			data: {
@@ -20,6 +25,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 		const formattedNewColumn: AddColumnResponse = {
 			name: newColumn.name,
 			sqliteType: newColumn.sqliteType,
+			supabaseType: newColumn.supabaseType,
 			tableId: newColumn.tableId,
 			projectId: newColumn.projectId,
 			id: newColumn.id,

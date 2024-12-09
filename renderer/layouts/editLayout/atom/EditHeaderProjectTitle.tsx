@@ -6,7 +6,12 @@ export const EditHeaderProjectTitle = () => {
 	const { currentProject } = useProject();
 
 	return (
-		<Typography variant="body2" color={palette.text.disabled} noWrap>
+		<Typography
+			variant="body2"
+			sx={{ fontSize: '0.8rem' }}
+			color={palette.text.disabled}
+			noWrap
+		>
 			{currentProject?.name}
 		</Typography>
 	);
