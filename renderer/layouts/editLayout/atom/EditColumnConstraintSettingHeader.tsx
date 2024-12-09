@@ -8,9 +8,10 @@ export const EditColumnConstraintSettingHeader = ({
 }: EditColumnConstraintSettingHeaderProps) => {
 	const {
 		handleGetColumnTypeTextWithSQlite,
+		handleGetColumnTypeTextWithSupabase,
 		handleSelectColumnConstraintItem,
 	} = useLayout();
-	const { columnConstraintEditInfo } = useProject();
+	const { currentProject, columnConstraintEditInfo } = useProject();
 
 	return (
 		<Box width="100%">
@@ -21,11 +22,22 @@ export const EditColumnConstraintSettingHeader = ({
 				width="100%"
 				height="40px"
 			>
-				{handleGetColumnTypeTextWithSQlite(
-					column?.sqliteType,
-					false,
-					'1.1rem',
-					''
+				{currentProject.dbType === 'SQLITE' ? (
+					handleGetColumnTypeTextWithSQlite(
+						column.sqliteType,
+						false,
+						'1rem',
+						'0.6rem'
+					)
+				) : currentProject.dbType == 'SUPABASE' ? (
+					handleGetColumnTypeTextWithSupabase(
+						column.supabaseType,
+						false,
+						'1rem',
+						'0.6rem'
+					)
+				) : (
+					<></>
 				)}
 				<Typography flexGrow={1} variant="body1" marginLeft="5px" noWrap>
 					{column?.name}

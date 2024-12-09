@@ -11,9 +11,10 @@ export const EditColumnConstraintColumnHeader = ({
 	const {
 		handleToggleColumnConstraintExpansion,
 		handleGetColumnTypeTextWithSQlite,
+		handleGetColumnTypeTextWithSupabase,
 		handleSelectColumnConstraintItem,
 	} = useLayout();
-	const { columnConstraintEditInfo } = useProject();
+	const { currentProject, columnConstraintEditInfo } = useProject();
 
 	return (
 		<>
@@ -29,7 +30,23 @@ export const EditColumnConstraintColumnHeader = ({
 					cursor: 'pointer',
 				}}
 			>
-				{handleGetColumnTypeTextWithSQlite(column.sqliteType, false, '', '')}
+				{currentProject.dbType === 'SQLITE' ? (
+					handleGetColumnTypeTextWithSQlite(
+						column.sqliteType,
+						false,
+						'1rem',
+						'0.6rem'
+					)
+				) : currentProject.dbType == 'SUPABASE' ? (
+					handleGetColumnTypeTextWithSupabase(
+						column.supabaseType,
+						false,
+						'1rem',
+						'0.6rem'
+					)
+				) : (
+					<></>
+				)}
 				<Typography
 					flexGrow={1}
 					variant="body2"
