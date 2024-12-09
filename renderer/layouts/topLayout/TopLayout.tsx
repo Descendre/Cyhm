@@ -8,13 +8,13 @@ import { useSession } from 'next-auth/react';
 import { TopLoading } from './section/TopLoading';
 
 export const TopLayout = ({ children }: TopLayoutProps) => {
-	const { handleFetchUserProjects } = useProject();
+	const { userProjects, handleFetchUserProjects } = useProject();
 	const { isPreparingProject } = useLayout();
 	const { data: session } = useSession();
 
 	useEffect(() => {
 		(async () => {
-			if (session && session.user) {
+			if (session && session.user && !userProjects) {
 				await handleFetchUserProjects({ userId: session.user.id });
 			}
 		})();
