@@ -1,19 +1,13 @@
 import { Box } from '@mui/material';
 import { EditHeaderProjectTitle } from '../atom';
-import { Settings } from '@mui/icons-material';
-import { usePalette } from '../../../hooks';
 
 export const EditHeaderProjectSettings = () => {
-	const palette = usePalette();
-
 	return (
 		<Box
 			display="flex"
-			justifyContent="center"
+			justifyContent="start"
 			alignItems="center"
-			gap="10px"
-			flexGrow={1}
-			width="0px"
+			width="calc(100% - 40px)"
 			height="100%"
 			sx={{
 				cursor: 'pointer',
@@ -23,14 +17,6 @@ export const EditHeaderProjectSettings = () => {
 			}}
 		>
 			<EditHeaderProjectTitle />
-			<Settings
-				className="settingsIcon"
-				fontSize="small"
-				sx={{
-					opacity: 0,
-					color: palette.text.disabled,
-				}}
-			/>
 		</Box>
 	);
 };

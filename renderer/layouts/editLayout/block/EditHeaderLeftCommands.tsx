@@ -7,7 +7,6 @@ export const EditHeaderLeftCommands = () => {
 			display="flex"
 			justifyContent="start"
 			alignItems="center"
-			gap="15px"
 			width="35%"
 			height="100%"
 			padding="0 15px"
