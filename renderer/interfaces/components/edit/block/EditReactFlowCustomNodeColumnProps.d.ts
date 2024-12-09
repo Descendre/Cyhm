@@ -1,7 +1,6 @@
-import { SQliteColumnType } from '@prisma/client';
+import { ColumnStatePropsExtended } from '../../../provider';
 
 export interface EditReactFlowCustomNodeColumnProps {
 	color: string;
-	name: string;
-	type: SQliteColumnType;
+	column: ColumnStatePropsExtended;
 }

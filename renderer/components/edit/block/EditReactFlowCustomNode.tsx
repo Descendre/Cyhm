@@ -46,8 +46,7 @@ export const EditReactFlowCustomNode = ({
 									? palette.components.edit.reactFlow.tableColumn.odd
 									: palette.components.edit.reactFlow.tableColumn.even
 							}
-							name={column.name}
-							type={column.sqliteType}
+							column={column}
 						/>
 					))}
 

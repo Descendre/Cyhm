@@ -99,9 +99,22 @@ export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 
 				{project.dbType === 'SQLITE' ? (
 					<Avatar
-						title="SQlite"
+						title="sqlite"
 						variant="square"
 						src="/sqlite.png"
+						sx={{
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							width: '25px',
+							height: '25px',
+						}}
+					/>
+				) : project.dbType === 'SUPABASE' ? (
+					<Avatar
+						title="supabase"
+						variant="square"
+						src="/supabase.svg"
 						sx={{
 							position: 'absolute',
 							top: 0,

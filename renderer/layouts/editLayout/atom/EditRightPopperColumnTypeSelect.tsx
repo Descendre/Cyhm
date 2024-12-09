@@ -1,26 +1,50 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { EditRightPopperColumnTypeSelectProps } from '../../../interfaces';
 import { useLayout, usePalette, useProject } from '../../../hooks';
-import { SQliteColumnType } from '@prisma/client';
+import { SQliteColumnType, SupabaseColumnType } from '@prisma/client';
 
 export const EditRightPopperColumnTypeSelect = ({
 	column,
 	table,
 }: EditRightPopperColumnTypeSelectProps) => {
 	const palette = usePalette();
-	const { tables, handleGetColumnTypeTextWithSQlite } = useLayout();
+	const {
+		tables,
+		handleGetColumnTypeTextWithSQlite,
+		handleGetColumnTypeTextWithSupabase,
+	} = useLayout();
 	const { currentProject, handleUpdateColumnType } = useProject();
 	const sqliteTypes: SQliteColumnType[] = ['INTEGER', 'TEXT', 'REAL', 'BLOB'];
+	const supabaseTypes: SupabaseColumnType[] = [
+		'STRING',
+		'INT',
+		'BIGINT',
+		'FLOAT',
+		'DECIMAL',
+		'BOOLEAN',
+		'DATETIME',
+		'JSON',
+		'BYTES',
+	];
 	const isEditable: boolean = tables[table?.id]?.isEditing;
+	const initialValue: SQliteColumnType | SupabaseColumnType =
+		currentProject.dbType === 'SQLITE'
+			? column.sqliteType
+			: column.supabaseType;
 
 	const handleTypeChange = async (event: SelectChangeEvent) => {
 		if (!currentProject) return;
-		const newType = event.target.value as SQliteColumnType;
+		const newType = event.target.value as SQliteColumnType | SupabaseColumnType;
+		const updateData =
+			currentProject.dbType === 'SQLITE'
+				? { sqliteType: newType as SQliteColumnType }
+				: { supabaseType: newType as SupabaseColumnType };
+
 		await handleUpdateColumnType({
 			tableId: column.tableId,
 			columnId: column.id,
 			dbType: currentProject.dbType,
-			type: newType,
+			...updateData,
 		});
 	};
 
@@ -29,7 +53,7 @@ export const EditRightPopperColumnTypeSelect = ({
 			variant="outlined"
 			size="small"
 			disabled={!isEditable}
-			value={column.sqliteType}
+			value={initialValue}
 			onChange={handleTypeChange}
 			sx={{
 				width: '50%',
@@ -60,11 +84,21 @@ export const EditRightPopperColumnTypeSelect = ({
 				},
 			}}
 		>
-			{sqliteTypes.map((type) => (
-				<MenuItem key={type} value={type}>
-					{handleGetColumnTypeTextWithSQlite(type, true, '1rem', '0.6rem')}
-				</MenuItem>
-			))}
+			{currentProject.dbType === 'SQLITE' ? (
+				sqliteTypes.map((type) => (
+					<MenuItem key={type} value={type}>
+						{handleGetColumnTypeTextWithSQlite(type, true, '1rem', '0.6rem')}
+					</MenuItem>
+				))
+			) : currentProject.dbType === 'SUPABASE' ? (
+				supabaseTypes.map((type) => (
+					<MenuItem key={type} value={type}>
+						{handleGetColumnTypeTextWithSupabase(type, true, '1rem', '0.6rem')}
+					</MenuItem>
+				))
+			) : (
+				<></>
+			)}
 		</Select>
 	);
 };

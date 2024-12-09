@@ -53,6 +53,16 @@ export const TopProjectStartPopper = ({
 							})
 						}
 					/>
+					<TopProjectStartPopperListItem
+						primary="Supabase"
+						secondary="Supabaseプロジェクトを開始"
+						onClick={() =>
+							handleCreateProject({
+								userId: session?.user.id,
+								dbType: 'SUPABASE',
+							})
+						}
+					/>
 				</List>
 			</Box>
 		</Popper>

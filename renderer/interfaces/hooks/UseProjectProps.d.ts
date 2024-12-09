@@ -14,6 +14,7 @@ import {
 	DBType,
 	SqliteClauseType,
 	SQliteColumnType,
+	SupabaseColumnType,
 } from '@prisma/client';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
@@ -90,7 +91,8 @@ export interface UseProjectProps {
 	handleUpdateColumnType: ({
 		tableId,
 		columnId,
-		type,
+		sqliteType,
+		supabaseType,
 	}: handleUpdateColumnTypeProps) => Promose<void>;
 	handleAddConstraint: ({
 		columnId,
@@ -180,7 +182,8 @@ export interface handleUpdateColumnTypeProps {
 	tableId: string;
 	columnId: string;
 	dbType: DBType;
-	type: SQliteColumnType;
+	sqliteType?: SQliteColumnType;
+	supabaseType?: SupabaseColumnType;
 }
 
 export interface handleNodeDragStopProps {

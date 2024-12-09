@@ -68,6 +68,7 @@ model Column {
   id            String             @id @default(cuid())
   name          String
   sqliteType    SQliteColumnType?
+  supabaseType  SupabaseColumnType?
   tableId       String
   projectId     String
   createdAt   DateTime @default(now())
@@ -133,6 +134,7 @@ enum Provider {
 
 enum DBType {
   SQLITE
+  SUPABASE
 }
 
 enum Role {
@@ -147,6 +149,18 @@ enum SQliteColumnType {
   TEXT
   REAL
   BLOB
+}
+
+enum SupabaseColumnType {
+  STRING
+  INT
+  BIGINT
+  FLOAT
+  DECIMAL
+  BOOLEAN
+  DATETIME
+  JSON
+  BYTES
 }
 
 enum ColumnConstraintType {

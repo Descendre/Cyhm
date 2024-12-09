@@ -111,6 +111,18 @@ declare module '@mui/material/styles' {
 								blob: string;
 								null: string;
 							};
+							supabase: {
+								string: string;
+								int: string;
+								bigInt: string;
+								float: string;
+								decimal: string;
+								boolean: string;
+								dateTime: string;
+								json: string;
+								bytes: string;
+								null: string;
+							};
 						};
 					};
 					commands: {
@@ -235,6 +247,18 @@ declare module '@mui/material/styles' {
 								text: string;
 								real: string;
 								blob: string;
+								null: string;
+							};
+							supabase: {
+								string: string;
+								int: string;
+								bigInt: string;
+								float: string;
+								decimal: string;
+								boolean: string;
+								dateTime: string;
+								json: string;
+								bytes: string;
 								null: string;
 							};
 						};

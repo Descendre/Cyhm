@@ -47,7 +47,6 @@ import {
 	UseProjectProps,
 } from '../../interfaces';
 import { usePalette } from '../common';
-import { SQliteColumnType } from '@prisma/client';
 
 export const useProject = (): UseProjectProps => {
 	const palette = usePalette();
@@ -191,6 +190,7 @@ export const useProject = (): UseProjectProps => {
 						tableId: column.tableId,
 						projectId: column.projectId,
 						sqliteType: column.sqliteType,
+						supabaseType: column.supabaseType,
 						createdAt: column.createdAt,
 						updatedAt: column.updatedAt,
 						columnConstraints: column.columnConstraints,
@@ -326,6 +326,7 @@ export const useProject = (): UseProjectProps => {
 					tableId: tableId,
 					projectId: projectId,
 					sqliteType: 'INTEGER',
+					supabaseType: 'INT',
 					columnConstraints: [],
 
 					// 以下拡張分。
@@ -350,6 +351,7 @@ export const useProject = (): UseProjectProps => {
 					tableId: tableId,
 					projectId: projectId,
 					sqliteType: 'INTEGER',
+					supabaseType: 'INT',
 					columnConstraints: [],
 
 					// 以下拡張分。
@@ -372,7 +374,6 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/column`,
 				{
 					name: name,
-					type: 'INTEGER' as SQliteColumnType,
 					tableId: tableId,
 					dbType: dbType,
 					projectId: projectId,
@@ -435,8 +436,10 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 	}: handleOpenTableExpansionProps): Promise<void> => {
 		try {
+			console.log(Boolean(channel));
 			if (!tables || !tables[tableId] || !tables[tableId].isEditing || !channel)
 				return;
+			console.log(2);
 			setTables((prevTables) => {
 				if (!prevTables || !prevTables[tableId]) return prevTables;
 				return {
@@ -668,7 +671,8 @@ export const useProject = (): UseProjectProps => {
 		tableId,
 		columnId,
 		dbType,
-		type,
+		sqliteType,
+		supabaseType,
 	}: handleUpdateColumnTypeProps): Promise<void> => {
 		try {
 			if (!channel) return;
@@ -676,7 +680,13 @@ export const useProject = (): UseProjectProps => {
 			const currentColumn = columns[tableId]?.find(
 				(column) => column.id === columnId
 			);
-			if (!currentColumn || currentColumn.sqliteType === type) {
+			if (
+				!currentColumn ||
+				(dbType === 'SQLITE' && !sqliteType) ||
+				(dbType === 'SUPABASE' && !supabaseType) ||
+				(dbType === 'SQLITE' && currentColumn.sqliteType === sqliteType) ||
+				(dbType === 'SUPABASE' && currentColumn.supabaseType === supabaseType)
+			) {
 				return;
 			}
 
@@ -686,7 +696,11 @@ export const useProject = (): UseProjectProps => {
 					(col) => col.id === columnId
 				);
 				if (columnIndex !== -1) {
-					updatedState[tableId][columnIndex].sqliteType = type;
+					if (dbType === 'SQLITE') {
+						updatedState[tableId][columnIndex].sqliteType = sqliteType;
+					} else if (dbType === 'SUPABASE') {
+						updatedState[tableId][columnIndex].supabaseType = supabaseType;
+					}
 				}
 				return updatedState;
 			});
@@ -696,7 +710,8 @@ export const useProject = (): UseProjectProps => {
 				{
 					columnId: columnId,
 					dbType: dbType,
-					type: type,
+					sqliteType: sqliteType,
+					supabaseType: supabaseType,
 				} as UpdateColumnTypeRequest
 			);
 
@@ -971,6 +986,7 @@ export const useProject = (): UseProjectProps => {
 						projectId: newColumn.projectId,
 						name: newColumn.name,
 						sqliteType: newColumn.sqliteType,
+						supabaseType: newColumn.supabaseType,
 						createdAt: newColumn.createdAt,
 						updatedAt: newColumn.updatedAt,
 						columnConstraints: newColumn.columnConstraints,
@@ -1094,6 +1110,7 @@ export const useProject = (): UseProjectProps => {
 
 		return () => {
 			newChannel.unsubscribe();
+			console.log('aaa');
 			setChannel(null);
 		};
 	}, [currentProject]); // eslint-disable-line
