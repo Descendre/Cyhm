@@ -43,6 +43,7 @@ import {
 	UpdateColumnNameRequest,
 	UpdateColumnTypeRequest,
 	UpdateProjectDBTypeRequest,
+	UpdateProjectDBTypeResponse,
 	UpdateProjectNameRequest,
 	UpdateTableColorRequest,
 	UpdateTableExpandRequest,
@@ -939,16 +940,52 @@ export const useProject = (): UseProjectProps => {
 			)
 				return;
 			setProjectSettingChanging('dbType');
-			const newProject = await axiosFetch.patch<ProjectsResponse>(
+			const newProject = await axiosFetch.patch<UpdateProjectDBTypeResponse>(
 				`/api/supabase/project/dbType`,
 				{
 					id: currentProject.id,
 					type: type,
 				} as UpdateProjectDBTypeRequest
 			);
+
+			setColumns((prevColumns) => {
+				// updatedColumnsをテーブルIDごとにグループ分け
+				const updatedColumnsByTableId = newProject.columns.reduce(
+					(acc, updatedColumn) => {
+						// 該当するテーブルIDがaccに存在しない場合は新しく作成
+						if (!acc[updatedColumn.tableId]) {
+							acc[updatedColumn.tableId] = [];
+						}
+
+						// 該当するカラム情報を更新する
+						const existingColumn = prevColumns[updatedColumn.tableId]?.find(
+							(column) => column.id === updatedColumn.id
+						);
+
+						// 既存のカラムがあれば、拡張分は元の値を保持し、それ以外は新しい値で更新
+						const updatedColumnState: ColumnStatePropsExtended = {
+							...existingColumn, // 既存のカラムの情報をベースにする
+							...updatedColumn, // 新しいカラムの情報を上書き
+							isConstraintExpand: existingColumn?.isConstraintExpand ?? false, // 拡張分は元の値を保持
+						};
+
+						// 該当するテーブルIDにカラムを追加
+						acc[updatedColumn.tableId].push(updatedColumnState);
+
+						return acc;
+					},
+					{} as { [key: string]: ColumnStatePropsExtended[] }
+				);
+
+				// グループ分けされた結果を元にstateを更新
+				return {
+					...prevColumns,
+					...updatedColumnsByTableId, // テーブルIDごとのカラム配列を更新
+				};
+			});
 			setCurrentProject((prev) => ({
 				...prev,
-				dbType: newProject.dbType,
+				dbType: newProject.project.dbType,
 			}));
 		} catch (error) {
 			console.log(error);
