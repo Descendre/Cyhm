@@ -16,3 +16,4 @@ export * from './EditColumnConstraintCurrentConstraintsProps';
 export * from './EditColumnConstraintColumnSqliteProps';
 export * from './EditColumnConstraintSqliteAddingAreaProps';
 export * from './EditColumnConstraintSqliteForeignKeyAddingClauseSelectProps';
+export * from './EditProjectSettingSectionProps';

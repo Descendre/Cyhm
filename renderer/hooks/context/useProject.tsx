@@ -22,6 +22,8 @@ import {
 	handleAddColumnProps,
 	handleAddConstraintProps,
 	handleAddTableProps,
+	handleChangeProjectDBTypeProps,
+	handleChangeProjectNameProps,
 	handleColumnNameChangeProps,
 	handleColumnNameUpdateProps,
 	handleCreateProjectProps,
@@ -36,9 +38,12 @@ import {
 	handleTableNameChangeProps,
 	handleTableNameUpdateProps,
 	handleUpdateColumnTypeProps,
+	ProjectsResponse,
 	TableChannelPayloadProps,
 	UpdateColumnNameRequest,
 	UpdateColumnTypeRequest,
+	UpdateProjectDBTypeRequest,
+	UpdateProjectNameRequest,
 	UpdateTableColorRequest,
 	UpdateTableExpandRequest,
 	UpdateTableLockRequest,
@@ -80,6 +85,10 @@ export const useProject = (): UseProjectProps => {
 		channel,
 		setChannel,
 		setIsConstraintDeleting,
+		projectSettingInfo,
+		setProjectSettingInfo,
+		projectSettingChanging,
+		setProjectSettingChanging,
 	} = context;
 
 	const handleCreateProject = async ({
@@ -157,6 +166,11 @@ export const useProject = (): UseProjectProps => {
 			setInvitedUsers(allProjectContents.invitedUsers);
 			setCurrentProject(project);
 			setWindowMode('edit');
+
+			setProjectSettingInfo({
+				projectName: project.name,
+				dbType: project.dbType,
+			});
 
 			setTableEditInfo((prevState) => {
 				const updatedTableInfo = { ...prevState };
@@ -890,6 +904,59 @@ export const useProject = (): UseProjectProps => {
 		}
 	};
 
+	const handleChangeProjectName = async ({
+		name,
+	}: handleChangeProjectNameProps) => {
+		try {
+			if (!currentProject || projectSettingInfo.projectName.length === 0)
+				return;
+			setProjectSettingChanging('name');
+			const newProject = await axiosFetch.patch<ProjectsResponse>(
+				`/api/supabase/project/name`,
+				{
+					id: currentProject.id,
+					name: name,
+				} as UpdateProjectNameRequest
+			);
+			setCurrentProject((prev) => ({
+				...prev,
+				name: newProject.name,
+			}));
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setProjectSettingChanging(null);
+		}
+	};
+
+	const handleChangeProjectDBType = async ({
+		type,
+	}: handleChangeProjectDBTypeProps) => {
+		try {
+			if (
+				!currentProject ||
+				projectSettingInfo.dbType === currentProject.dbType
+			)
+				return;
+			setProjectSettingChanging('dbType');
+			const newProject = await axiosFetch.patch<ProjectsResponse>(
+				`/api/supabase/project/dbType`,
+				{
+					id: currentProject.id,
+					type: type,
+				} as UpdateProjectDBTypeRequest
+			);
+			setCurrentProject((prev) => ({
+				...prev,
+				dbType: newProject.dbType,
+			}));
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setProjectSettingChanging(null);
+		}
+	};
+
 	const handleNodeDragStop = async ({ node }: handleNodeDragStopProps) => {
 		try {
 			if (!channel) return;
@@ -939,6 +1006,10 @@ export const useProject = (): UseProjectProps => {
 		setColumnConstraintEditInfo,
 		channel,
 		setChannel,
+		projectSettingInfo,
+		setProjectSettingInfo,
+		projectSettingChanging,
+		setProjectSettingChanging,
 
 		handleCreateProject,
 		handleFetchUserProjects,
@@ -958,6 +1029,8 @@ export const useProject = (): UseProjectProps => {
 		handleUpdateColumnType,
 		handleAddConstraint,
 		handleDeleteConstraint,
+		handleChangeProjectName,
+		handleChangeProjectDBType,
 		handleNodeDragStop,
 	};
 };

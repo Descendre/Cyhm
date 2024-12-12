@@ -30,9 +30,10 @@ import {
 	TextFields,
 } from '@mui/icons-material';
 import { usePalette } from '../common';
-import { Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography } from '@mui/material';
 import {
 	ColumnConstraintType,
+	DBType,
 	SqliteClauseType,
 	SQliteColumnType,
 	SupabaseColumnType,
@@ -89,6 +90,61 @@ export const useLayout = (): UseLayoutProps => {
 		} else {
 			console.error('IPC is not available');
 		}
+	};
+
+	const handleGetDBTypeText = (
+		type: DBType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	): ReactNode => {
+		return type === 'SQLITE' ? (
+			<Box
+				title="SQLite"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="5px"
+			>
+				<Avatar
+					variant="square"
+					src="/sqlite.png"
+					sx={{
+						width: iconSize,
+						height: iconSize,
+					}}
+				/>
+				{withText && (
+					<Typography variant="body2" color="color.primary" fontSize={fontSize}>
+						SQLite
+					</Typography>
+				)}
+			</Box>
+		) : type === 'SUPABASE' ? (
+			<Box
+				title="Supabase"
+				display="flex"
+				justifyContent="center"
+				alignItems="center"
+				gap="5px"
+			>
+				<Avatar
+					variant="square"
+					src="/supabase.svg"
+					sx={{
+						width: iconSize,
+						height: iconSize,
+					}}
+				/>
+				{withText && (
+					<Typography variant="body2" color="color.primary" fontSize={fontSize}>
+						Supabase
+					</Typography>
+				)}
+			</Box>
+		) : (
+			<></>
+		);
 	};
 
 	const handleGetColumnTypeTextWithSQlite = (
@@ -950,6 +1006,7 @@ export const useLayout = (): UseLayoutProps => {
 		setIsConstraintDeleting,
 
 		handleGithubExternalShellOpen,
+		handleGetDBTypeText,
 		handleGetColumnTypeTextWithSQlite,
 		handleGetColumnTypeTextWithSupabase,
 		handleGetConstraintIcon,

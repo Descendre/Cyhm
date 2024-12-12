@@ -15,3 +15,5 @@ export * from './AcceptOrRejectInviteNotifyRequest';
 export * from './AddColumnClauseRequest';
 export * from './AddColumnConstraintRequest';
 export * from './DeleteColumnConstraintRequest';
+export * from './UpdateProjectNameRequest';
+export * from './UpdateProjectDBTypeRequest';

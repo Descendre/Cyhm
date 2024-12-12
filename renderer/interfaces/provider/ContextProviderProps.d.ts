@@ -11,6 +11,8 @@ import { UserSearchResultsProps } from './UserSearchResultsProps';
 import { UserPopperViewModeProps } from './UserPopperViewModeProps';
 import { RealtimeChannel } from '@supabase/supabase-js';
 import { ColumnConstraintEditInfoProps } from './ColumnConstraintEditInfoProps';
+import { ProjectSettingInfoProps } from './ProjectSettingInfoProps';
+import { ProjectSettingChangingProps } from './ProjectSettingChangingProps';
 
 export interface ContextProviderProps {
 	EditLeftBarTableAreaRef: React.RefObject<HTMLDivElement | null>;
@@ -82,4 +84,12 @@ export interface ContextProviderProps {
 	setChannel: React.Dispatch<React.SetStateAction<RealtimeChannel | null>>;
 	isConstraintDeleting: boolean;
 	setIsConstraintDeleting: React.Dispatch<React.SetStateAction<boolean>>;
+	projectSettingInfo: ProjectSettingInfoProps;
+	setProjectSettingInfo: React.Dispatch<
+		React.SetStateAction<ProjectSettingInfoProps>
+	>;
+	projectSettingChanging: ProjectSettingChangingProps;
+	setProjectSettingChanging: React.Dispatch<
+		React.SetStateAction<ProjectSettingChangingProps>
+	>;
 }
