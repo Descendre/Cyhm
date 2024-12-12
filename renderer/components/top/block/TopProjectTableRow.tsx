@@ -2,18 +2,20 @@
 import {
 	Avatar,
 	AvatarGroup,
+	Box,
 	IconButton,
 	TableCell,
 	TableRow,
 	Typography,
 } from '@mui/material';
-import { usePalette, useProject } from '../../../hooks';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 import { MoreVert } from '@mui/icons-material';
 import { formatTimeAgo, hexToRgba } from '../../../utils';
 import { TopProjectTableRowProps } from '../../../interfaces';
 
 export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 	const palette = usePalette();
+	const { handleGetDBTypeText } = useLayout();
 	const { handleStartProject } = useProject();
 
 	return (
@@ -57,6 +59,7 @@ export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 				>
 					{project.members.map((member) => (
 						<Avatar
+							title={member.userName}
 							key={member.userId}
 							src={member.userImage}
 							sx={{
@@ -97,35 +100,9 @@ export const TopProjectTableRow = ({ project }: TopProjectTableRowProps) => {
 					</IconButton>
 				</Typography>
 
-				{project.dbType === 'SQLITE' ? (
-					<Avatar
-						title="sqlite"
-						variant="square"
-						src="/sqlite.png"
-						sx={{
-							position: 'absolute',
-							top: 0,
-							left: 0,
-							width: '25px',
-							height: '25px',
-						}}
-					/>
-				) : project.dbType === 'SUPABASE' ? (
-					<Avatar
-						title="supabase"
-						variant="square"
-						src="/supabase.svg"
-						sx={{
-							position: 'absolute',
-							top: 0,
-							left: 0,
-							width: '25px',
-							height: '25px',
-						}}
-					/>
-				) : (
-					<></>
-				)}
+				<Box position="absolute" top={0} left={0}>
+					{handleGetDBTypeText(project.dbType, false, '20px', '20px')}
+				</Box>
 			</TableCell>
 		</TableRow>
 	);

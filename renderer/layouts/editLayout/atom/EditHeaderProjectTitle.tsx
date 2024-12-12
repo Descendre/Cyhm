@@ -1,9 +1,10 @@
-import { Avatar, Box, Typography } from '@mui/material';
-import { usePalette, useProject } from '../../../hooks';
+import { Box, Typography } from '@mui/material';
+import { useLayout, usePalette, useProject } from '../../../hooks';
 import { Settings } from '@mui/icons-material';
 
 export const EditHeaderProjectTitle = () => {
 	const palette = usePalette();
+	const { handleGetDBTypeText } = useLayout();
 	const { currentProject } = useProject();
 
 	return (
@@ -21,29 +22,8 @@ export const EditHeaderProjectTitle = () => {
 				width="90%"
 				height="100%"
 			>
-				{currentProject?.dbType === 'SQLITE' ? (
-					<Avatar
-						title="sqlite"
-						variant="square"
-						src="/sqlite.png"
-						sx={{
-							width: '20px',
-							height: '20px',
-						}}
-					/>
-				) : currentProject?.dbType === 'SUPABASE' ? (
-					<Avatar
-						title="supabase"
-						variant="square"
-						src="/supabase.svg"
-						sx={{
-							width: '20px',
-							height: '20px',
-						}}
-					/>
-				) : (
-					<></>
-				)}
+				{currentProject?.dbType &&
+					handleGetDBTypeText(currentProject?.dbType, false, '20px', '20px')}
 				<Typography
 					variant="body2"
 					sx={{ fontSize: '0.8rem' }}

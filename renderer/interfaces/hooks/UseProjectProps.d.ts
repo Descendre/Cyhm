@@ -7,6 +7,8 @@ import {
 import {
 	ColumnConstraintEditInfoProps,
 	ColumnsStateProps,
+	ProjectSettingChangingProps,
+	ProjectSettingInfoProps,
 	TablesStateProps,
 } from '../provider';
 import {
@@ -39,6 +41,14 @@ export interface UseProjectProps {
 	>;
 	channel: RealtimeChannel | null;
 	setChannel: React.Dispatch<React.SetStateAction<RealtimeChannel | null>>;
+	projectSettingInfo: ProjectSettingInfoProps;
+	setProjectSettingInfo: React.Dispatch<
+		React.SetStateAction<ProjectSettingInfoProps>
+	>;
+	projectSettingChanging: ProjectSettingChangingProps;
+	setProjectSettingChanging: React.Dispatch<
+		React.SetStateAction<ProjectSettingChangingProps>
+	>;
 
 	handleCreateProject: ({ userId }: handleCreateProjectProps) => Promise<void>;
 	handleFetchUserProjects: ({
@@ -106,6 +116,12 @@ export interface UseProjectProps {
 	handleDeleteConstraint: ({
 		id,
 	}: handleDeleteConstraintProps) => Promise<void>;
+	handleChangeProjectName: ({
+		name,
+	}: handleChangeProjectNameProps) => Promise<void>;
+	handleChangeProjectDBType: ({
+		type,
+	}: handleChangeProjectDBTypeProps) => Promise<void>;
 	handleNodeDragStop: ({ node }: handleNodeDragStopProps) => Promise<void>;
 }
 
@@ -184,6 +200,14 @@ export interface handleUpdateColumnTypeProps {
 	dbType: DBType;
 	sqliteType?: SQliteColumnType;
 	supabaseType?: SupabaseColumnType;
+}
+
+export interface handleChangeProjectNameProps {
+	name: string;
+}
+
+export interface handleChangeProjectDBTypeProps {
+	type: DBType;
 }
 
 export interface handleNodeDragStopProps {

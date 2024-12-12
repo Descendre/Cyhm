@@ -9,6 +9,7 @@ import {
 import { AddTableResponse, ColumnConstraintResponse } from '../api';
 import {
 	ColumnConstraintType,
+	DBType,
 	SqliteClauseType,
 	SQliteColumnType,
 	SupabaseColumnType,
@@ -53,6 +54,12 @@ export interface UseLayoutProps {
 	>;
 
 	handleGithubExternalShellOpen: () => void;
+	handleGetDBTypeText: (
+		type: DBType,
+		withText: boolean,
+		iconSize: string,
+		fontSize: string
+	) => ReactNode;
 	handleToggleColumnConstraintExpansion: ({
 		tableId,
 		columnId,

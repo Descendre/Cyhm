@@ -7,6 +7,8 @@ import {
 	FetchNotifyInvitedUserResponse,
 	FetchUserProjectsResponse,
 	NotifyWithDetail,
+	ProjectSettingChangingProps,
+	ProjectSettingInfoProps,
 	TablesStateProps,
 	UserPopperViewModeProps,
 	UserSearchResultsProps,
@@ -69,6 +71,13 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 	const [channel, setChannel] = useState<RealtimeChannel | null>(null);
 	const [isConstraintDeleting, setIsConstraintDeleting] =
 		useState<boolean>(false);
+	const [projectSettingInfo, setProjectSettingInfo] =
+		useState<ProjectSettingInfoProps>({
+			projectName: '',
+			dbType: null,
+		});
+	const [projectSettingChanging, setProjectSettingChanging] =
+		useState<ProjectSettingChangingProps>(null);
 
 	const contextValue = {
 		EditLeftBarTableAreaRef,
@@ -126,6 +135,10 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 		setChannel,
 		isConstraintDeleting,
 		setIsConstraintDeleting,
+		projectSettingInfo,
+		setProjectSettingInfo,
+		projectSettingChanging,
+		setProjectSettingChanging,
 	};
 
 	return <Context.Provider value={contextValue}>{children}</Context.Provider>;

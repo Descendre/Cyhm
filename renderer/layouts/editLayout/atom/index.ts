@@ -36,3 +36,5 @@ export * from './EditColumnConstraintSqliteAddingClauseSelect';
 export * from './EditColumnConstraintNoConstraintDisplay';
 export * from './EditColumnConstraintSqliteDeleteConstraintModalContent';
 export * from './EditColumnConstraintReferencingInfoSqlite';
+export * from './EditProjectSettingProjectNameInput';
+export * from './EditProjectSettingDBTypeSelect';
