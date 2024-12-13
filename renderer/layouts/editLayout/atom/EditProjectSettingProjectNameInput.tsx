@@ -4,8 +4,12 @@ import { Clear } from '@mui/icons-material';
 
 export const EditProjectSettingProjectNameInput = () => {
 	const palette = usePalette();
-	const { currentProject, projectSettingInfo, setProjectSettingInfo } =
-		useProject();
+	const {
+		currentProject,
+		projectSettingInfo,
+		setProjectSettingInfo,
+		handleChangeProjectName,
+	} = useProject();
 
 	const handleChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -18,6 +22,19 @@ export const EditProjectSettingProjectNameInput = () => {
 		}
 	};
 
+	const handleKeyDown = (
+		event: React.KeyboardEvent<HTMLInputElement>
+	): void => {
+		if (
+			event.key === 'Enter' &&
+			currentProject &&
+			currentProject.name !== projectSettingInfo.projectName &&
+			projectSettingInfo.projectName
+		) {
+			handleChangeProjectName({ name: projectSettingInfo.projectName });
+		}
+	};
+
 	return (
 		<TextField
 			fullWidth
@@ -26,6 +43,7 @@ export const EditProjectSettingProjectNameInput = () => {
 			placeholder="プロジェクト名を入力"
 			value={projectSettingInfo?.projectName || ''}
 			onChange={handleChange}
+			onKeyDown={handleKeyDown}
 			sx={{
 				flexGrow: 1,
 				height: '30px',
