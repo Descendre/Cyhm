@@ -220,7 +220,6 @@ export const EditLayout = ({ children }: EditLayoutProps) => {
 		const handleProjectUpdate = (payload: {
 			payload: ProjectChannelPayloadProps;
 		}) => {
-			console.log(1);
 			const { newProject } = payload.payload;
 			setCurrentProject((prev) => ({
 				...prev,
