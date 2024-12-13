@@ -38,6 +38,7 @@ import {
 	handleTableNameChangeProps,
 	handleTableNameUpdateProps,
 	handleUpdateColumnTypeProps,
+	ProjectChannelPayloadProps,
 	ProjectsResponse,
 	TableChannelPayloadProps,
 	UpdateColumnNameRequest,
@@ -929,6 +930,13 @@ export const useProject = (): UseProjectProps => {
 				...prev,
 				name: newProject.name,
 			}));
+			channel.send({
+				type: 'broadcast',
+				event: 'project_update',
+				payload: {
+					newProject: newProject,
+				} as ProjectChannelPayloadProps,
+			});
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -946,17 +954,18 @@ export const useProject = (): UseProjectProps => {
 			)
 				return;
 			setProjectSettingChanging('dbType');
-			const newProject = await axiosFetch.patch<UpdateProjectDBTypeResponse>(
-				`/api/supabase/project/dbType`,
-				{
-					id: currentProject.id,
-					type: type,
-				} as UpdateProjectDBTypeRequest
-			);
+			const newProjectInfo =
+				await axiosFetch.patch<UpdateProjectDBTypeResponse>(
+					`/api/supabase/project/dbType`,
+					{
+						id: currentProject.id,
+						type: type,
+					} as UpdateProjectDBTypeRequest
+				);
 
 			setColumns((prevColumns) => {
 				// updatedColumnsをテーブルIDごとにグループ分け
-				const updatedColumnsByTableId = newProject.columns.reduce(
+				const updatedColumnsByTableId = newProjectInfo.columns.reduce(
 					(acc, updatedColumn) => {
 						// 該当するテーブルIDがaccに存在しない場合は新しく作成
 						if (!acc[updatedColumn.tableId]) {
@@ -991,8 +1000,15 @@ export const useProject = (): UseProjectProps => {
 			});
 			setCurrentProject((prev) => ({
 				...prev,
-				dbType: newProject.project.dbType,
+				dbType: newProjectInfo.project.dbType,
 			}));
+			channel.send({
+				type: 'broadcast',
+				event: 'project_update',
+				payload: {
+					newProject: newProjectInfo.project,
+				} as ProjectChannelPayloadProps,
+			});
 		} catch (error) {
 			console.log(error);
 		} finally {

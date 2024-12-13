@@ -3,6 +3,7 @@ import {
 	AddColumnResponse,
 	AddTableResponse,
 	FetchUserProjectsResponse,
+	ProjectsResponse,
 } from '../api';
 import {
 	ColumnConstraintEditInfoProps,
@@ -240,4 +241,8 @@ export interface ColumnChannelPayloadProps {
 
 export interface ColumnsChannelPayloadProps {
 	newColumns: AddColumnResponse[];
+}
+
+export interface ProjectChannelPayloadProps {
+	newProject: ProjectsResponse;
 }

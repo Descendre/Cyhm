@@ -4,6 +4,7 @@ import {
 	ColumnsChannelPayloadProps,
 	ColumnStatePropsExtended,
 	EditLayoutProps,
+	ProjectChannelPayloadProps,
 	TableChannelPayloadProps,
 } from '../../interfaces';
 import {
@@ -34,6 +35,8 @@ export const EditLayout = ({ children }: EditLayoutProps) => {
 		setChannel,
 		setTableEditInfo,
 		setColumnEditInfo,
+		setCurrentProject,
+		setProjectSettingInfo,
 	} = useProject();
 	const lastSelectedTableInfo =
 		lastSelectedTableId && tables && tables[lastSelectedTableId]
@@ -214,12 +217,27 @@ export const EditLayout = ({ children }: EditLayoutProps) => {
 				};
 			});
 		};
+		const handleProjectUpdate = (payload: {
+			payload: ProjectChannelPayloadProps;
+		}) => {
+			console.log(1);
+			const { newProject } = payload.payload;
+			setCurrentProject((prev) => ({
+				...prev,
+				...newProject,
+			}));
+			setProjectSettingInfo({
+				projectName: newProject.name,
+				dbType: newProject.dbType,
+			});
+		};
 		newChannel
 			.on('broadcast', { event: 'table_add' }, handleTableAdd)
 			.on('broadcast', { event: 'table_update' }, handleTableUpdate)
 			.on('broadcast', { event: 'column_add' }, handleColumnAdd)
 			.on('broadcast', { event: 'column_update' }, handleColumnUpdate)
 			.on('broadcast', { event: 'columns_update' }, handleColumnsUpdate)
+			.on('broadcast', { event: 'project_update' }, handleProjectUpdate)
 			.subscribe();
 
 		return () => {
