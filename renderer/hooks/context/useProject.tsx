@@ -114,6 +114,12 @@ export const useProject = (): UseProjectProps => {
 				`/api/supabase/project/${newProject.id}`
 			);
 			setCurrentProject(newCurrentProject);
+
+			setProjectSettingInfo({
+				projectName: newCurrentProject.name,
+				dbType: newCurrentProject.dbType,
+			});
+
 			if (typeof window !== 'undefined' && window.ipc) {
 				window.ipc.send('project-start');
 			} else {
