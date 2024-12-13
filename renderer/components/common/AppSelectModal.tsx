@@ -48,11 +48,10 @@ export const AppSelectModal = ({
 			<Grow in={isOpen} timeout={200}>
 				<Box
 					display="flex"
-					justifyContent="space-between"
+					justifyContent="center"
 					alignItems="center"
 					flexDirection="column"
 					width="400px"
-					height="300px"
 					padding="40px 30px"
 					bgcolor={palette.components.common.appSelectModal.bg}
 					borderRadius="5px"
@@ -65,11 +64,10 @@ export const AppSelectModal = ({
 						flexDirection="column"
 						gap="30px"
 						width="100%"
-						height="100%"
 					>
 						<Box
 							width="100%"
-							flexGrow={1}
+							maxHeight="150px"
 							sx={{
 								overflowY: 'overlay',
 								'&:not(:hover)': {
@@ -81,12 +79,14 @@ export const AppSelectModal = ({
 						>
 							{children}
 						</Box>
+
 						<Box
 							display="flex"
 							justifyContent="center"
 							alignItems="center"
 							gap="10px"
 							width="100%"
+							height="30px"
 						>
 							<Button
 								fullWidth
@@ -96,6 +96,9 @@ export const AppSelectModal = ({
 								color={rejectColor}
 								onClick={rejectFunc}
 								startIcon={rejectIcon}
+								sx={{
+									height: '100%',
+								}}
 							>
 								{rejectText}
 							</Button>
@@ -108,6 +111,9 @@ export const AppSelectModal = ({
 								color={acceptColor}
 								onClick={acceptFunc}
 								startIcon={!loading && acceptIcon}
+								sx={{
+									height: '100%',
+								}}
 							>
 								{acceptText}
 							</LoadingButton>
